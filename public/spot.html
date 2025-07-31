@@ -112,11 +112,19 @@
                     </div>
 
                     <div style="text-align: right;">
-                        <div style="background: #f8f9fa; padding: 0.75rem 1rem; border-radius: 12px; border: 2px solid #e9ecef;">
-                            <div style="font-size: 0.8rem; color: #666; margin-bottom: 0.2rem;">Réservation express</div>
-                            <button onclick="quickBook()" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
-                                ⚡ Réserver 2h - €24
-                            </button>
+                        <div style="background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%); padding: 1rem 1.25rem; border-radius: 16px; border: 2px solid #4A90E2; box-shadow: 0 8px 24px rgba(74, 144, 226, 0.15); position: relative; overflow: hidden;">
+                            <!-- Effet de brillance d'arrière-plan -->
+                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 40%, rgba(74, 144, 226, 0.05) 50%, transparent 60%); pointer-events: none;"></div>
+
+                            <div style="position: relative; z-index: 2;">
+                                <div style="font-size: 0.75rem; color: #4A90E2; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">⚡ Réservation express</div>
+                                <button onclick="quickBook()" class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 700; border-radius: 12px; box-shadow: 0 6px 20px rgba(74, 144, 226, 0.3); transition: all 0.3s ease; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 28px rgba(74, 144, 226, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(74, 144, 226, 0.3)'">
+                                    <span style="position: relative; z-index: 2;">⚡ Réserver 2h - €24</span>
+                                    <!-- Effet de hover lumineux -->
+                                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s ease; pointer-events: none;" onmouseover="this.style.left='100%'"></div>
+                                </button>
+                                <div style="font-size: 0.7rem; color: #666; margin-top: 0.5rem; opacity: 0.8;">💳 Paiement sécurisé</div>
+                            </div>
                         </div>
                     </div>
                 </div>
