@@ -36,6 +36,14 @@ app.get('/owner-profile', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'owner-profile.html'));
 });
 
+app.get('/owner-reservations', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'owner-reservations.html'));
+});
+
+app.get('/owner-earnings', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'owner-earnings.html'));
+});
+
 app.get('/add-spot', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'add-spot.html'));
 });
