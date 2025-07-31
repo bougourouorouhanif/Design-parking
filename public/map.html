@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte des parkings - ParkShare</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="/" class="logo">🅿️ ParkShare</a>
+                <ul class="nav-links">
+                    <li><a href="/map" style="opacity: 1;">Carte</a></li>
+                    <li><a href="/dashboard">Mes réservations</a></li>
+                    <li><a href="/owner">Propriétaire</a></li>
+                    <li><a href="/auth">Connexion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="filter-bar">
+        <div class="container" style="max-width: none;">
+            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                <div class="filter-item">
+                    <label>Prix max:</label>
+                    <select id="maxPrice" onchange="filterSpots()">
+                        <option value="">Tous</option>
+                        <option value="5">€5/h</option>
+                        <option value="10">€10/h</option>
+                        <option value="15">€15/h</option>
+                        <option value="20">€20/h</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>Type:</label>
+                    <select id="parkingType" onchange="filterSpots()">
+                        <option value="">Tous</option>
+                        <option value="covered">Couvert</option>
+                        <option value="outdoor">Extérieur</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>Distance:</label>
+                    <select id="maxDistance" onchange="filterSpots()">
+                        <option value="">Toutes</option>
+                        <option value="1">1 km</option>
+                        <option value="2">2 km</option>
+                        <option value="5">5 km</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <input type="checkbox" id="availableNow" onchange="filterSpots()">
+                    <label for="availableNow">Disponible maintenant</label>
+                </div>
+                <button class="btn btn-secondary" onclick="clearFilters()">Effacer filtres</button>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 400px; height: calc(100vh - 120px);">
+        <div class="map-container" style="margin: 0; border-radius: 0; height: 100%; position: relative;">
+            <div style="position: absolute; top: 20px; left: 20px; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                📍 <strong>Paris Centre</strong> - 23 places trouvées
+            </div>
+            
+            <!-- Simulated map pins -->
+            <div style="position: absolute; top: 30%; left: 40%; background: #28a745; color: white; padding: 5px 8px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer;" onclick="selectSpot(1)">
+                €12
+            </div>
+            <div style="position: absolute; top: 45%; left: 55%; background: #ffc107; color: #333; padding: 5px 8px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer;" onclick="selectSpot(2)">
+                €8
+            </div>
+            <div style="position: absolute; top: 60%; left: 35%; background: #28a745; color: white; padding: 5px 8px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer;" onclick="selectSpot(3)">
+                €6
+            </div>
+            <div style="position: absolute; top: 25%; left: 65%; background: #dc3545; color: white; padding: 5px 8px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer;" onclick="selectSpot(4)">
+                €15
+            </div>
+            <div style="position: absolute; top: 70%; left: 50%; background: #28a745; color: white; padding: 5px 8px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer;" onclick="selectSpot(5)">
+                €10
+            </div>
+            
+            <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; gap: 10px; align-items: center;">
+                <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">Disponible</span>
+                <span style="background: #ffc107; color: #333; padding: 2px 6px; border-radius: 4px; font-size: 12px;">Bientôt libre</span>
+                <span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">Occupé</span>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 1rem; overflow-y: auto; border-left: 1px solid #e9ecef;">
+            <h3>Places disponibles</h3>
+            
+            <div class="parking-list" id="parkingList">
+                <div class="parking-spot" data-price="12" data-type="covered" data-distance="0.5" data-available="true" onclick="selectSpot(1)">
+                    <div class="spot-image">🏢</div>
+                    <div class="spot-info">
+                        <h4>Parking Centre-ville</h4>
+                        <div class="spot-details">
+                            <span class="spot-tag covered">Couvert</span>
+                            <span class="spot-tag">5 min à pied</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666;">15 Rue de la République</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                            <span class="price" style="font-size: 1.2rem;">€12/h</span>
+                            <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;">Réserver</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="parking-spot" data-price="8" data-type="outdoor" data-distance="0.3" data-available="true" onclick="selectSpot(2)">
+                    <div class="spot-image">🏠</div>
+                    <div class="spot-info">
+                        <h4>Garage privé</h4>
+                        <div class="spot-details">
+                            <span class="spot-tag outdoor">Extérieur</span>
+                            <span class="spot-tag">2 min à pied</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666;">8 Avenue des Champs</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                            <span class="price" style="font-size: 1.2rem;">€8/h</span>
+                            <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;">Réserver</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="parking-spot" data-price="6" data-type="covered" data-distance="0.8" data-available="true" onclick="selectSpot(3)">
+                    <div class="spot-image">🏪</div>
+                    <div class="spot-info">
+                        <h4>Parking Supermarché</h4>
+                        <div class="spot-details">
+                            <span class="spot-tag covered">Couvert</span>
+                            <span class="spot-tag">3 min à pied</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666;">25 Boulevard Saint-Germain</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                            <span class="price" style="font-size: 1.2rem;">€6/h</span>
+                            <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;">Réserver</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="parking-spot" data-price="15" data-type="covered" data-distance="1.2" data-available="false" onclick="selectSpot(4)">
+                    <div class="spot-image">🏨</div>
+                    <div class="spot-info">
+                        <h4>Parking Hôtel</h4>
+                        <div class="spot-details">
+                            <span class="spot-tag covered">Couvert</span>
+                            <span class="spot-tag">Libre à 16h</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666;">12 Place Vendôme</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                            <span class="price" style="font-size: 1.2rem;">€15/h</span>
+                            <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;" disabled>Occupé</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="parking-spot" data-price="10" data-type="outdoor" data-distance="0.6" data-available="true" onclick="selectSpot(5)">
+                    <div class="spot-image">🏘️</div>
+                    <div class="spot-info">
+                        <h4>Résidence privée</h4>
+                        <div class="spot-details">
+                            <span class="spot-tag outdoor">Extérieur</span>
+                            <span class="spot-tag">4 min à pied</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666;">33 Rue du Louvre</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                            <span class="price" style="font-size: 1.2rem;">€10/h</span>
+                            <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;">Réserver</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectSpot(id) {
+            window.location.href = `/spot/${id}`;
+        }
+
+        function filterSpots() {
+            const maxPrice = document.getElementById('maxPrice').value;
+            const parkingType = document.getElementById('parkingType').value;
+            const maxDistance = document.getElementById('maxDistance').value;
+            const availableNow = document.getElementById('availableNow').checked;
+
+            const spots = document.querySelectorAll('.parking-spot');
+            
+            spots.forEach(spot => {
+                let show = true;
+                
+                if (maxPrice && parseFloat(spot.dataset.price) > parseFloat(maxPrice)) {
+                    show = false;
+                }
+                
+                if (parkingType && spot.dataset.type !== parkingType) {
+                    show = false;
+                }
+                
+                if (maxDistance && parseFloat(spot.dataset.distance) > parseFloat(maxDistance)) {
+                    show = false;
+                }
+                
+                if (availableNow && spot.dataset.available !== 'true') {
+                    show = false;
+                }
+                
+                spot.style.display = show ? 'grid' : 'none';
+            });
+        }
+
+        function clearFilters() {
+            document.getElementById('maxPrice').value = '';
+            document.getElementById('parkingType').value = '';
+            document.getElementById('maxDistance').value = '';
+            document.getElementById('availableNow').checked = false;
+            filterSpots();
+        }
+
+        // Load search parameters if coming from homepage
+        window.onload = function() {
+            const searchLocation = localStorage.getItem('searchLocation');
+            if (searchLocation) {
+                // Update map location indicator
+                document.querySelector('.map-container div').innerHTML = `📍 <strong>${searchLocation}</strong> - 23 places trouvées`;
+                localStorage.removeItem('searchLocation');
+                localStorage.removeItem('searchDateTime');
+            }
+        }
+    </script>
+</body>
+</html>
