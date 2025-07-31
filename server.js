@@ -48,6 +48,10 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
+app.get('/navbar-demo', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'navbar-demo.html'));
+});
+
 app.listen(port, '0.0.0.0', () => {
   console.log(`Parky app running at http://0.0.0.0:${port}/`);
 });
