@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une place - ParkShare</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="/" class="logo">🅿️ ParkShare</a>
+                <ul class="nav-links">
+                    <li><a href="/map">Carte</a></li>
+                    <li><a href="/dashboard">Mes réservations</a></li>
+                    <li><a href="/owner">Propriétaire</a></li>
+                    <li><a href="#" onclick="logout()">Déconnexion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="padding: 2rem 20px; max-width: 800px;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+            <button onclick="history.back()" class="btn btn-secondary" style="padding: 0.5rem 1rem;">← Retour</button>
+            <h1 id="pageTitle">Ajouter une nouvelle place</h1>
+        </div>
+
+        <form onsubmit="submitSpot(event)" class="card">
+            <div style="border-bottom: 1px solid #e9ecef; padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                <h2>📍 Localisation</h2>
+                
+                <div class="form-group">
+                    <label for="address">Adresse complète *</label>
+                    <input type="text" id="address" placeholder="15 Rue de la République, 75001 Paris" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="city">Ville *</label>
+                        <input type="text" id="city" placeholder="Paris" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipCode">Code postal *</label>
+                        <input type="text" id="zipCode" placeholder="75001" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="instructions">Instructions d'accès</label>
+                    <textarea id="instructions" placeholder="ex: Digicode 1234B, ascenseur jusqu'au -1, place 15" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #e9ecef; padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                <h2>📋 Informations sur la place</h2>
+                
+                <div class="form-group">
+                    <label for="spotName">Nom de la place *</label>
+                    <input type="text" id="spotName" placeholder="ex: Parking Centre-ville, Garage privé..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="Décrivez votre place de parking..." rows="4"></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="spotType">Type de parking *</label>
+                        <select id="spotType" required>
+                            <option value="">Sélectionner...</option>
+                            <option value="covered">Couvert</option>
+                            <option value="outdoor">Extérieur</option>
+                            <option value="garage">Garage privé</option>
+                            <option value="underground">Souterrain</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleType">Véhicules acceptés *</label>
+                        <select id="vehicleType" required>
+                            <option value="">Sélectionner...</option>
+                            <option value="car">Voiture</option>
+                            <option value="motorcycle">Moto</option>
+                            <option value="both">Voiture et moto</option>
+                            <option value="truck">Camionnette</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="maxLength">Longueur max (m)</label>
+                        <input type="number" id="maxLength" placeholder="4.8" step="0.1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxWidth">Largeur max (m)</label>
+                        <input type="number" id="maxWidth" placeholder="2.0" step="0.1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxHeight">Hauteur max (m)</label>
+                        <input type="number" id="maxHeight" placeholder="2.1" step="0.1" min="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Équipements et services</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="security" value="security">
+                            🛡️ Sécurisé / Surveillé
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="accessible" value="accessible">
+                            ♿ Accessible PMR
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="electric" value="electric">
+                            🔌 Borne électrique
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="shelter" value="shelter">
+                            🏠 Abri intempéries
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="lighting" value="lighting">
+                            💡 Éclairage
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="cctv" value="cctv">
+                            📹 Vidéosurveillance
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #e9ecef; padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                <h2>📸 Photos</h2>
+                
+                <div class="form-group">
+                    <label for="photos">Ajouter des photos (max 5)</label>
+                    <input type="file" id="photos" multiple accept="image/*" style="padding: 0.5rem;">
+                    <div style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                        Formats acceptés: JPG, PNG. Taille max: 5MB par photo.
+                    </div>
+                </div>
+
+                <div id="photoPreview" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <!-- Photo previews will appear here -->
+                </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #e9ecef; padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                <h2>💰 Tarification</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="hourlyRate">Prix par heure (€) *</label>
+                        <input type="number" id="hourlyRate" placeholder="12.00" step="0.50" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dailyRate">Prix par jour (€)</label>
+                        <input type="number" id="dailyRate" placeholder="50.00" step="1.00" min="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tarifs spéciaux</label>
+                    <div style="margin-top: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <input type="checkbox" id="weekendDiscount">
+                            Réduction week-end (-10%)
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <input type="checkbox" id="longTermDiscount">
+                            Réduction séjour longue durée (+3 jours: -15%)
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="firstTimeDiscount">
+                            Réduction première réservation (-20%)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="border-bottom: 1px solid #e9ecef; padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                <h2>📅 Disponibilités</h2>
+                
+                <div class="form-group">
+                    <label>Mode de gestion</label>
+                    <div style="margin-top: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <input type="radio" name="managementMode" value="auto" checked>
+                            Acceptation automatique des réservations
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="managementMode" value="manual">
+                            Validation manuelle de chaque réservation
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Disponibilité générale</label>
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; margin-top: 0.5rem;">
+                        <label style="text-align: center;">
+                            <div style="font-weight: bold; margin-bottom: 0.2rem;">Lun</div>
+                            <input type="checkbox" id="monday" checked>
+                        </label>
+                        <label style="text-align: center;">
+                            <div style="font-weight: bold; margin-bottom: 0.2rem;">Mar</div>
+                            <input type="checkbox" id="tuesday" checked>
+                        </label>
+                        <label style="text-align: center;">
+                            <div style="font-weight: bold; margin-bottom: 0.2rem;">Mer</div>
+                            <input type="checkbox" id="wednesday" checked>
+                        </label>
+                        <label style="text-align: center;">
+                            <div style="font-weight: bold; margin-bottom: 0.2rem;">Jeu</div>
+                            <input type="checkbox" id="thursday" checked>
+                        </label>
+                        <label style="text-align: center;">
+                            <div style="font-weight: bold; margin-bottom: 0.2rem;">Ven</div>
+                            <input type="checkbox" id="friday" checked>
+                        </label>
+                        <label style="text-align: center;">
+                            <div style="font-weight: bold; margin-bottom: 0.2rem;">Sam</div>
+                            <input type="checkbox" id="saturday" checked>
+                        </label>
+                        <label style="text-align: center;">
+                            <div style="font-weight: bold; margin-bottom: 0.2rem;">Dim</div>
+                            <input type="checkbox" id="sunday" checked>
+                        </label>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="startTime">Heure de début</label>
+                        <input type="time" id="startTime" value="00:00">
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">Heure de fin</label>
+                        <input type="time" id="endTime" value="23:59">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="minDuration">Durée minimum de réservation (heures)</label>
+                    <select id="minDuration">
+                        <option value="0.5">30 minutes</option>
+                        <option value="1" selected>1 heure</option>
+                        <option value="2">2 heures</option>
+                        <option value="4">4 heures</option>
+                        <option value="24">1 jour</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <h2>📞 Contact</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="contactName">Nom du contact</label>
+                        <input type="text" id="contactName" placeholder="Nom du propriétaire">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPhone">Téléphone de contact</label>
+                        <input type="tel" id="contactPhone" placeholder="06 12 34 56 78">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Options de contact</label>
+                    <div style="margin-top: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <input type="checkbox" id="allowSMS" checked>
+                            Autoriser les SMS de notification
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="allowPhone">
+                            Autoriser les appels en urgence
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <h3>💡 Résumé</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <div>
+                        <div style="color: #666;">Nom de la place:</div>
+                        <div id="summaryName" style="font-weight: bold;">-</div>
+                    </div>
+                    <div>
+                        <div style="color: #666;">Prix par heure:</div>
+                        <div id="summaryPrice" style="font-weight: bold; color: #28a745;">-</div>
+                    </div>
+                    <div>
+                        <div style="color: #666;">Type:</div>
+                        <div id="summaryType" style="font-weight: bold;">-</div>
+                    </div>
+                    <div>
+                        <div style="color: #666;">Commission plateforme:</div>
+                        <div style="font-weight: bold; color: #dc3545;">10%</div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                    <div style="color: #666;">Revenus estimés par mois:</div>
+                    <div id="estimatedRevenue" style="font-size: 1.5rem; font-weight: bold; color: #28a745;">-</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button type="button" onclick="saveDraft()" class="btn btn-secondary">
+                    💾 Sauvegarder brouillon
+                </button>
+                <button type="submit" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    ✅ Publier la place
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function submitSpot(event) {
+            event.preventDefault();
+            
+            // Collect form data
+            const spotData = {
+                name: document.getElementById('spotName').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                zipCode: document.getElementById('zipCode').value,
+                type: document.getElementById('spotType').value,
+                hourlyRate: document.getElementById('hourlyRate').value,
+                // ... other fields
+            };
+            
+            // Simulate submission
+            showNotification('Place publiée avec succès! Votre annonce sera visible sous 24h après validation.', 'success');
+            
+            setTimeout(() => {
+                window.location.href = '/owner';
+            }, 2000);
+        }
+
+        function saveDraft() {
+            showNotification('Brouillon sauvegardé', 'info');
+        }
+
+        function updateSummary() {
+            const name = document.getElementById('spotName').value || '-';
+            const price = document.getElementById('hourlyRate').value;
+            const type = document.getElementById('spotType').value;
+            
+            document.getElementById('summaryName').textContent = name;
+            document.getElementById('summaryPrice').textContent = price ? `€${price}/h` : '-';
+            document.getElementById('summaryType').textContent = type ? getTypeDisplay(type) : '-';
+            
+            if (price) {
+                const estimatedHours = 6; // hours per day on average
+                const estimatedDays = 20; // days per month
+                const monthlyRevenue = (price * estimatedHours * estimatedDays * 0.9).toFixed(0); // minus 10% commission
+                document.getElementById('estimatedRevenue').textContent = `€${monthlyRevenue}`;
+            }
+        }
+
+        function getTypeDisplay(type) {
+            const types = {
+                'covered': 'Couvert',
+                'outdoor': 'Extérieur',
+                'garage': 'Garage privé',
+                'underground': 'Souterrain'
+            };
+            return types[type] || type;
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.borderLeftColor = type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff';
+            notification.innerHTML = `
+                <div style="font-weight: 600;">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'} ${message}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = '/auth';
+        }
+
+        // Handle photo upload preview
+        document.getElementById('photos').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            const previewContainer = document.getElementById('photoPreview');
+            previewContainer.innerHTML = '';
+            
+            files.forEach((file, index) => {
+                if (index < 5) { // Max 5 photos
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const photoDiv = document.createElement('div');
+                        photoDiv.style.cssText = `
+                            background-image: url(${e.target.result});
+                            background-size: cover;
+                            background-position: center;
+                            height: 120px;
+                            border-radius: 8px;
+                            position: relative;
+                            border: 2px solid #e9ecef;
+                        `;
+                        
+                        const removeBtn = document.createElement('button');
+                        removeBtn.textContent = '×';
+                        removeBtn.style.cssText = `
+                            position: absolute;
+                            top: 5px;
+                            right: 5px;
+                            background: rgba(220, 53, 69, 0.8);
+                            color: white;
+                            border: none;
+                            border-radius: 50%;
+                            width: 25px;
+                            height: 25px;
+                            cursor: pointer;
+                            font-size: 16px;
+                            line-height: 1;
+                        `;
+                        removeBtn.onclick = () => photoDiv.remove();
+                        
+                        photoDiv.appendChild(removeBtn);
+                        previewContainer.appendChild(photoDiv);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        // Add event listeners for summary updates
+        document.getElementById('spotName').addEventListener('input', updateSummary);
+        document.getElementById('hourlyRate').addEventListener('input', updateSummary);
+        document.getElementById('spotType').addEventListener('change', updateSummary);
+
+        // Check if editing existing spot
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const editId = urlParams.get('edit');
+            
+            if (editId) {
+                document.getElementById('pageTitle').textContent = 'Modifier la place';
+                // Load existing data for editing
+                loadSpotData(editId);
+            }
+        }
+
+        function loadSpotData(id) {
+            // Simulate loading existing spot data
+            const spotData = {
+                name: 'Parking Centre-ville',
+                address: '15 Rue de la République',
+                city: 'Paris',
+                zipCode: '75001',
+                type: 'covered',
+                hourlyRate: '12.00'
+            };
+            
+            document.getElementById('spotName').value = spotData.name;
+            document.getElementById('address').value = spotData.address;
+            document.getElementById('city').value = spotData.city;
+            document.getElementById('zipCode').value = spotData.zipCode;
+            document.getElementById('spotType').value = spotData.type;
+            document.getElementById('hourlyRate').value = spotData.hourlyRate;
+            
+            updateSummary();
+        }
+
+        // Initialize summary
+        updateSummary();
+    </script>
+</body>
+</html>
