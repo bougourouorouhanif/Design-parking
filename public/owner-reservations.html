@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservations - Parky</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header spécifique propriétaire -->
+    <header class="owner-header">
+        <div class="owner-nav-container">
+            <nav class="owner-nav">
+                <div class="owner-nav-left">
+                    <div class="owner-profile-icon" onclick="toggleProfileMenu()">
+                        <div class="profile-avatar">
+                            <img src="data:image/svg+xml,%3Csvg viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='20' fill='%234A90E2'/%3E%3Ctext x='20' y='28' text-anchor='middle' fill='white' font-family='Poppins' font-size='16' font-weight='600'%3EJM%3C/text%3E%3C/svg%3E" alt="Profile">
+                        </div>
+                    </div>
+                </div>
+                <div class="owner-nav-center">
+                    <a href="/" class="owner-logo">Parky</a>
+                </div>
+                <div class="owner-nav-right">
+                    <div class="owner-notification-icon" onclick="toggleNotifications()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Menu profil coulissant -->
+    <div class="profile-menu-overlay" id="profileMenuOverlay" onclick="closeProfileMenu()"></div>
+    <div class="profile-menu" id="profileMenu">
+        <div class="profile-menu-header">
+            <div class="profile-avatar-large">
+                <img src="data:image/svg+xml,%3Csvg viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='40' fill='%234A90E2'/%3E%3Ctext x='40' y='52' text-anchor='middle' fill='white' font-family='Poppins' font-size='28' font-weight='600'%3EJM%3C/text%3E%3C/svg%3E" alt="Profile">
+            </div>
+            <div class="profile-info">
+                <h3>Jean Martin</h3>
+                <p>Propriétaire Premium</p>
+                <span class="owner-status">5 places actives</span>
+            </div>
+        </div>
+        <div class="profile-menu-items">
+            <a href="/owner-profile" class="profile-menu-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Mon Profil
+            </a>
+            <a href="/owner" class="profile-menu-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                </svg>
+                Tableau de Bord
+            </a>
+            <a href="/owner-reservations" class="profile-menu-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                Réservations
+            </a>
+            <a href="#" class="profile-menu-item" onclick="showSettings()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V6a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                Paramètres
+            </a>
+            <a href="#" class="profile-menu-item" onclick="showHelp()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Aide & Support
+            </a>
+            <a href="#" class="profile-menu-item" onclick="logout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16,17 21,12 16,7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Déconnexion
+            </a>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="container reservations-container">
+        <!-- Header de la page -->
+        <div class="page-header">
+            <div class="page-title-section">
+                <h1>Gestion des Réservations</h1>
+                <p>Suivez et gérez toutes vos réservations en temps réel</p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-secondary" onclick="exportReservations()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-15"></path>
+                        <polyline points="7,10 12,15 17,10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Exporter
+                </button>
+                <button class="btn btn-primary" onclick="viewCalendar()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Calendrier
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats rapides -->
+        <div class="quick-stats">
+            <div class="stat-card">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-content">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">En attente</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-content">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Confirmées</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🕒</div>
+                <div class="stat-content">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">En cours</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <div class="stat-value">54</div>
+                    <div class="stat-label">Ce mois</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtres -->
+        <div class="filters-section">
+            <div class="filters-header">
+                <h3>Filtrer les réservations</h3>
+                <button class="btn-link" onclick="resetFilters()">Réinitialiser</button>
+            </div>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label>Statut</label>
+                    <select id="statusFilter" onchange="applyFilters()">
+                        <option value="">Tous les statuts</option>
+                        <option value="pending">En attente</option>
+                        <option value="confirmed">Confirmée</option>
+                        <option value="active">En cours</option>
+                        <option value="completed">Terminée</option>
+                        <option value="cancelled">Annulée</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Place de parking</label>
+                    <select id="spotFilter" onchange="applyFilters()">
+                        <option value="">Toutes les places</option>
+                        <option value="1">Parking Centre-ville</option>
+                        <option value="2">Garage privé</option>
+                        <option value="3">Place extérieure</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Période</label>
+                    <select id="periodFilter" onchange="applyFilters()">
+                        <option value="">Toutes les périodes</option>
+                        <option value="today">Aujourd'hui</option>
+                        <option value="week">Cette semaine</option>
+                        <option value="month">Ce mois</option>
+                        <option value="custom">Personnalisée</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Recherche</label>
+                    <input type="text" id="searchFilter" placeholder="Client, véhicule, #réservation..." onkeyup="applyFilters()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des réservations -->
+        <div class="reservations-list">
+            <!-- Réservation en attente -->
+            <div class="reservation-card pending" data-status="pending" data-spot="2">
+                <div class="reservation-header">
+                    <div class="reservation-id">
+                        <span class="id-label">#R2024-0851</span>
+                        <span class="status-badge pending">En attente</span>
+                    </div>
+                    <div class="reservation-actions">
+                        <button class="action-btn accept" onclick="acceptReservation('R2024-0851')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20,6 9,17 4,12"></polyline>
+                            </svg>
+                        </button>
+                        <button class="action-btn reject" onclick="rejectReservation('R2024-0851')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                        <button class="action-btn contact" onclick="contactClient('R2024-0851')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="reservation-content">
+                    <div class="client-info">
+                        <div class="client-avatar">
+                            <img src="data:image/svg+xml,%3Csvg viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23FF6B6B'/%3E%3Ctext x='20' y='28' text-anchor='middle' fill='white' font-family='Poppins' font-size='16' font-weight='600'%3ESL%3C/text%3E%3C/svg%3E" alt="Client">
+                        </div>
+                        <div class="client-details">
+                            <h4>Sophie Laurent</h4>
+                            <p>Membre depuis 2023</p>
+                            <div class="client-rating">
+                                <span>⭐⭐⭐⭐⭐</span>
+                                <span>(4.8)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="reservation-details">
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="detail-label">Place</span>
+                                <span class="detail-value">Garage privé</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Véhicule</span>
+                                <span class="detail-value">Tesla Model 3</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="detail-label">Début</span>
+                                <span class="detail-value">Demain 14:00</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Fin</span>
+                                <span class="detail-value">Demain 18:00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="detail-label">Durée</span>
+                                <span class="detail-value">4 heures</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Montant</span>
+                                <span class="detail-value price">€32.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reservation-footer">
+                    <div class="urgency-indicator">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12,6 12,12 16,14"></polyline>
+                        </svg>
+                        <span>Réponse attendue avant 23h59</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Réservation confirmée -->
+            <div class="reservation-card confirmed" data-status="confirmed" data-spot="1">
+                <div class="reservation-header">
+                    <div class="reservation-id">
+                        <span class="id-label">#R2024-0850</span>
+                        <span class="status-badge confirmed">Confirmée</span>
+                    </div>
+                    <div class="reservation-actions">
+                        <button class="action-btn contact" onclick="contactClient('R2024-0850')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                        </button>
+                        <button class="action-btn details" onclick="viewReservationDetails('R2024-0850')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                        <button class="action-btn cancel" onclick="cancelReservation('R2024-0850')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="reservation-content">
+                    <div class="client-info">
+                        <div class="client-avatar">
+                            <img src="data:image/svg+xml,%3Csvg viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='20' fill='%234ECDC4'/%3E%3Ctext x='20' y='28' text-anchor='middle' fill='white' font-family='Poppins' font-size='16' font-weight='600'%3EML%3C/text%3E%3C/svg%3E" alt="Client">
+                        </div>
+                        <div class="client-details">
+                            <h4>Marie Lefebvre</h4>
+                            <p>Membre VIP depuis 2021</p>
+                            <div class="client-rating">
+                                <span>⭐⭐⭐⭐⭐</span>
+                                <span>(5.0)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="reservation-details">
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="detail-label">Place</span>
+                                <span class="detail-value">Parking Centre-ville</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Véhicule</span>
+                                <span class="detail-value">BMW X5</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="detail-label">Début</span>
+                                <span class="detail-value">Aujourd'hui 09:00</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Fin</span>
+                                <span class="detail-value">Aujourd'hui 17:00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="detail-label">Durée</span>
+                                <span class="detail-value">8 heures</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Montant</span>
+                                <span class="detail-value price">€96.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reservation-footer">
+                    <div class="payment-status paid">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20,6 9,17 4,12"></polyline>
+                        </svg>
+                        <span>Paiement confirmé</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Réservation en cours -->
+            <div class="reservation-card active" data-status="active" data-spot="1">
+                <div class="reservation-header">
+                    <div class="reservation-id">
+                        <span class="id-label">#R2024-0849</span>
+                        <span class="status-badge active">En cours</span>
+                    </div>
+                    <div class="reservation-actions">
+                        <button class="action-btn contact" onclick="contactClient('R2024-0849')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                        </button>
+                        <button class="action-btn location" onclick="viewLocation('R2024-0849')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </button>
+                        <button class="action-btn emergency" onclick="reportIssue('R2024-0849')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                <line x1="12" y1="9" x2="12" y2="13"></line>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="reservation-content">
+                    <div class="client-info">
+                        <div class="client-avatar">
+                            <img src="data:image/svg+xml,%3Csvg viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23A8E6CF'/%3E%3Ctext x='20' y='28' text-anchor='middle' fill='white' font-family='Poppins' font-size='16' font-weight='600'%3EPD%3C/text%3E%3C/svg%3E" alt="Client">
+                        </div>
+                        <div class="client-details">
+                            <h4>Pierre Dubois</h4>
+                            <p>Membre depuis 2022</p>
+                            <div class="client-rating">
+                                <span>⭐⭐⭐⭐</span>
+                                <span>(4.5)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="reservation-details">
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="detail-label">Place</span>
+                                <span class="detail-value">Parking Centre-ville</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Véhicule</span>
+                                <span class="detail-value">Audi A4</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="detail-label">Début</span>
+                                <span class="detail-value">Aujourd'hui 13:30</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Fin</span>
+                                <span class="detail-value">Aujourd'hui 19:30</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="detail-label">Temps restant</span>
+                                <span class="detail-value countdown">3h 45min</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Montant</span>
+                                <span class="detail-value price">€72.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reservation-footer">
+                    <div class="live-status">
+                        <div class="live-indicator"></div>
+                        <span>Véhicule présent sur la place</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="pagination-btn" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                </svg>
+            </button>
+            <span class="page-info">1 / 3</span>
+            <button class="pagination-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9,18 15,12 9,6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Navbar inférieure propriétaire -->
+    <nav class="owner-bottom-navbar" id="ownerBottomNavbar">
+        <div class="navbar-container">
+            <a href="/owner" class="nav-item" data-page="dashboard">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                </div>
+                <span class="nav-label">Tableau de Bord</span>
+            </a>
+            
+            <a href="/add-spot" class="nav-item" data-page="add-spot">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </div>
+                <span class="nav-label">Ajouter Place</span>
+            </a>
+            
+            <a href="/owner-reservations" class="nav-item active" data-page="reservations">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </div>
+                <span class="nav-label">Réservations</span>
+                <span class="nav-badge">3</span>
+            </a>
+            
+            <a href="/owner-earnings" class="nav-item" data-page="earnings">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <span class="nav-label">Revenus</span>
+            </a>
+            
+            <a href="/owner-profile" class="nav-item" data-page="profile">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <span class="nav-label">Profil</span>
+            </a>
+        </div>
+    </nav>
+
+    <script src="navbar.js"></script>
+    <script>
+        // Fonctions de gestion des réservations
+        function toggleProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            const overlay = document.getElementById('profileMenuOverlay');
+            
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            const overlay = document.getElementById('profileMenuOverlay');
+            
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function toggleNotifications() {
+            alert('Notifications du propriétaire');
+        }
+
+        function acceptReservation(id) {
+            if (confirm('Accepter cette réservation ?')) {
+                const card = document.querySelector(`[data-id="${id}"]`);
+                showToast('Réservation acceptée avec succès!', 'success');
+                // Animation de changement de statut
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        }
+
+        function rejectReservation(id) {
+            if (confirm('Refuser cette réservation ? Cette action est irréversible.')) {
+                showToast('Réservation refusée', 'warning');
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        }
+
+        function contactClient(id) {
+            alert(`Contacter le client de la réservation ${id}`);
+        }
+
+        function cancelReservation(id) {
+            if (confirm('Annuler cette réservation ? Le client sera remboursé.')) {
+                showToast('Réservation annulée', 'info');
+            }
+        }
+
+        function viewReservationDetails(id) {
+            alert(`Détails de la réservation ${id}`);
+        }
+
+        function viewLocation(id) {
+            alert(`Localisation de la réservation ${id}`);
+        }
+
+        function reportIssue(id) {
+            alert(`Signaler un problème pour la réservation ${id}`);
+        }
+
+        function exportReservations() {
+            alert('Export des réservations en cours...');
+        }
+
+        function viewCalendar() {
+            alert('Vue calendrier des réservations');
+        }
+
+        function applyFilters() {
+            const status = document.getElementById('statusFilter').value;
+            const spot = document.getElementById('spotFilter').value;
+            const period = document.getElementById('periodFilter').value;
+            const search = document.getElementById('searchFilter').value.toLowerCase();
+            
+            const cards = document.querySelectorAll('.reservation-card');
+            
+            cards.forEach(card => {
+                let show = true;
+                
+                if (status && !card.classList.contains(status)) {
+                    show = false;
+                }
+                
+                if (spot && card.dataset.spot !== spot) {
+                    show = false;
+                }
+                
+                if (search && !card.textContent.toLowerCase().includes(search)) {
+                    show = false;
+                }
+                
+                card.style.display = show ? 'block' : 'none';
+            });
+        }
+
+        function resetFilters() {
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('spotFilter').value = '';
+            document.getElementById('periodFilter').value = '';
+            document.getElementById('searchFilter').value = '';
+            applyFilters();
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        function showSettings() {
+            alert('Paramètres avancés');
+        }
+
+        function showHelp() {
+            alert('Centre d\'aide propriétaire');
+        }
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter?')) {
+                localStorage.removeItem('user');
+                window.location.href = '/auth';
+            }
+        }
+
+        // Mise à jour en temps réel du countdown
+        function updateCountdowns() {
+            const countdowns = document.querySelectorAll('.countdown');
+            countdowns.forEach(countdown => {
+                // Simulation d'une mise à jour de temps
+                let time = countdown.textContent;
+                // Logic to update countdown would go here
+            });
+        }
+
+        // Update every minute
+        setInterval(updateCountdowns, 60000);
+
+        // Initialize
+        window.onload = function() {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                window.location.href = '/auth';
+                return;
+            }
+        }
+    </script>
+</body>
+</html>
