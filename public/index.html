@@ -58,7 +58,7 @@
 
                                 <li class="notification-item unread" onclick="handleNotificationClick(2)">
                                     <div class="notification-content">
-                                        <div class="notification-icon-bg info">📍</div>
+                                        <div class="notification-icon-bg info">����</div>
                                         <div class="notification-text">
                                             <p class="notification-title">Nouvelle place disponible</p>
                                             <p class="notification-message">3 nouvelles places de parking près de votre localisation habituelle.</p>
@@ -429,6 +429,60 @@
         window.addEventListener('load', function() {
             updateUserProfile();
 
+            // Initialiser la navbar inférieure
+            initBottomNavbar({
+                theme: 'light',
+                style: 'default',
+                alwaysVisible: false,
+                autoHide: true,
+                customItems: [
+                    {
+                        id: 'home',
+                        icon: '🏠',
+                        label: 'Accueil',
+                        href: '/',
+                        badge: null
+                    },
+                    {
+                        id: 'search',
+                        icon: '🔍',
+                        label: 'Recherche',
+                        href: '/map',
+                        badge: null
+                    },
+                    {
+                        id: 'add',
+                        icon: '➕',
+                        label: 'Partager',
+                        href: '/add-spot',
+                        badge: null
+                    },
+                    {
+                        id: 'notifications',
+                        icon: '🔔',
+                        label: 'Notifications',
+                        href: '#',
+                        badge: 3,
+                        dataIcon: 'notification',
+                        onClick: () => {
+                            toggleNotifications();
+                            showToast('Ouverture des notifications', 'info');
+                        }
+                    },
+                    {
+                        id: 'profile',
+                        icon: '👤',
+                        label: 'Profil',
+                        href: '/dashboard',
+                        badge: null
+                    }
+                ],
+                onItemClick: (item) => {
+                    console.log('Clicked on:', item.label);
+                    showToast(`Navigation vers ${item.label}`, 'info');
+                }
+            });
+
             // Simuler de nouvelles notifications périodiquement
             setInterval(() => {
                 const badge = document.getElementById('notificationCount');
@@ -438,6 +492,11 @@
                         badge.textContent = currentCount + 1;
                         badge.style.display = 'flex';
                         showToast('Nouvelle notification reçue!', 'info');
+
+                        // Mettre à jour aussi la navbar inférieure
+                        if (window.bottomNavbar) {
+                            window.bottomNavbar.updateBadge('notifications', currentCount + 1);
+                        }
                     }
                 }
             }, 30000);
