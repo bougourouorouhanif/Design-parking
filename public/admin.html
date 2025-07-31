@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - ParkShare</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="/" class="logo">🅿️ ParkShare</a>
+                <ul class="nav-links">
+                    <li><a href="/admin" style="opacity: 1;">Administration</a></li>
+                    <li><a href="/map">Carte</a></li>
+                    <li><a href="#" onclick="logout()">Déconnexion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="padding: 2rem 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1>Tableau de bord Administrateur</h1>
+                <p style="color: #666; margin: 0;">Vue d'ensemble de la plateforme</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button onclick="exportData()" class="btn btn-secondary">📊 Exporter données</button>
+                <button onclick="generateReport()" class="btn btn-primary">📋 Rapport mensuel</button>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
+            <div class="stat-card">
+                <div class="stat-value">12,847</div>
+                <div>Utilisateurs actifs</div>
+                <div style="color: #28a745; font-size: 0.9rem; margin-top: 0.5rem;">+15% ce mois</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">3,294</div>
+                <div>Places en ligne</div>
+                <div style="color: #28a745; font-size: 0.9rem; margin-top: 0.5rem;">+8% ce mois</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">€289K</div>
+                <div>CA mensuel</div>
+                <div style="color: #28a745; font-size: 0.9rem; margin-top: 0.5rem;">+22% ce mois</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">89%</div>
+                <div>Taux satisfaction</div>
+                <div style="color: #ffc107; font-size: 0.9rem; margin-top: 0.5rem;">-2% ce mois</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">2,847</div>
+                <div>Réservations/jour</div>
+                <div style="color: #28a745; font-size: 0.9rem; margin-top: 0.5rem;">+12% ce mois</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">€28.9K</div>
+                <div>Commissions/jour</div>
+                <div style="color: #28a745; font-size: 0.9rem; margin-top: 0.5rem;">+18% ce mois</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div>
+                <!-- User Management -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h2>👥 Gestion des utilisateurs</h2>
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <input type="text" placeholder="Rechercher un utilisateur..." style="flex: 1; padding: 0.5rem; border: 1px solid #e9ecef; border-radius: 4px;">
+                        <select style="padding: 0.5rem; border: 1px solid #e9ecef; border-radius: 4px;">
+                            <option>Tous les types</option>
+                            <option>Conducteurs</option>
+                            <option>Propriétaires</option>
+                        </select>
+                        <button class="btn btn-primary">🔍</button>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid #e9ecef;">Utilisateur</th>
+                                    <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid #e9ecef;">Type</th>
+                                    <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid #e9ecef;">Inscription</th>
+                                    <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid #e9ecef;">Statut</th>
+                                    <th style="padding: 0.75rem; text-align: left; border-bottom: 1px solid #e9ecef;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid #e9ecef;">
+                                        <div>
+                                            <div style="font-weight: 600;">Marie Dubois</div>
+                                            <div style="color: #666; font-size: 0.9rem;">marie.d@email.com</div>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid #e9ecef;">
+                                        <span class="spot-tag" style="background: #d1ecf1; color: #0c5460;">Conducteur</span>
+                                    </td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid #e9ecef;">15/01/2024</td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid #e9ecef;">
+                                        <span class="spot-tag" style="background: #d4edda; color: #155724;">Actif</span>
+                                    </td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid #e9ecef;">
+                                        <button onclick="viewUser(1)" class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Voir</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid #e9ecef;">
+                                        <div>
+                                            <div style="font-weight: 600;">Jean Martin</div>
+                                            <div style="color: #666; font-size: 0.9rem;">jean.m@email.com</div>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid #e9ecef;">
+                                        <span class="spot-tag" style="background: #fff3cd; color: #856404;">Propriétaire</span>
+                                    </td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid #e9ecef;">12/01/2024</td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid #e9ecef;">
+                                        <span class="spot-tag" style="background: #d4edda; color: #155724;">Actif</span>
+                                    </td>
+                                    <td style="padding: 0.75rem; border-bottom: 1px solid #e9ecef;">
+                                        <button onclick="viewUser(2)" class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Voir</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Content Moderation -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h2>🛡️ Modération du contenu</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #ffc107;">7</div>
+                            <div>Places en attente</div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #dc3545;">3</div>
+                            <div>Signalements</div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #007bff;">12</div>
+                            <div>Avis à modérer</div>
+                        </div>
+                    </div>
+
+                    <div style="border: 1px solid #e9ecef; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0;">🚨 Signalement #S2024-047</h4>
+                                <p style="color: #666; margin: 0;">Place "Garage Marais" - Accès refusé par propriétaire</p>
+                            </div>
+                            <span class="spot-tag" style="background: #f8d7da; color: #721c24;">Urgent</span>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button onclick="resolveReport(1)" class="btn btn-success" style="padding: 0.5rem 1rem;">✅ Résoudre</button>
+                            <button onclick="viewReport(1)" class="btn btn-secondary" style="padding: 0.5rem 1rem;">👁️ Détails</button>
+                            <button onclick="contactUser(1)" class="btn btn-secondary" style="padding: 0.5rem 1rem;">💬 Contacter</button>
+                        </div>
+                    </div>
+
+                    <div style="border: 1px solid #e9ecef; border-radius: 8px; padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0;">📝 Place en attente #P2024-156</h4>
+                                <p style="color: #666; margin: 0;">"Parking Bastille" - Documents à vérifier</p>
+                            </div>
+                            <span class="spot-tag" style="background: #fff3cd; color: #856404;">En attente</span>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button onclick="approveSpot(1)" class="btn btn-success" style="padding: 0.5rem 1rem;">✅ Approuver</button>
+                            <button onclick="rejectSpot(1)" class="btn btn-danger" style="padding: 0.5rem 1rem;">❌ Refuser</button>
+                            <button onclick="viewSpot(1)" class="btn btn-secondary" style="padding: 0.5rem 1rem;">👁️ Voir</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Overview -->
+                <div class="card">
+                    <h2>💰 Vue financière</h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0;">
+                        <div>
+                            <h4>Revenus par mois</h4>
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Janvier 2024:</span>
+                                    <span style="font-weight: bold;">€289,450</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Décembre 2023:</span>
+                                    <span style="font-weight: bold;">€237,890</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Novembre 2023:</span>
+                                    <span style="font-weight: bold;">€198,670</span>
+                                </div>
+                                <hr>
+                                <div style="display: flex; justify-content: space-between; font-weight: bold; color: #28a745;">
+                                    <span>Croissance:</span>
+                                    <span>+22%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4>Commissions par segment</h4>
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Particuliers (78%):</span>
+                                    <span style="font-weight: bold;">€22,567</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Entreprises (22%):</span>
+                                    <span style="font-weight: bold;">€6,383</span>
+                                </div>
+                                <hr>
+                                <div style="display: flex; justify-content: space-between; font-weight: bold; color: #28a745;">
+                                    <span>Total commissions:</span>
+                                    <span>€28,950</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <!-- Platform Health -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3>🏥 Santé de la plateforme</h3>
+                    
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Uptime:</span>
+                            <span style="font-weight: bold; color: #28a745;">99.97%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Temps de réponse moyen:</span>
+                            <span style="font-weight: bold;">127ms</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Erreurs (24h):</span>
+                            <span style="font-weight: bold; color: #28a745;">0.02%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Transactions échouées:</span>
+                            <span style="font-weight: bold; color: #ffc107;">0.5%</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="viewTechnicalDetails()" class="btn btn-secondary" style="width: 100%;">
+                        🔧 Détails techniques
+                    </button>
+                </div>
+
+                <!-- Support Tickets -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3>📞 Support client</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #dc3545;">23</div>
+                            <div style="font-size: 0.9rem;">Tickets ouverts</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #28a745;">156</div>
+                            <div style="font-size: 0.9rem;">Résolus ce mois</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Temps de réponse moyen:</span>
+                            <span style="font-weight: bold;">2h 15min</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Satisfaction support:</span>
+                            <span style="font-weight: bold; color: #28a745;">4.7/5</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="viewSupportQueue()" class="btn btn-primary" style="width: 100%;">
+                        📋 File d'attente
+                    </button>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <h3>⚡ Actions rapides</h3>
+                    <div style="display: grid; gap: 0.5rem;">
+                        <button onclick="sendNotification()" class="btn btn-primary">
+                            📢 Envoyer notification
+                        </button>
+                        <button onclick="createPromotion()" class="btn btn-success">
+                            🏷️ Créer promotion
+                        </button>
+                        <button onclick="manageCommissions()" class="btn btn-secondary">
+                            💳 Gestion commissions
+                        </button>
+                        <button onclick="viewAnalytics()" class="btn btn-secondary">
+                            📊 Analytics avancées
+                        </button>
+                        <button onclick="manageFraud()" class="btn btn-warning">
+                            🚨 Détection fraude
+                        </button>
+                        <button onclick="backupData()" class="btn btn-secondary">
+                            💾 Sauvegarde données
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function exportData() {
+            alert('Export des données en cours...');
+        }
+
+        function generateReport() {
+            alert('Génération du rapport mensuel...');
+        }
+
+        function viewUser(id) {
+            alert(`Affichage du profil utilisateur ${id}`);
+        }
+
+        function resolveReport(id) {
+            if (confirm('Marquer ce signalement comme résolu?')) {
+                alert('Signalement résolu');
+            }
+        }
+
+        function viewReport(id) {
+            alert(`Détails du signalement ${id}`);
+        }
+
+        function contactUser(id) {
+            alert(`Contact de l'utilisateur ${id}`);
+        }
+
+        function approveSpot(id) {
+            if (confirm('Approuver cette place de parking?')) {
+                alert('Place approuvée et mise en ligne');
+            }
+        }
+
+        function rejectSpot(id) {
+            if (confirm('Refuser cette place de parking?')) {
+                alert('Place refusée - notification envoyée au propriétaire');
+            }
+        }
+
+        function viewSpot(id) {
+            alert(`Détails de la place ${id}`);
+        }
+
+        function viewTechnicalDetails() {
+            alert('Affichage des détails techniques de la plateforme');
+        }
+
+        function viewSupportQueue() {
+            alert('File d\'attente du support client');
+        }
+
+        function sendNotification() {
+            const message = prompt('Message à envoyer à tous les utilisateurs:');
+            if (message) {
+                alert(`Notification envoyée: "${message}"`);
+            }
+        }
+
+        function createPromotion() {
+            alert('Interface de création de promotion');
+        }
+
+        function manageCommissions() {
+            alert('Gestion des taux de commission par segment');
+        }
+
+        function viewAnalytics() {
+            alert('Analytics avancées et tableaux de bord détaillés');
+        }
+
+        function manageFraud() {
+            alert('Système de détection et prévention de la fraude');
+        }
+
+        function backupData() {
+            if (confirm('Lancer une sauvegarde complète des données?')) {
+                alert('Sauvegarde en cours...');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = '/auth';
+        }
+
+        // Check admin access
+        window.onload = function() {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                window.location.href = '/auth';
+                return;
+            }
+            
+            // In real app, check if user has admin rights
+            // For demo, allow access
+        }
+    </script>
+</body>
+</html>
