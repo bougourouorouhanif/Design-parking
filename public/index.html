@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ParkShare - Trouvez votre place de parking</title>
+    <title>Parky - Trouvez ou proposez une place de parking en temps réel</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="header">
         <div class="container">
             <nav class="nav">
-                <a href="/" class="logo">🅿️ ParkShare</a>
+                <a href="/" class="logo">Parky</a>
                 <ul class="nav-links">
                     <li><a href="/map">Carte</a></li>
                     <li><a href="/dashboard">Mes réservations</a></li>
@@ -23,21 +23,21 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Trouvez votre place de parking en temps réel</h1>
-            <p>Réservez des places de parking proposées par des particuliers et entreprises</p>
+            <h1>Trouvez une place libre autour de vous</h1>
+            <p>ou mettez la vôtre à disposition</p>
             
             <div class="search-container">
                 <form class="search-form" onsubmit="searchParking(event)">
                     <div class="form-group">
                         <label for="location">Où ?</label>
-                        <input type="text" id="location" placeholder="Adresse, ville..." required>
+                        <input type="text" id="location" placeholder="Où cherchez-vous?" required>
                     </div>
                     <div class="form-group">
                         <label for="datetime">Quand ?</label>
                         <input type="datetime-local" id="datetime" required>
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        🔍 Rechercher
+                        🔍 Trouver une place
                     </button>
                 </form>
             </div>
@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <h2>Places populaires près de vous</h2>
+        <h2>📍 Places disponibles près de vous</h2>
         
         <div class="parking-spot" onclick="goToSpot(1)">
             <div class="spot-image">🏢</div>
@@ -109,9 +109,15 @@
         </div>
     </section>
 
-    <button class="floating-action" onclick="window.location.href='/add-spot'" title="Ajouter une place">
+    <button class="floating-action" onclick="window.location.href='/add-spot'" title="Partager ma place">
         ➕
     </button>
+
+    <div style="background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%); color: white; padding: 1rem; text-align: center; margin: 2rem 0; border-radius: 16px;">
+        <h3 style="margin-bottom: 0.5rem;">💰 Vous partez ?</h3>
+        <p style="margin: 0;">Gagnez de l'argent avec votre place libre</p>
+        <a href="/add-spot" class="btn" style="background: white; color: #4A90E2; margin-top: 1rem;">Partager ma place</a>
+    </div>
 
     <script>
         function searchParking(event) {
