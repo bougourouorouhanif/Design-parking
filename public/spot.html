@@ -10,13 +10,27 @@
     <header class="header">
         <div class="container">
             <nav class="nav">
-                <a href="/" class="logo">Parky</a>
-                <ul class="nav-links">
-                    <li><a href="/map">Carte</a></li>
-                    <li><a href="/dashboard">Mes réservations</a></li>
-                    <li><a href="/owner">Propriétaire</a></li>
-                    <li><a href="/auth">Connexion</a></li>
-                </ul>
+                <!-- Menu burger à gauche -->
+                <div class="nav-left">
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
+                </div>
+
+                <!-- Logo centré -->
+                <div class="nav-center">
+                    <a href="/" class="logo centered">Parky</a>
+                </div>
+
+                <!-- Notifications à droite -->
+                <div class="nav-right">
+                    <div class="notification-icon enhanced" onclick="toggleNotifications()">
+                        🔔
+                        <span class="notification-badge" id="notificationCount">2</span>
+                    </div>
+                </div>
             </nav>
         </div>
 
