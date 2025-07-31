@@ -19,14 +19,87 @@
                 </ul>
             </nav>
         </div>
+
+        <!-- Breadcrumb contextuel -->
+        <div style="background: rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.2);">
+            <div class="container">
+                <div style="padding: 0.75rem 0; display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.9rem;">
+                    <a href="/" style="color: rgba(255,255,255,0.7); text-decoration: none;">🏠 Accueil</a>
+                    <span style="color: rgba(255,255,255,0.5);">></span>
+                    <span id="breadcrumbContext">Places disponibles</span>
+                    <span style="color: rgba(255,255,255,0.5);">></span>
+                    <span style="color: white; font-weight: 500;" id="breadcrumbSpot">Détails de la place</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section d'informations rapides -->
+        <div style="background: linear-gradient(135deg, rgba(74, 144, 226, 0.9) 0%, rgba(126, 214, 167, 0.9) 100%); padding: 1rem 0;">
+            <div class="container">
+                <div style="display: flex; align-items: center; justify-content: space-between; color: white;">
+                    <div style="display: flex; align-items: center; gap: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 0.5rem; border-radius: 8px; font-size: 1.2rem;">📍</div>
+                            <div>
+                                <div style="font-size: 0.8rem; opacity: 0.9;">Vous consultez</div>
+                                <div style="font-weight: 600; font-size: 1.1rem;" id="headerSpotName">Parking Centre-ville</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 0.5rem; border-radius: 8px; font-size: 1.2rem;">💰</div>
+                            <div>
+                                <div style="font-size: 0.8rem; opacity: 0.9;">À partir de</div>
+                                <div style="font-weight: 700; font-size: 1.3rem; color: #7ED6A7;" id="headerSpotPrice">€12/h</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 0.5rem; border-radius: 8px; font-size: 1.2rem;">⭐</div>
+                            <div>
+                                <div style="font-size: 0.8rem; opacity: 0.9;">Note moyenne</div>
+                                <div style="font-weight: 600; font-size: 1.1rem;" id="headerSpotRating">4.8/5</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="shareSpot()" class="btn" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 0.5rem 1rem;">
+                            📤 Partager
+                        </button>
+                        <button onclick="addToFavorites()" class="btn" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 0.5rem 1rem;">
+                            ❤️ Favoris
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
     <div class="container" style="padding: 2rem 20px;">
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
             <div>
-                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                    <button onclick="history.back()" class="btn btn-secondary" style="padding: 0.5rem 1rem;">← Retour</button>
-                    <h1 style="margin: 0;">Parking Centre-ville</h1>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <button onclick="history.back()" class="btn btn-secondary" style="padding: 0.5rem 1rem;">← Retour</button>
+                        <div>
+                            <h1 style="margin: 0; font-size: 2rem; color: #333;">Parking Centre-ville</h1>
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem; color: #666;">
+                                <span style="display: flex; align-items: center; gap: 0.3rem;">📍 15 Rue de la République, Paris 75001</span>
+                                <span style="display: flex; align-items: center; gap: 0.3rem;">🚶‍♂️ 5 min à pied</span>
+                                <span style="display: flex; align-items: center; gap: 0.3rem; color: #28a745; font-weight: 500;">✅ Disponible maintenant</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: right;">
+                        <div style="background: #f8f9fa; padding: 0.75rem 1rem; border-radius: 12px; border: 2px solid #e9ecef;">
+                            <div style="font-size: 0.8rem; color: #666; margin-bottom: 0.2rem;">Réservation express</div>
+                            <button onclick="quickBook()" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                                ⚡ Réserver 2h - €24
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card">
@@ -52,7 +125,7 @@
                     <h3>📍 Adresse</h3>
                     <p style="margin-bottom: 1.5rem;">15 Rue de la République, 75001 Paris</p>
 
-                    <h3>ℹ️ Description</h3>
+                    <h3>��️ Description</h3>
                     <p style="margin-bottom: 1.5rem;">
                         Parking couvert et sécurisé au cœur du centre-ville. Accès facile par ascenseur. 
                         Place de taille standard adaptée aux véhicules jusqu'à 4,80m de longueur. 
