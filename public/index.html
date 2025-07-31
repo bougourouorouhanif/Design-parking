@@ -12,28 +12,23 @@
     <header class="header">
         <div class="container">
             <nav class="modern-nav">
+                <!-- Menu burger à gauche -->
                 <div class="nav-left">
-                    <a href="/" class="logo">Parky</a>
-
-                    <!-- Menu desktop -->
-                    <ul class="nav-links">
-                        <li><a href="/" class="active">🏠 Accueil</a></li>
-                        <li><a href="/map">🗺️ Carte</a></li>
-                        <li><a href="/dashboard">📊 Dashboard</a></li>
-                        <li><a href="/owner">🏢 Propriétaire</a></li>
-                    </ul>
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
                 </div>
 
-                <div class="nav-right">
-                    <!-- Menu burger mobile -->
-                    <div class="menu-toggle" onclick="toggleMobileMenu()">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
+                <!-- Logo centré -->
+                <div class="nav-center">
+                    <a href="/" class="logo centered">Parky</a>
+                </div>
 
-                    <!-- Notifications -->
-                    <div class="notification-icon" onclick="toggleNotifications()">
+                <!-- Notifications à droite -->
+                <div class="nav-right">
+                    <div class="notification-icon enhanced" onclick="toggleNotifications()">
                         🔔
                         <span class="notification-badge" id="notificationCount">3</span>
 
@@ -58,7 +53,7 @@
 
                                 <li class="notification-item unread" onclick="handleNotificationClick(2)">
                                     <div class="notification-content">
-                                        <div class="notification-icon-bg info">����</div>
+                                        <div class="notification-icon-bg info">📍</div>
                                         <div class="notification-text">
                                             <p class="notification-title">Nouvelle place disponible</p>
                                             <p class="notification-message">3 nouvelles places de parking près de votre localisation habituelle.</p>
@@ -94,16 +89,6 @@
                                 <a href="/notifications" class="view-all-notifications">Voir toutes les notifications</a>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Profil utilisateur -->
-                    <div class="user-profile" onclick="toggleUserMenu()" id="userProfile">
-                        <div class="user-avatar" id="userAvatar">U</div>
-                        <div class="user-info">
-                            <p class="user-name" id="userName">Utilisateur</p>
-                            <p class="user-role" id="userRole">Conducteur</p>
-                        </div>
-                        <span style="color: rgba(255,255,255,0.7); margin-left: 0.5rem;">▼</span>
                     </div>
                 </div>
 
@@ -451,23 +436,19 @@
                         badge: null
                     },
                     {
-                        id: 'add',
-                        icon: '➕',
-                        label: 'Partager',
-                        href: '/add-spot',
+                        id: 'reservations',
+                        icon: '📝',
+                        label: 'Réservations',
+                        href: '/dashboard',
                         badge: null
                     },
                     {
-                        id: 'notifications',
-                        icon: '🔔',
-                        label: 'Notifications',
-                        href: '#',
-                        badge: 3,
-                        dataIcon: 'notification',
-                        onClick: () => {
-                            toggleNotifications();
-                            showToast('Ouverture des notifications', 'info');
-                        }
+                        id: 'favorites',
+                        icon: '❤️',
+                        label: 'Favoris',
+                        href: '/favorites',
+                        badge: null,
+                        dataIcon: 'heart'
                     },
                     {
                         id: 'profile',
