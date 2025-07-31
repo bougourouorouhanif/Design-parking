@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Propriétaire - ParkShare</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="/" class="logo">🅿️ ParkShare</a>
+                <ul class="nav-links">
+                    <li><a href="/map">Carte</a></li>
+                    <li><a href="/dashboard">Mes réservations</a></li>
+                    <li><a href="/owner" style="opacity: 1;">Propriétaire</a></li>
+                    <li><a href="#" onclick="logout()">Déconnexion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="padding: 2rem 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1>Espace Propriétaire</h1>
+                <p style="color: #666; margin: 0;">Gérez vos places de parking et vos revenus</p>
+            </div>
+            <a href="/add-spot" class="btn btn-primary">
+                ➕ Ajouter une place
+            </a>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">5</div>
+                <div>Places en ligne</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">€2,847</div>
+                <div>Revenus ce mois</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">89%</div>
+                <div>Taux d'occupation</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4.9★</div>
+                <div>Note moyenne</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div>
+                <h2>Mes places de parking</h2>
+                
+                <div class="card" style="border-left: 4px solid #28a745;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin: 0 0 0.5rem 0;">Parking Centre-ville</h3>
+                            <p style="color: #666; margin: 0;">📍 15 Rue de la République, Paris 75001</p>
+                        </div>
+                        <span class="spot-tag" style="background: #d4edda; color: #155724;">Actif</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Prix</div>
+                            <div style="color: #28a745; font-weight: bold;">€12/h</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Réservations</div>
+                            <div style="color: #666;">23 ce mois</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Revenus</div>
+                            <div style="color: #28a745; font-weight: bold;">€896</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Note</div>
+                            <div style="color: #ffc107;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-primary" onclick="editSpot(1)">✏️ Modifier</button>
+                        <button class="btn btn-secondary" onclick="viewBookings(1)">📅 Réservations</button>
+                        <button class="btn btn-secondary" onclick="toggleAvailability(1)">⏸️ Désactiver</button>
+                    </div>
+                </div>
+
+                <div class="card" style="border-left: 4px solid #28a745;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin: 0 0 0.5rem 0;">Garage privé</h3>
+                            <p style="color: #666; margin: 0;">📍 8 Avenue des Champs, Paris 75008</p>
+                        </div>
+                        <span class="spot-tag" style="background: #d4edda; color: #155724;">Actif</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Prix</div>
+                            <div style="color: #28a745; font-weight: bold;">€8/h</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Réservations</div>
+                            <div style="color: #666;">31 ce mois</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Revenus</div>
+                            <div style="color: #28a745; font-weight: bold;">€1,127</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Note</div>
+                            <div style="color: #ffc107;">⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-primary" onclick="editSpot(2)">✏️ Modifier</button>
+                        <button class="btn btn-secondary" onclick="viewBookings(2)">📅 Réservations</button>
+                        <button class="btn btn-secondary" onclick="toggleAvailability(2)">⏸️ Désactiver</button>
+                    </div>
+                </div>
+
+                <div class="card" style="border-left: 4px solid #dc3545;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin: 0 0 0.5rem 0;">Place extérieure</h3>
+                            <p style="color: #666; margin: 0;">📍 33 Rue du Louvre, Paris 75001</p>
+                        </div>
+                        <span class="spot-tag" style="background: #f8d7da; color: #721c24;">Désactivé</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Prix</div>
+                            <div style="color: #28a745; font-weight: bold;">€10/h</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Réservations</div>
+                            <div style="color: #666;">0 ce mois</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Revenus</div>
+                            <div style="color: #666;">€0</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Note</div>
+                            <div style="color: #666;">N/A</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-success" onclick="toggleAvailability(3)">▶️ Activer</button>
+                        <button class="btn btn-primary" onclick="editSpot(3)">✏️ Modifier</button>
+                        <button class="btn btn-danger" onclick="deleteSpot(3)">🗑️ Supprimer</button>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 2rem;">Réservations récentes</h2>
+                
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h4 style="margin: 0 0 0.5rem 0;">Réservation #R2024-0847</h4>
+                            <p style="color: #666; margin: 0;">Parking Centre-ville</p>
+                        </div>
+                        <span class="spot-tag" style="background: #d4edda; color: #155724;">Confirmé</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Client</div>
+                            <div style="color: #666;">Marie L.</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Période</div>
+                            <div style="color: #666;">Aujourd'hui 14h-18h</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Véhicule</div>
+                            <div style="color: #666;">Peugeot 308</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Montant</div>
+                            <div style="color: #28a745; font-weight: bold;">€43.20</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-secondary" onclick="contactClient('R2024-0847')">💬 Contacter</button>
+                        <button class="btn btn-secondary" onclick="viewBookingDetails('R2024-0847')">👁️ Détails</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h4 style="margin: 0 0 0.5rem 0;">Réservation #R2024-0846</h4>
+                            <p style="color: #666; margin: 0;">Garage privé</p>
+                        </div>
+                        <span class="spot-tag" style="background: #fff3cd; color: #856404;">En attente</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Client</div>
+                            <div style="color: #666;">Jean P.</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Période</div>
+                            <div style="color: #666;">Demain 09h-17h</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Véhicule</div>
+                            <div style="color: #666;">BMW X3</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Montant</div>
+                            <div style="color: #28a745; font-weight: bold;">€57.60</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-success" onclick="acceptBooking('R2024-0846')">✅ Accepter</button>
+                        <button class="btn btn-danger" onclick="rejectBooking('R2024-0846')">❌ Refuser</button>
+                        <button class="btn btn-secondary" onclick="contactClient('R2024-0846')">💬 Contacter</button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="card">
+                    <h3>Revenus du mois</h3>
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <div style="font-size: 2.5rem; color: #28a745; font-weight: bold; margin-bottom: 0.5rem;">€2,847</div>
+                        <div style="color: #666;">+15% par rapport au mois dernier</div>
+                    </div>
+                    
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Revenus bruts:</span>
+                            <span style="font-weight: 600;">€3,165</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Commission plateforme (10%):</span>
+                            <span style="font-weight: 600; color: #dc3545;">-€318</span>
+                        </div>
+                        <hr style="margin: 0.5rem 0;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; color: #28a745;">
+                            <span>Revenus nets:</span>
+                            <span>€2,847</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%;" onclick="requestPayout()">
+                        💰 Demander un virement
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>Statistiques</h3>
+                    
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Réservations ce mois:</span>
+                            <span style="font-weight: 600;">54</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Taux d'acceptation:</span>
+                            <span style="font-weight: 600; color: #28a745;">96%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Temps de réponse moyen:</span>
+                            <span style="font-weight: 600;">< 5 min</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Note moyenne:</span>
+                            <span style="font-weight: 600;">⭐⭐⭐⭐⭐ (4.9)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Notifications</h3>
+                    
+                    <div style="border-left: 4px solid #ffc107; padding-left: 1rem; margin-bottom: 1rem;">
+                        <div style="font-weight: 600; margin-bottom: 0.2rem;">Nouvelle réservation</div>
+                        <div style="color: #666; font-size: 0.9rem;">Jean P. souhaite réserver votre garage privé</div>
+                        <div style="color: #999; font-size: 0.8rem;">Il y a 15 minutes</div>
+                    </div>
+                    
+                    <div style="border-left: 4px solid #28a745; padding-left: 1rem; margin-bottom: 1rem;">
+                        <div style="font-weight: 600; margin-bottom: 0.2rem;">Paiement reçu</div>
+                        <div style="color: #666; font-size: 0.9rem;">€43.20 pour la réservation #R2024-0847</div>
+                        <div style="color: #999; font-size: 0.8rem;">Il y a 2 heures</div>
+                    </div>
+                    
+                    <div style="border-left: 4px solid #007bff; padding-left: 1rem;">
+                        <div style="font-weight: 600; margin-bottom: 0.2rem;">Nouvel avis</div>
+                        <div style="color: #666; font-size: 0.9rem;">Marie L. a laissé un avis 5★ sur votre parking</div>
+                        <div style="color: #999; font-size: 0.8rem;">Il y a 1 jour</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Actions rapides</h3>
+                    <div style="display: grid; gap: 0.5rem;">
+                        <button class="btn btn-primary" onclick="window.location.href='/add-spot'">
+                            ➕ Ajouter une place
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewAllBookings()">
+                            📅 Toutes les réservations
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewPayments()">
+                            💳 Historique des paiements
+                        </button>
+                        <button class="btn btn-secondary" onclick="contactSupport()">
+                            💬 Support propriétaire
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function editSpot(id) {
+            window.location.href = `/add-spot?edit=${id}`;
+        }
+
+        function viewBookings(id) {
+            alert(`Affichage des réservations pour la place ${id}`);
+        }
+
+        function toggleAvailability(id) {
+            alert(`Basculement de la disponibilité pour la place ${id}`);
+        }
+
+        function deleteSpot(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette place?')) {
+                alert('Place supprimée avec succès');
+            }
+        }
+
+        function contactClient(bookingId) {
+            alert(`Contact du client pour la réservation ${bookingId}`);
+        }
+
+        function viewBookingDetails(bookingId) {
+            alert(`Détails de la réservation ${bookingId}`);
+        }
+
+        function acceptBooking(bookingId) {
+            alert(`Réservation ${bookingId} acceptée`);
+        }
+
+        function rejectBooking(bookingId) {
+            if (confirm('Êtes-vous sûr de vouloir refuser cette réservation?')) {
+                alert(`Réservation ${bookingId} refusée`);
+            }
+        }
+
+        function requestPayout() {
+            alert('Demande de virement en cours de traitement');
+        }
+
+        function viewAllBookings() {
+            alert('Affichage de toutes les réservations');
+        }
+
+        function viewPayments() {
+            alert('Affichage de l\'historique des paiements');
+        }
+
+        function contactSupport() {
+            alert('Contact du support propriétaire');
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = '/auth';
+        }
+
+        // Check if user is logged in
+        window.onload = function() {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                window.location.href = '/auth';
+                return;
+            }
+        }
+    </script>
+</body>
+</html>
