@@ -9,7 +9,7 @@
 <body>
     <header class="header">
         <div class="container">
-            <nav class="nav">
+            <nav class="modern-nav">
                 <!-- Menu burger à gauche -->
                 <div class="nav-left">
                     <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
@@ -29,6 +29,20 @@
                     <div class="notification-icon enhanced" onclick="toggleNotifications()">
                         🔔
                         <span class="notification-badge" id="notificationCount">2</span>
+                    </div>
+                </div>
+
+                <!-- Menu mobile -->
+                <div class="mobile-menu" id="mobileMenu">
+                    <div class="mobile-menu-content">
+                        <ul class="mobile-menu-links">
+                            <li><a href="/" onclick="closeMobileMenu()">🏠 Accueil</a></li>
+                            <li><a href="/map" onclick="closeMobileMenu()">🗺️ Rechercher une place</a></li>
+                            <li><a href="/dashboard" onclick="closeMobileMenu()">📊 Mes réservations</a></li>
+                            <li><a href="/owner" onclick="closeMobileMenu()">🏢 Espace propriétaire</a></li>
+                            <li><a href="/add-spot" onclick="closeMobileMenu()">➕ Partager ma place</a></li>
+                            <li><a href="/auth" onclick="closeMobileMenu()">🔐 Connexion</a></li>
+                        </ul>
                     </div>
                 </div>
             </nav>
