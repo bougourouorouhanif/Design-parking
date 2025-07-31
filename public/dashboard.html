@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon tableau de bord - ParkShare</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="/" class="logo">🅿️ ParkShare</a>
+                <ul class="nav-links">
+                    <li><a href="/map">Carte</a></li>
+                    <li><a href="/dashboard" style="opacity: 1;">Mes réservations</a></li>
+                    <li><a href="/owner">Propriétaire</a></li>
+                    <li><a href="#" onclick="logout()">Déconnexion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="padding: 2rem 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1>Tableau de bord</h1>
+                <p style="color: #666; margin: 0;">Bonjour <span id="userName">Utilisateur</span> 👋</p>
+            </div>
+            <a href="/map" class="btn btn-primary">
+                🔍 Nouvelle recherche
+            </a>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div>Réservations actives</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">127</div>
+                <div>Total réservations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">€1,245</div>
+                <div>Total dépensé</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4.9★</div>
+                <div>Votre note</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div>
+                <h2>Réservations en cours</h2>
+                
+                <div class="card" style="border-left: 4px solid #28a745;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin: 0 0 0.5rem 0;">Parking Centre-ville</h3>
+                            <p style="color: #666; margin: 0;">📍 15 Rue de la République, Paris 75001</p>
+                        </div>
+                        <span class="spot-tag" style="background: #d4edda; color: #155724;">En cours</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Début</div>
+                            <div style="color: #666;">Aujourd'hui 14:00</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Fin</div>
+                            <div style="color: #666;">Aujourd'hui 18:00</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Prix</div>
+                            <div style="color: #28a745; font-weight: bold;">€48</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-primary" onclick="navigateToParking(1)">📍 Y aller</button>
+                        <button class="btn btn-secondary" onclick="extendReservation(1)">⏰ Prolonger</button>
+                        <button class="btn btn-danger" onclick="cancelReservation(1)">❌ Annuler</button>
+                    </div>
+                </div>
+
+                <div class="card" style="border-left: 4px solid #ffc107;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin: 0 0 0.5rem 0;">Garage privé</h3>
+                            <p style="color: #666; margin: 0;">📍 8 Avenue des Champs, Paris 75008</p>
+                        </div>
+                        <span class="spot-tag" style="background: #fff3cd; color: #856404;">À venir</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Début</div>
+                            <div style="color: #666;">Demain 09:00</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Fin</div>
+                            <div style="color: #666;">Demain 17:00</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Prix</div>
+                            <div style="color: #28a745; font-weight: bold;">€64</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-secondary" onclick="modifyReservation(2)">✏️ Modifier</button>
+                        <button class="btn btn-danger" onclick="cancelReservation(2)">❌ Annuler</button>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 2rem;">Historique des réservations</h2>
+                
+                <div class="card" style="border-left: 4px solid #6c757d;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin: 0 0 0.5rem 0;">Parking Supermarché</h3>
+                            <p style="color: #666; margin: 0;">📍 25 Boulevard Saint-Germain, Paris 75005</p>
+                        </div>
+                        <span class="spot-tag" style="background: #e9ecef; color: #495057;">Terminé</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Date</div>
+                            <div style="color: #666;">15 Jan 2024</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Durée</div>
+                            <div style="color: #666;">3 heures</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Prix</div>
+                            <div style="color: #666;">€18</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Note</div>
+                            <div style="color: #ffc107;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-secondary" onclick="rebook(3)">🔄 Réserver à nouveau</button>
+                        <button class="btn btn-secondary" onclick="viewReceipt(3)">📄 Reçu</button>
+                    </div>
+                </div>
+
+                <div class="card" style="border-left: 4px solid #6c757d;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin: 0 0 0.5rem 0;">Parking Hôtel</h3>
+                            <p style="color: #666; margin: 0;">📍 12 Place Vendôme, Paris 75001</p>
+                        </div>
+                        <span class="spot-tag" style="background: #e9ecef; color: #495057;">Terminé</span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Date</div>
+                            <div style="color: #666;">10 Jan 2024</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Durée</div>
+                            <div style="color: #666;">2 heures</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Prix</div>
+                            <div style="color: #666;">€30</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">Note</div>
+                            <div style="color: #ffc107;">⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-secondary" onclick="rebook(4)">🔄 Réserver à nouveau</button>
+                        <button class="btn btn-secondary" onclick="viewReceipt(4)">📄 Reçu</button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="card">
+                    <h3>Profil utilisateur</h3>
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; margin: 0 auto 1rem;">
+                            👤
+                        </div>
+                        <h4 id="profileName">Utilisateur</h4>
+                        <p style="color: #666; margin: 0;" id="profileEmail">user@email.com</p>
+                    </div>
+                    
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Membre depuis:</span>
+                            <span style="font-weight: 600;">Janvier 2024</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Téléphone:</span>
+                            <span style="font-weight: 600;" id="profilePhone">06 12 34 56 78</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Note moyenne:</span>
+                            <span style="font-weight: 600;">⭐⭐⭐⭐⭐ (4.9)</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="editProfile()">
+                        ✏️ Modifier le profil
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>Notifications récentes</h3>
+                    
+                    <div style="border-left: 4px solid #28a745; padding-left: 1rem; margin-bottom: 1rem;">
+                        <div style="font-weight: 600; margin-bottom: 0.2rem;">Réservation confirmée</div>
+                        <div style="color: #666; font-size: 0.9rem;">Votre place au Garage privé est confirmée pour demain 9h</div>
+                        <div style="color: #999; font-size: 0.8rem;">Il y a 2 heures</div>
+                    </div>
+                    
+                    <div style="border-left: 4px solid #007bff; padding-left: 1rem; margin-bottom: 1rem;">
+                        <div style="font-weight: 600; margin-bottom: 0.2rem;">Rappel de réservation</div>
+                        <div style="color: #666; font-size: 0.9rem;">Votre parking expire dans 30 minutes</div>
+                        <div style="color: #999; font-size: 0.8rem;">Il y a 3 heures</div>
+                    </div>
+                    
+                    <div style="border-left: 4px solid #ffc107; padding-left: 1rem;">
+                        <div style="font-weight: 600; margin-bottom: 0.2rem;">Nouveau dans votre zone</div>
+                        <div style="color: #666; font-size: 0.9rem;">3 nouvelles places disponibles près de vous</div>
+                        <div style="color: #999; font-size: 0.8rem;">Il y a 1 jour</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Actions rapides</h3>
+                    <div style="display: grid; gap: 0.5rem;">
+                        <button class="btn btn-primary" onclick="window.location.href='/map'">
+                            🔍 Rechercher un parking
+                        </button>
+                        <button class="btn btn-secondary" onclick="window.location.href='/owner'">
+                            🏠 Devenir propriétaire
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewPaymentMethods()">
+                            💳 Mes moyens de paiement
+                        </button>
+                        <button class="btn btn-secondary" onclick="contactSupport()">
+                            💬 Support client
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadUserData() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.name) {
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('profileName').textContent = user.name;
+                document.getElementById('profileEmail').textContent = user.email;
+                if (user.phone) {
+                    document.getElementById('profilePhone').textContent = user.phone;
+                }
+            }
+        }
+
+        function navigateToParking(id) {
+            window.location.href = '/navigation';
+        }
+
+        function extendReservation(id) {
+            alert('Fonction de prolongation en cours de développement');
+        }
+
+        function cancelReservation(id) {
+            if (confirm('Êtes-vous sûr de vouloir annuler cette réservation?')) {
+                alert('Réservation annulée avec succès');
+                // Refresh page to update UI
+                window.location.reload();
+            }
+        }
+
+        function modifyReservation(id) {
+            alert('Fonction de modification en cours de développement');
+        }
+
+        function rebook(id) {
+            alert('Fonction de re-réservation en cours de développement');
+        }
+
+        function viewReceipt(id) {
+            alert('Fonction d\'affichage du reçu en cours de développement');
+        }
+
+        function editProfile() {
+            alert('Fonction de modification du profil en cours de développement');
+        }
+
+        function viewPaymentMethods() {
+            alert('Fonction de gestion des moyens de paiement en cours de développement');
+        }
+
+        function contactSupport() {
+            alert('Fonction de support client en cours de développement');
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = '/auth';
+        }
+
+        // Check if user is logged in
+        window.onload = function() {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                window.location.href = '/auth';
+                return;
+            }
+            loadUserData();
+        }
+    </script>
+</body>
+</html>
