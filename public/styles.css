@@ -600,42 +600,133 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-/* Menu burger moderne */
+/* Menu burger moderne amélioré */
 .menu-toggle {
-  display: none;
+  display: flex;
   flex-direction: column;
   cursor: pointer;
-  padding: 0.5rem;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.1) 100%);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .menu-toggle:hover {
-  background: rgba(255,255,255,0.2);
+  background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 100%);
   transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
-.menu-toggle span {
-  width: 20px;
-  height: 2px;
-  background: white;
+.menu-toggle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.menu-toggle:hover::before {
+  left: 100%;
+}
+
+.menu-line {
+  width: 22px;
+  height: 3px;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.9) 100%);
   margin: 2px 0;
-  transition: all 0.3s ease;
-  border-radius: 1px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-.menu-toggle.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+.menu-toggle.active .menu-line:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+  background: linear-gradient(135deg, #FF4757 0%, #FF3742 100%);
 }
 
-.menu-toggle.active span:nth-child(2) {
+.menu-toggle.active .menu-line:nth-child(2) {
   opacity: 0;
+  transform: translateX(-10px);
 }
 
-.menu-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -6px);
+.menu-toggle.active .menu-line:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+  background: linear-gradient(135deg, #FF4757 0%, #FF3742 100%);
+}
+
+/* Logo centré */
+.logo.centered {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.logo.centered:hover {
+  transform: scale(1.05);
+  text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.logo.centered::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.logo.centered:hover::before {
+  opacity: 1;
+}
+
+/* Notification améliorée */
+.notification-icon.enhanced {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.1) 100%);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 12px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1.1rem;
+  overflow: hidden;
+}
+
+.notification-icon.enhanced:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.notification-icon.enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.notification-icon.enhanced:hover::before {
+  left: 100%;
 }
 
 /* Menu mobile */
