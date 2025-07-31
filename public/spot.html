@@ -321,6 +321,110 @@
         document.getElementById('endDateTime').value = now.toISOString().slice(0, 16);
 
         calculatePrice();
+
+        // Nouvelles fonctions pour le header amélioré
+        function shareSpot() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Parky - Place de parking',
+                    text: 'Découvrez cette place de parking disponible sur Parky',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback pour les navigateurs qui ne supportent pas l'API Web Share
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showNotification('Lien copié dans le presse-papiers!', 'success');
+                });
+            }
+        }
+
+        function addToFavorites() {
+            const spotId = getSpotId();
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+            if (!favorites.includes(spotId)) {
+                favorites.push(spotId);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                showNotification('Place ajoutée aux favoris ❤️', 'success');
+
+                // Mettre à jour l'icône du bouton
+                document.querySelector('button[onclick="addToFavorites()"]').innerHTML = '💖 Ajouté aux favoris';
+            } else {
+                showNotification('Cette place est déjà dans vos favoris', 'info');
+            }
+        }
+
+        function quickBook() {
+            // Réservation express pour 2 heures à partir de maintenant
+            const start = new Date();
+            start.setMinutes(start.getMinutes() + 5); // Dans 5 minutes
+            const end = new Date(start);
+            end.setHours(end.getHours() + 2);
+
+            document.getElementById('startDateTime').value = start.toISOString().slice(0, 16);
+            document.getElementById('endDateTime').value = end.toISOString().slice(0, 16);
+            document.getElementById('vehicleInfo').value = 'Véhicule principal';
+
+            calculatePrice();
+
+            // Scroll vers la section de réservation
+            document.querySelector('.card[style*="sticky"]').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            showNotification('Réservation express pré-remplie! Vérifiez les détails.', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                max-width: 300px;
+                font-size: 0.9rem;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        function updateHeaderContext() {
+            const spotId = getSpotId();
+            const referrer = document.referrer;
+
+            // Mettre à jour le contexte du breadcrumb
+            if (referrer.includes('/map')) {
+                document.getElementById('breadcrumbContext').textContent = 'Carte';
+            } else if (referrer.includes('/dashboard')) {
+                document.getElementById('breadcrumbContext').textContent = 'Mes réservations';
+            } else {
+                document.getElementById('breadcrumbContext').textContent = 'Places disponibles';
+            }
+
+            // Vérifier si la place est dans les favoris
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            if (favorites.includes(spotId)) {
+                document.querySelector('button[onclick="addToFavorites()"]').innerHTML = '💖 Dans les favoris';
+            }
+        }
+
+        // Initialisation du header au chargement de la page
+        window.onload = function() {
+            updateHeaderContext();
+        }
     </script>
 </body>
 </html>
