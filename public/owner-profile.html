@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Propriétaire - Parky</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header spécifique propriétaire -->
+    <header class="owner-header">
+        <div class="owner-nav-container">
+            <nav class="owner-nav">
+                <div class="owner-nav-left">
+                    <div class="owner-profile-icon" onclick="toggleProfileMenu()">
+                        <div class="profile-avatar">
+                            <img src="data:image/svg+xml,%3Csvg viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='20' fill='%234A90E2'/%3E%3Ctext x='20' y='28' text-anchor='middle' fill='white' font-family='Poppins' font-size='16' font-weight='600'%3EJM%3C/text%3E%3C/svg%3E" alt="Profile">
+                        </div>
+                    </div>
+                </div>
+                <div class="owner-nav-center">
+                    <a href="/" class="owner-logo">Parky</a>
+                </div>
+                <div class="owner-nav-right">
+                    <div class="owner-notification-icon" onclick="toggleNotifications()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Menu profil coulissant -->
+    <div class="profile-menu-overlay" id="profileMenuOverlay" onclick="closeProfileMenu()"></div>
+    <div class="profile-menu" id="profileMenu">
+        <div class="profile-menu-header">
+            <div class="profile-avatar-large">
+                <img src="data:image/svg+xml,%3Csvg viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='40' fill='%234A90E2'/%3E%3Ctext x='40' y='52' text-anchor='middle' fill='white' font-family='Poppins' font-size='28' font-weight='600'%3EJM%3C/text%3E%3C/svg%3E" alt="Profile">
+            </div>
+            <div class="profile-info">
+                <h3>Jean Martin</h3>
+                <p>Propriétaire Premium</p>
+                <span class="owner-status">5 places actives</span>
+            </div>
+        </div>
+        <div class="profile-menu-items">
+            <a href="/owner-profile" class="profile-menu-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Mon Profil
+            </a>
+            <a href="/owner" class="profile-menu-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                </svg>
+                Tableau de Bord
+            </a>
+            <a href="#" class="profile-menu-item" onclick="showSettings()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V6a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                Paramètres
+            </a>
+            <a href="#" class="profile-menu-item" onclick="showHelp()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Aide & Support
+            </a>
+            <a href="#" class="profile-menu-item" onclick="logout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16,17 21,12 16,7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Déconnexion
+            </a>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="container profile-container">
+        <div class="profile-header-section">
+            <div class="profile-banner">
+                <div class="profile-banner-content">
+                    <div class="profile-main-info">
+                        <div class="profile-avatar-xl">
+                            <img src="data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='60' cy='60' r='60' fill='%234A90E2'/%3E%3Ctext x='60' y='80' text-anchor='middle' fill='white' font-family='Poppins' font-size='42' font-weight='600'%3EJM%3C/text%3E%3C/svg%3E" alt="Profile">
+                            <button class="edit-avatar-btn" onclick="editAvatar()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="profile-details">
+                            <h1>Jean Martin</h1>
+                            <p class="profile-subtitle">Propriétaire Premium depuis 2022</p>
+                            <div class="profile-stats">
+                                <div class="stat">
+                                    <span class="stat-value">5</span>
+                                    <span class="stat-label">Places</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">4.9★</span>
+                                    <span class="stat-label">Note</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">847</span>
+                                    <span class="stat-label">Réservations</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="edit-profile-btn" onclick="toggleEditMode()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                        Modifier le profil
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sections du profil -->
+        <div class="profile-sections">
+            <!-- Informations personnelles -->
+            <div class="profile-section">
+                <h2>Informations personnelles</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Nom complet</label>
+                        <input type="text" value="Jean Martin" disabled id="fullName">
+                    </div>
+                    <div class="info-item">
+                        <label>Email</label>
+                        <input type="email" value="jean.martin@email.com" disabled id="email">
+                    </div>
+                    <div class="info-item">
+                        <label>Téléphone</label>
+                        <input type="tel" value="+33 6 12 34 56 78" disabled id="phone">
+                    </div>
+                    <div class="info-item">
+                        <label>Date de naissance</label>
+                        <input type="date" value="1985-03-15" disabled id="birthDate">
+                    </div>
+                    <div class="info-item">
+                        <label>Adresse</label>
+                        <input type="text" value="123 Rue de la Paix, 75001 Paris" disabled id="address">
+                    </div>
+                    <div class="info-item">
+                        <label>Membre depuis</label>
+                        <input type="text" value="15 mars 2022" disabled readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paramètres de compte -->
+            <div class="profile-section">
+                <h2>Paramètres de compte</h2>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Notifications par email</h4>
+                            <p>Recevoir des emails pour les nouvelles réservations</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Notifications push</h4>
+                            <p>Recevoir des notifications sur votre navigateur</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Acceptation automatique</h4>
+                            <p>Accepter automatiquement les réservations</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4>Profil public</h4>
+                            <p>Permettre aux utilisateurs de voir votre profil</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sécurité -->
+            <div class="profile-section">
+                <h2>Sécurité</h2>
+                <div class="security-grid">
+                    <div class="security-item">
+                        <div class="security-info">
+                            <h4>Changer le mot de passe</h4>
+                            <p>Dernière modification: il y a 6 mois</p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="changePassword()">Modifier</button>
+                    </div>
+                    <div class="security-item">
+                        <div class="security-info">
+                            <h4>Authentification à deux facteurs</h4>
+                            <p>Sécurisez votre compte avec 2FA</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="setup2FA()">Activer</button>
+                    </div>
+                    <div class="security-item">
+                        <div class="security-info">
+                            <h4>Sessions actives</h4>
+                            <p>Gérer vos sessions de connexion</p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="manageSessions()">Gérer</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paiement & Facturation -->
+            <div class="profile-section">
+                <h2>Paiement & Facturation</h2>
+                <div class="payment-grid">
+                    <div class="payment-method">
+                        <div class="card-icon">💳</div>
+                        <div class="card-info">
+                            <h4>Carte bancaire</h4>
+                            <p>**** **** **** 1234</p>
+                            <small>Expire 12/2026</small>
+                        </div>
+                        <button class="btn btn-sm btn-secondary">Modifier</button>
+                    </div>
+                    <div class="payment-method">
+                        <div class="card-icon">🏦</div>
+                        <div class="card-info">
+                            <h4>Compte bancaire</h4>
+                            <p>FR76 **** **** **** **89</p>
+                            <small>Vérifié</small>
+                        </div>
+                        <button class="btn btn-sm btn-secondary">Modifier</button>
+                    </div>
+                </div>
+                <div class="fiscal-info">
+                    <h4>Informations fiscales</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Numéro SIRET</label>
+                            <input type="text" value="12345678901234" disabled>
+                        </div>
+                        <div class="info-item">
+                            <label>TVA applicable</label>
+                            <select disabled>
+                                <option>Non assujetti</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions rapides -->
+            <div class="profile-section">
+                <h2>Actions rapides</h2>
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="downloadData()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7,10 12,15 17,10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Télécharger mes données
+                    </button>
+                    <button class="quick-action-btn" onclick="exportReports()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14,2 14,8 20,8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10,9 9,9 8,9"></polyline>
+                        </svg>
+                        Exporter les rapports
+                    </button>
+                    <button class="quick-action-btn danger" onclick="deleteAccount()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3,6 5,6 21,6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                        Supprimer le compte
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar inférieure propriétaire -->
+    <nav class="owner-bottom-navbar" id="ownerBottomNavbar">
+        <div class="navbar-container">
+            <a href="/owner" class="nav-item" data-page="dashboard">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                </div>
+                <span class="nav-label">Tableau de Bord</span>
+            </a>
+            
+            <a href="/add-spot" class="nav-item" data-page="add-spot">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </div>
+                <span class="nav-label">Ajouter Place</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="reservations" onclick="showReservations()">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </div>
+                <span class="nav-label">Réservations</span>
+                <span class="nav-badge">3</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="earnings" onclick="showEarnings()">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <span class="nav-label">Revenus</span>
+            </a>
+            
+            <a href="/owner-profile" class="nav-item active" data-page="profile">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <span class="nav-label">Profil</span>
+            </a>
+        </div>
+    </nav>
+
+    <script src="navbar.js"></script>
+    <script>
+        let editMode = false;
+
+        function toggleProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            const overlay = document.getElementById('profileMenuOverlay');
+            
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            const overlay = document.getElementById('profileMenuOverlay');
+            
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function toggleNotifications() {
+            alert('Notifications du propriétaire');
+        }
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            const inputs = document.querySelectorAll('.info-item input:not([readonly])');
+            const btn = document.querySelector('.edit-profile-btn');
+            
+            inputs.forEach(input => {
+                input.disabled = !editMode;
+            });
+            
+            if (editMode) {
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"></polyline></svg>Sauvegarder';
+                btn.classList.add('btn-success');
+                btn.classList.remove('btn-primary');
+            } else {
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Modifier le profil';
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-primary');
+                
+                // Sauvegarder les modifications
+                showToast('Profil mis à jour avec succès!', 'success');
+            }
+        }
+
+        function editAvatar() {
+            alert('Modification de la photo de profil');
+        }
+
+        function changePassword() {
+            alert('Changement de mot de passe');
+        }
+
+        function setup2FA() {
+            alert('Configuration de l\'authentification à deux facteurs');
+        }
+
+        function manageSessions() {
+            alert('Gestion des sessions actives');
+        }
+
+        function downloadData() {
+            alert('Téléchargement des données personnelles');
+        }
+
+        function exportReports() {
+            alert('Export des rapports d\'activité');
+        }
+
+        function deleteAccount() {
+            if (confirm('Êtes-vous sûr de vouloir supprimer définitivement votre compte?')) {
+                alert('Suppression du compte initiée');
+            }
+        }
+
+        function showReservations() {
+            alert('Affichage des réservations');
+        }
+
+        function showEarnings() {
+            alert('Affichage des revenus détaillés');
+        }
+
+        function showSettings() {
+            alert('Paramètres avancés');
+        }
+
+        function showHelp() {
+            alert('Centre d\'aide propriétaire');
+        }
+
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter?')) {
+                localStorage.removeItem('user');
+                window.location.href = '/auth';
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        // Initialize navbar
+        window.onload = function() {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                window.location.href = '/auth';
+                return;
+            }
+            
+            // Initialize owner bottom navbar
+            if (typeof OwnerBottomNavbar !== 'undefined') {
+                new OwnerBottomNavbar();
+            }
+        }
+    </script>
+</body>
+</html>
