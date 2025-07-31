@@ -12,40 +12,25 @@
     <header class="header">
         <div class="container">
             <nav class="modern-nav">
+                <!-- Menu burger à gauche -->
                 <div class="nav-left">
-                    <a href="/" class="logo">Parky</a>
-
-                    <!-- Menu desktop -->
-                    <ul class="nav-links">
-                        <li><a href="/">🏠 Accueil</a></li>
-                        <li><a href="/map" class="active">🗺️ Carte</a></li>
-                        <li><a href="/dashboard">📊 Dashboard</a></li>
-                        <li><a href="/owner">🏢 Propriétaire</a></li>
-                    </ul>
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
                 </div>
 
-                <div class="nav-right">
-                    <!-- Menu burger mobile -->
-                    <div class="menu-toggle" onclick="toggleMobileMenu()">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
+                <!-- Logo centré -->
+                <div class="nav-center">
+                    <a href="/" class="logo centered">Parky</a>
+                </div>
 
-                    <!-- Notifications -->
-                    <div class="notification-icon" onclick="toggleNotifications()">
+                <!-- Notifications à droite -->
+                <div class="nav-right">
+                    <div class="notification-icon enhanced" onclick="toggleNotifications()">
                         🔔
                         <span class="notification-badge" id="notificationCount">2</span>
-                    </div>
-
-                    <!-- Profil utilisateur -->
-                    <div class="user-profile" onclick="toggleUserMenu()" id="userProfile">
-                        <div class="user-avatar" id="userAvatar">U</div>
-                        <div class="user-info">
-                            <p class="user-name" id="userName">Utilisateur</p>
-                            <p class="user-role" id="userRole">Conducteur</p>
-                        </div>
-                        <span style="color: rgba(255,255,255,0.7); margin-left: 0.5rem;">▼</span>
                     </div>
                 </div>
 
