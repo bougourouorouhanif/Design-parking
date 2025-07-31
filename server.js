@@ -32,6 +32,10 @@ app.get('/owner', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'owner.html'));
 });
 
+app.get('/owner-profile', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'owner-profile.html'));
+});
+
 app.get('/add-spot', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'add-spot.html'));
 });
