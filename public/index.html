@@ -112,7 +112,7 @@
                             <li><a href="/" onclick="closeMobileMenu()">🏠 Accueil</a></li>
                             <li><a href="/map" onclick="closeMobileMenu()">🗺️ Rechercher une place</a></li>
                             <li><a href="/dashboard" onclick="closeMobileMenu()">📊 Mes réservations</a></li>
-                            <li><a href="/owner" onclick="closeMobileMenu()">🏢 Espace propriétaire</a></li>
+                            <li><a href="/owner" onclick="closeMobileMenu()">��� Espace propriétaire</a></li>
                             <li><a href="/add-spot" onclick="closeMobileMenu()">➕ Partager ma place</a></li>
                             <li><a href="/auth" onclick="closeMobileMenu()">🔐 Connexion</a></li>
                         </ul>
@@ -253,6 +253,193 @@
 
         // Set default datetime to now + 1 hour
         document.getElementById('datetime').value = new Date(Date.now() + 3600000).toISOString().slice(0, 16);
+
+        // Fonctions pour la navbar moderne
+        function toggleMobileMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            menuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+
+            // Fermer les autres menus ouverts
+            closeNotifications();
+        }
+
+        function closeMobileMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            menuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }
+
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationDropdown');
+            const isActive = dropdown.classList.contains('active');
+
+            // Fermer tous les autres menus
+            closeMobileMenu();
+
+            if (isActive) {
+                dropdown.classList.remove('active');
+            } else {
+                dropdown.classList.add('active');
+            }
+        }
+
+        function closeNotifications() {
+            const dropdown = document.getElementById('notificationDropdown');
+            dropdown.classList.remove('active');
+        }
+
+        function toggleUserMenu() {
+            // Redirection intelligente basée sur l'état de connexion
+            const user = localStorage.getItem('user');
+            if (user) {
+                // Utilisateur connecté - aller au dashboard
+                window.location.href = '/dashboard';
+            } else {
+                // Utilisateur non connecté - aller à la page de connexion
+                window.location.href = '/auth';
+            }
+        }
+
+        function markAllAsRead() {
+            const unreadItems = document.querySelectorAll('.notification-item.unread');
+            unreadItems.forEach(item => {
+                item.classList.remove('unread');
+            });
+
+            // Mettre à jour le badge
+            document.getElementById('notificationCount').textContent = '0';
+            document.getElementById('notificationCount').style.display = 'none';
+
+            showToast('Toutes les notifications ont été marquées comme lues', 'success');
+        }
+
+        function handleNotificationClick(notificationId) {
+            // Marquer comme lu
+            event.currentTarget.classList.remove('unread');
+
+            // Diminuer le compteur
+            const badge = document.getElementById('notificationCount');
+            const currentCount = parseInt(badge.textContent);
+            if (currentCount > 0) {
+                const newCount = currentCount - 1;
+                badge.textContent = newCount;
+                if (newCount === 0) {
+                    badge.style.display = 'none';
+                }
+            }
+
+            // Redirection intelligente basée sur le type de notification
+            switch(notificationId) {
+                case 1: // Réservation confirmée
+                    setTimeout(() => window.location.href = '/dashboard', 300);
+                    break;
+                case 2: // Nouvelles places
+                    setTimeout(() => window.location.href = '/map', 300);
+                    break;
+                case 3: // Rappel de réservation
+                    setTimeout(() => window.location.href = '/dashboard', 300);
+                    break;
+                case 4: // Paiement effectué
+                    setTimeout(() => window.location.href = '/dashboard', 300);
+                    break;
+                default:
+                    closeNotifications();
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: ${type === 'success' ? '#7ED6A7' : type === 'error' ? '#FF4757' : '#4A90E2'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-weight: 500;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            toast.textContent = message;
+
+            document.body.appendChild(toast);
+
+            // Animation d'apparition
+            setTimeout(() => {
+                toast.style.transform = 'translateX(0)';
+            }, 100);
+
+            // Suppression automatique
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function updateUserProfile() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const userProfile = document.getElementById('userProfile');
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+            const userRole = document.getElementById('userRole');
+
+            if (user.name) {
+                // Utilisateur connecté
+                userAvatar.textContent = user.name.charAt(0).toUpperCase();
+                userName.textContent = user.name.split(' ')[0];
+                userRole.textContent = user.type === 'owner' ? 'Propriétaire' : 'Conducteur';
+                userProfile.style.display = 'flex';
+            } else {
+                // Utilisateur non connecté
+                userAvatar.textContent = '?';
+                userName.textContent = 'Connexion';
+                userRole.textContent = 'Cliquez ici';
+            }
+        }
+
+        // Fermer les menus quand on clique à l'extérieur
+        document.addEventListener('click', function(event) {
+            const notificationIcon = document.querySelector('.notification-icon');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const mobileMenuToggle = document.querySelector('.menu-toggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            // Fermer notifications si clic à l'extérieur
+            if (notificationIcon && !notificationIcon.contains(event.target)) {
+                closeNotifications();
+            }
+
+            // Fermer menu mobile si clic à l'extérieur
+            if (mobileMenuToggle && !mobileMenuToggle.contains(event.target) && mobileMenu && !mobileMenu.contains(event.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // Initialisation au chargement de la page
+        window.addEventListener('load', function() {
+            updateUserProfile();
+
+            // Simuler de nouvelles notifications périodiquement
+            setInterval(() => {
+                const badge = document.getElementById('notificationCount');
+                if (badge) {
+                    const currentCount = parseInt(badge.textContent) || 0;
+                    if (currentCount < 5 && Math.random() < 0.1) { // 10% de chance toutes les 30 secondes
+                        badge.textContent = currentCount + 1;
+                        badge.style.display = 'flex';
+                        showToast('Nouvelle notification reçue!', 'info');
+                    }
+                }
+            }, 30000);
+        });
     </script>
 </body>
 </html>
