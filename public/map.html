@@ -6,6 +6,7 @@
     <title>Carte des parkings - Parky</title>
     <link rel="stylesheet" href="styles.css">
     <script src="navbar.js" defer></script>
+    <script src="bottom-navbar.js" defer></script>
 </head>
 <body>
     <header class="header">
@@ -274,6 +275,54 @@
                 localStorage.removeItem('searchLocation');
                 localStorage.removeItem('searchDateTime');
             }
+
+            // Initialiser la navbar inférieure pour la page carte
+            initBottomNavbar({
+                theme: 'light',
+                style: 'floating',
+                alwaysVisible: false,
+                customItems: [
+                    {
+                        id: 'home',
+                        icon: '🏠',
+                        label: 'Accueil',
+                        href: '/',
+                        badge: null
+                    },
+                    {
+                        id: 'search',
+                        icon: '🗺️',
+                        label: 'Carte',
+                        href: '/map',
+                        badge: null
+                    },
+                    {
+                        id: 'filters',
+                        icon: '🔧',
+                        label: 'Filtres',
+                        href: '#',
+                        badge: null,
+                        onClick: () => {
+                            document.querySelector('.filter-bar').scrollIntoView({ behavior: 'smooth' });
+                        }
+                    },
+                    {
+                        id: 'favorites',
+                        icon: '❤️',
+                        label: 'Favoris',
+                        href: '/favorites',
+                        badge: null,
+                        dataIcon: 'heart'
+                    },
+                    {
+                        id: 'profile',
+                        icon: '👤',
+                        label: 'Profil',
+                        href: '/dashboard',
+                        badge: null
+                    }
+                ]
+            });
         }
     </script>
 </body>
