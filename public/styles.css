@@ -1307,26 +1307,19 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Responsive pour la navbar inférieure */
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
+  .modern-nav {
+    grid-template-columns: auto 1fr auto;
+    gap: 0.5rem;
   }
 
   .menu-toggle {
     display: flex;
   }
 
-  .nav-right {
-    order: -1;
-  }
-
   .notification-dropdown {
     right: -1rem;
     left: 1rem;
     min-width: auto;
-  }
-
-  .user-info {
-    display: none;
   }
 
   /* Ajuster l'espacement du contenu pour la navbar inférieure */
@@ -1336,6 +1329,12 @@ h1, h2, h3, h4, h5, h6 {
 
   .floating-action {
     bottom: 100px;
+  }
+}
+
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
   }
 }
 
