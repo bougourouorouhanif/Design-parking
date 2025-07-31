@@ -132,6 +132,13 @@
         }
 
         function goToSpot(id) {
+            // Stocker le contexte de navigation
+            localStorage.setItem('navigationContext', JSON.stringify({
+                from: 'home',
+                section: 'places-disponibles',
+                timestamp: Date.now()
+            }));
+
             window.location.href = `/spot/${id}`;
         }
 
