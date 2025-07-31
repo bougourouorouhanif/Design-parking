@@ -1,7 +1,7 @@
 {
-  "name": "parkshare-app",
+  "name": "parky-app",
   "version": "1.0.0",
-  "description": "Real-time parking sharing application",
+  "description": "Trouvez ou proposez une place de parking en temps réel",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

@@ -49,5 +49,5 @@ app.get('/admin', (req, res) => {
 });
 
 app.listen(port, '0.0.0.0', () => {
-  console.log(`ParkShare app running at http://0.0.0.0:${port}/`);
+  console.log(`Parky app running at http://0.0.0.0:${port}/`);
 });
