@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de la place - ParkShare</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="/" class="logo">🅿️ ParkShare</a>
+                <ul class="nav-links">
+                    <li><a href="/map">Carte</a></li>
+                    <li><a href="/dashboard">Mes réservations</a></li>
+                    <li><a href="/owner">Propriétaire</a></li>
+                    <li><a href="/auth">Connexion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" style="padding: 2rem 20px;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+            <div>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <button onclick="history.back()" class="btn btn-secondary" style="padding: 0.5rem 1rem;">← Retour</button>
+                    <h1 style="margin: 0;">Parking Centre-ville</h1>
+                </div>
+
+                <div class="card">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="background: #f8f9fa; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+                            🏢
+                        </div>
+                        <div style="background: #f8f9fa; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #666;">
+                            Photo 2
+                        </div>
+                        <div style="background: #f8f9fa; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #666;">
+                            Photo 3
+                        </div>
+                    </div>
+
+                    <div class="spot-details" style="margin-bottom: 1rem;">
+                        <span class="spot-tag covered">Couvert</span>
+                        <span class="spot-tag">Sécurisé</span>
+                        <span class="spot-tag">Accessible PMR</span>
+                        <span class="spot-tag">24h/24</span>
+                    </div>
+
+                    <h3>📍 Adresse</h3>
+                    <p style="margin-bottom: 1.5rem;">15 Rue de la République, 75001 Paris</p>
+
+                    <h3>ℹ️ Description</h3>
+                    <p style="margin-bottom: 1.5rem;">
+                        Parking couvert et sécurisé au cœur du centre-ville. Accès facile par ascenseur. 
+                        Place de taille standard adaptée aux véhicules jusqu'à 4,80m de longueur. 
+                        Vidéosurveillance 24h/24. Entrée par badge fourni lors de la réservation.
+                    </p>
+
+                    <h3>🕒 Disponibilités</h3>
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; margin-bottom: 1.5rem;">
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Lun</div>
+                            <div style="color: #28a745;">Libre</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Mar</div>
+                            <div style="color: #28a745;">Libre</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Mer</div>
+                            <div style="color: #dc3545;">Occupé</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Jeu</div>
+                            <div style="color: #28a745;">Libre</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Ven</div>
+                            <div style="color: #ffc107;">16h-18h</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Sam</div>
+                            <div style="color: #28a745;">Libre</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Dim</div>
+                            <div style="color: #28a745;">Libre</div>
+                        </div>
+                    </div>
+
+                    <h3>⭐ Avis (4.8/5)</h3>
+                    <div style="border-left: 4px solid #e9ecef; padding-left: 1rem; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <strong>Marie L.</strong>
+                            <span>⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p style="margin: 0; color: #666;">"Place facile d'accès, très pratique pour le shopping en centre-ville."</p>
+                    </div>
+                    <div style="border-left: 4px solid #e9ecef; padding-left: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <strong>Jean P.</strong>
+                            <span>⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p style="margin: 0; color: #666;">"Parking sécurisé, propriétaire très réactif. Je recommande!"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="position: sticky; top: 2rem;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div class="price" style="font-size: 2.5rem; margin-bottom: 0.5rem;">€12</div>
+                    <div style="color: #666;">par heure</div>
+                </div>
+
+                <form onsubmit="proceedToPayment(event)">
+                    <div class="form-group">
+                        <label for="startDateTime">Début de réservation</label>
+                        <input type="datetime-local" id="startDateTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDateTime">Fin de réservation</label>
+                        <input type="datetime-local" id="endDateTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicleInfo">Informations véhicule</label>
+                        <input type="text" id="vehicleInfo" placeholder="ex: Peugeot 308 - AB-123-CD" required>
+                    </div>
+
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Durée:</span>
+                            <span id="duration">- heures</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Prix unitaire:</span>
+                            <span>€12/heure</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Commission plateforme:</span>
+                            <span id="commission">€0</span>
+                        </div>
+                        <hr style="margin: 0.5rem 0;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem;">
+                            <span>Total:</span>
+                            <span id="totalPrice">€0</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 1rem;">
+                        Réserver maintenant
+                    </button>
+                </form>
+
+                <div style="margin-top: 1rem; text-align: center;">
+                    <p style="font-size: 0.9rem; color: #666;">
+                        🛡️ Annulation gratuite jusqu'à 2h avant
+                    </p>
+                    <p style="font-size: 0.9rem; color: #666;">
+                        💳 Paiement sécurisé
+                    </p>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                    <h4>📞 Propriétaire: Michel D.</h4>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                        <span>⭐⭐⭐⭐⭐</span>
+                        <span style="color: #666;">(47 avis)</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #666;">
+                        Membre depuis 2019. Temps de réponse: &lt; 5 minutes
+                    </p>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="contactOwner()">
+                        💬 Contacter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculatePrice() {
+            const start = new Date(document.getElementById('startDateTime').value);
+            const end = new Date(document.getElementById('endDateTime').value);
+            
+            if (start && end && end > start) {
+                const hours = Math.ceil((end - start) / (1000 * 60 * 60));
+                const basePrice = hours * 12;
+                const commission = Math.ceil(basePrice * 0.1);
+                const total = basePrice + commission;
+                
+                document.getElementById('duration').textContent = hours + ' heure' + (hours > 1 ? 's' : '');
+                document.getElementById('commission').textContent = '€' + commission;
+                document.getElementById('totalPrice').textContent = '€' + total;
+            }
+        }
+
+        function proceedToPayment(event) {
+            event.preventDefault();
+            
+            const start = document.getElementById('startDateTime').value;
+            const end = document.getElementById('endDateTime').value;
+            const vehicle = document.getElementById('vehicleInfo').value;
+            
+            if (!start || !end || !vehicle) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+            
+            // Store booking details
+            localStorage.setItem('bookingDetails', JSON.stringify({
+                spotId: getSpotId(),
+                spotName: 'Parking Centre-ville',
+                address: '15 Rue de la République, 75001 Paris',
+                start: start,
+                end: end,
+                vehicle: vehicle,
+                price: document.getElementById('totalPrice').textContent
+            }));
+            
+            window.location.href = '/payment';
+        }
+
+        function contactOwner() {
+            alert('Fonction de contact en cours de développement');
+        }
+
+        function getSpotId() {
+            const path = window.location.pathname;
+            return path.split('/')[2] || '1';
+        }
+
+        // Set default times and add event listeners
+        document.getElementById('startDateTime').addEventListener('change', calculatePrice);
+        document.getElementById('endDateTime').addEventListener('change', calculatePrice);
+
+        // Set default start time to now + 1 hour
+        const now = new Date();
+        now.setHours(now.getHours() + 1);
+        document.getElementById('startDateTime').value = now.toISOString().slice(0, 16);
+
+        // Set default end time to now + 3 hours
+        now.setHours(now.getHours() + 2);
+        document.getElementById('endDateTime').value = now.toISOString().slice(0, 16);
+
+        calculatePrice();
+    </script>
+</body>
+</html>
