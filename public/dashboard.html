@@ -5,18 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon tableau de bord - Parky</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="navbar.js" defer></script>
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <nav class="nav">
-                <a href="/" class="logo">Parky</a>
-                <ul class="nav-links">
-                    <li><a href="/map">Carte</a></li>
-                    <li><a href="/dashboard" style="opacity: 1;">Mes réservations</a></li>
-                    <li><a href="/owner">Propriétaire</a></li>
-                    <li><a href="#" onclick="logout()">Déconnexion</a></li>
-                </ul>
+            <nav class="modern-nav">
+                <div class="nav-left">
+                    <a href="/" class="logo">Parky</a>
+
+                    <!-- Menu desktop -->
+                    <ul class="nav-links">
+                        <li><a href="/">🏠 Accueil</a></li>
+                        <li><a href="/map">🗺️ Carte</a></li>
+                        <li><a href="/dashboard" class="active">📊 Dashboard</a></li>
+                        <li><a href="/owner">🏢 Propriétaire</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-right">
+                    <!-- Menu burger mobile -->
+                    <div class="menu-toggle" onclick="toggleMobileMenu()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="notification-icon" onclick="toggleNotifications()">
+                        🔔
+                        <span class="notification-badge" id="notificationCount">1</span>
+                    </div>
+
+                    <!-- Profil utilisateur -->
+                    <div class="user-profile" onclick="showUserMenu()" id="userProfile">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <div class="user-info">
+                            <p class="user-name" id="userName">Utilisateur</p>
+                            <p class="user-role" id="userRole">Conducteur</p>
+                        </div>
+                        <span style="color: rgba(255,255,255,0.7); margin-left: 0.5rem;" onclick="logout()">🚪</span>
+                    </div>
+                </div>
+
+                <!-- Menu mobile -->
+                <div class="mobile-menu" id="mobileMenu">
+                    <div class="mobile-menu-content">
+                        <ul class="mobile-menu-links">
+                            <li><a href="/" onclick="closeMobileMenu()">🏠 Accueil</a></li>
+                            <li><a href="/map" onclick="closeMobileMenu()">🗺️ Rechercher une place</a></li>
+                            <li><a href="/dashboard" onclick="closeMobileMenu()">📊 Mes réservations</a></li>
+                            <li><a href="/owner" onclick="closeMobileMenu()">🏢 Espace propriétaire</a></li>
+                            <li><a href="/add-spot" onclick="closeMobileMenu()">➕ Partager ma place</a></li>
+                            <li><a href="#" onclick="logout()">🔐 Déconnexion</a></li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
@@ -25,7 +69,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div>
                 <h1>Tableau de bord</h1>
-                <p style="color: #666; margin: 0;">Bonjour <span id="userName">Utilisateur</span> 👋</p>
+                <p style="color: #666; margin: 0;">Bonjour <span id="userName">Utilisateur</span> ��</p>
             </div>
             <a href="/map" class="btn btn-primary">
                 🔍 Trouver une place
@@ -247,7 +291,7 @@
                             🔍 Rechercher un parking
                         </button>
                         <button class="btn btn-secondary" onclick="window.location.href='/owner'">
-                            🏠 Devenir propriétaire
+                            ��� Devenir propriétaire
                         </button>
                         <button class="btn btn-secondary" onclick="viewPaymentMethods()">
                             💳 Mes moyens de paiement
