@@ -417,16 +417,36 @@ p {
 }
 
 .card {
-  background: white;
-  border-radius: 16px;
-  padding: 1.5rem;
-  margin: 1rem 0;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  transition: transform 0.3s;
+  background: var(--surface-color);
+  border-radius: var(--radius-xl);
+  padding: clamp(1rem, 3vw, 1.5rem);
+  margin: var(--spacing-md) 0;
+  box-shadow: var(--shadow-medium);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-heavy);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 .parking-spot {
