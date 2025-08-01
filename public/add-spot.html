@@ -399,7 +399,97 @@
         </form>
     </div>
 
+    <!-- Navbar inférieure propriétaire -->
+    <nav class="owner-bottom-navbar" id="ownerBottomNavbar">
+        <div class="navbar-container">
+            <a href="/owner" class="nav-item" data-page="dashboard">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                </div>
+                <span class="nav-label">Tableau de Bord</span>
+            </a>
+
+            <a href="/add-spot" class="nav-item active" data-page="add-spot">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </div>
+                <span class="nav-label">Ajouter Place</span>
+            </a>
+
+            <a href="/owner-reservations" class="nav-item" data-page="reservations">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </div>
+                <span class="nav-label">Réservations</span>
+                <span class="nav-badge">3</span>
+            </a>
+
+            <a href="/owner-earnings" class="nav-item" data-page="earnings">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <span class="nav-label">Revenus</span>
+            </a>
+
+            <a href="/owner-profile" class="nav-item" data-page="profile">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <span class="nav-label">Profil</span>
+            </a>
+        </div>
+    </nav>
+
+    <script src="navbar.js"></script>
     <script>
+        // Fonctions de gestion du profil
+        function toggleProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            const overlay = document.getElementById('profileMenuOverlay');
+
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            const overlay = document.getElementById('profileMenuOverlay');
+
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function toggleNotifications() {
+            alert('Notifications du propriétaire');
+        }
+
+        function showSettings() {
+            alert('Paramètres avancés');
+        }
+
+        function showHelp() {
+            alert('Centre d\'aide propriétaire');
+        }
+
         function submitSpot(event) {
             event.preventDefault();
             
