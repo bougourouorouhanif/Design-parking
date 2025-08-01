@@ -1332,9 +1332,21 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Menu burger toujours visible sur desktop et mobile */
+.menu-toggle {
+  display: flex;
+}
+
+/* Ajuster la taille sur desktop */
 @media (min-width: 769px) {
   .menu-toggle {
-    display: none;
+    display: flex;
+    padding: 0.6rem;
+  }
+
+  .menu-line {
+    width: 20px;
+    height: 2.5px;
   }
 }
 
