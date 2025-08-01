@@ -122,7 +122,7 @@ class BottomNavbar {
         // Icône
         const icon = document.createElement('div');
         icon.className = 'bottom-nav-icon';
-        icon.textContent = item.icon;
+        icon.innerHTML = item.icon;
         
         // Badge de notification
         if (item.badge && item.badge > 0) {
