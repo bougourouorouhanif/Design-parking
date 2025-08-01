@@ -9,7 +9,7 @@ app.use(express.static('public'));
 
 // Routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'auth.html'));
+  res.sendFile(path.join(__dirname, 'public', 'demo-status.html'));
 });
 
 app.get('/home', (req, res) => {
