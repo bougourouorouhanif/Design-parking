@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parky - Mode Démonstration Activé</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="navbar-enhanced.css">
+    <script src="auth-check.js"></script>
+    <script src="navbar.js" defer></script>
+    <script src="bottom-navbar.js" defer></script>
+</head>
+<body>
+    <!-- Navbar moderne -->
+    <header class="header">
+        <div class="container">
+            <nav class="modern-nav">
+                <div class="nav-left">
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
+                </div>
+                
+                <div class="nav-center">
+                    <a href="/home" class="logo centered">Parky</a>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="notification-icon enhanced" onclick="toggleNotifications()">
+                        <div class="icon icon-bell icon-white icon-interactive"></div>
+                        <span class="notification-badge" id="notificationCount">3</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Menu mobile -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul class="mobile-menu-links">
+            <!-- Le contenu sera généré par navbar.js -->
+        </ul>
+    </div>
+
+    <main class="container" style="padding-top: 2rem;">
+        <div class="demo-status-container">
+            <div class="demo-hero">
+                <div class="demo-icon">🎭</div>
+                <h1>Mode Démonstration Activé</h1>
+                <p class="demo-subtitle">
+                    Explorez toutes les fonctionnalités de Parky sans authentification requise
+                </p>
+            </div>
+
+            <div class="demo-features-grid">
+                <div class="demo-feature-card">
+                    <div class="feature-icon">🚫</div>
+                    <h3>Pas d'authentification</h3>
+                    <p>Accédez à toutes les pages sans avoir besoin de vous connecter</p>
+                </div>
+
+                <div class="demo-feature-card">
+                    <div class="feature-icon">👤</div>
+                    <h3>Basculer entre les rôles</h3>
+                    <p>Testez l'interface conducteur et propriétaire en un clic</p>
+                </div>
+
+                <div class="demo-feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Données fictives</h3>
+                    <p>Toutes les données sont générées automatiquement pour les tests</p>
+                </div>
+
+                <div class="demo-feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Réinitialisation facile</h3>
+                    <p>Effacez les données et recommencez à tout moment</p>
+                </div>
+            </div>
+
+            <div class="demo-actions">
+                <div class="demo-section">
+                    <h3>🎯 Actions rapides</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn primary" onclick="goToPage('/home')">
+                            <div class="icon icon-home"></div>
+                            Accueil Conducteur
+                        </button>
+                        <button class="action-btn secondary" onclick="goToPage('/owner')">
+                            <div class="icon icon-dashboard"></div>
+                            Dashboard Propriétaire
+                        </button>
+                        <button class="action-btn tertiary" onclick="goToPage('/map')">
+                            <div class="icon icon-map"></div>
+                            Rechercher une place
+                        </button>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>⚙️ Outils de développement</h3>
+                    <div class="dev-tools">
+                        <button class="dev-btn" onclick="clearAllData()">
+                            🗑️ Effacer toutes les données
+                        </button>
+                        <button class="dev-btn" onclick="generateFreshData()">
+                            🔄 Régénérer les données
+                        </button>
+                        <button class="dev-btn" onclick="showCurrentUser()">
+                            👤 Afficher utilisateur actuel
+                        </button>
+                        <button class="dev-btn" onclick="toggleAuthMode()">
+                            🔐 Basculer mode auth
+                        </button>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>📱 Test des interfaces</h3>
+                    <div class="interface-links">
+                        <a href="/demo-navbar.html" class="interface-link">
+                            🎨 Démonstration UI/UX
+                        </a>
+                        <a href="/auth.html" class="interface-link">
+                            🔑 Page d'authentification
+                        </a>
+                        <a href="/dashboard.html" class="interface-link">
+                            📊 Dashboard utilisateur
+                        </a>
+                        <a href="/owner-reservations.html" class="interface-link">
+                            📅 Gestion réservations
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-status-info">
+                <div class="status-item">
+                    <strong>Utilisateur actuel:</strong>
+                    <span id="current-user-name">Chargement...</span>
+                </div>
+                <div class="status-item">
+                    <strong>Type:</strong>
+                    <span id="current-user-type">Chargement...</span>
+                </div>
+                <div class="status-item">
+                    <strong>Mode:</strong>
+                    <span class="demo-badge">DÉMONSTRATION</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .demo-status-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .demo-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+            color: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .demo-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .demo-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .demo-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .demo-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .demo-feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .demo-feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .demo-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .demo-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .action-btn.secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .action-btn.tertiary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .dev-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .dev-btn {
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .dev-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .interface-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .interface-link {
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .interface-link:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .demo-status-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .status-item {
+            text-align: center;
+        }
+
+        .demo-badge {
+            background: linear-gradient(135deg, #4A90E2, #7ED6A7);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .demo-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-status-info {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <script>
+        // Afficher les informations de l'utilisateur actuel
+        function updateUserInfo() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            document.getElementById('current-user-name').textContent = user.name || 'Aucun';
+            document.getElementById('current-user-type').textContent = user.type === 'owner' ? 'Propriétaire' : 'Conducteur';
+        }
+
+        // Navigation vers une page
+        function goToPage(url) {
+            window.location.href = url;
+        }
+
+        // Effacer toutes les données
+        function clearAllData() {
+            if (confirm('Êtes-vous sûr de vouloir effacer toutes les données demo ?')) {
+                localStorage.clear();
+                alert('Toutes les données ont été effacées. Un nouvel utilisateur demo sera créé.');
+                window.location.reload();
+            }
+        }
+
+        // Générer de nouvelles données
+        function generateFreshData() {
+            if (typeof generateDemoData === 'function') {
+                generateDemoData();
+                alert('Nouvelles données générées !');
+            }
+        }
+
+        // Afficher l'utilisateur actuel
+        function showCurrentUser() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            alert(JSON.stringify(user, null, 2));
+        }
+
+        // Basculer le mode d'authentification (placeholder)
+        function toggleAuthMode() {
+            alert('Cette fonctionnalité permettrait de basculer entre mode demo et mode authentification réelle.');
+        }
+
+        // Initialiser au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserInfo();
+        });
+    </script>
+</body>
+</html>
