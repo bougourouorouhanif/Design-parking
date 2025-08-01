@@ -88,16 +88,16 @@
         <div id="registerForm" class="tab-content" style="display: none;">
             <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">Créer un compte</h2>
             
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-                <button class="btn" id="driverBtn" onclick="selectUserType('driver')" style="padding: 1rem; border: 2px solid #e9ecef; background: white; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
-                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🚗</div>
-                    <div style="font-weight: 600;">Conducteur</div>
-                    <div style="font-size: 0.8rem; color: #666;">Je cherche des places</div>
+            <div class="user-type-selector">
+                <button class="user-type-btn active" id="driverBtn" onclick="selectUserType('driver')">
+                    <div class="user-type-icon">🚗</div>
+                    <div class="user-type-title">Conducteur</div>
+                    <div class="user-type-subtitle">Je cherche des places</div>
                 </button>
-                <button class="btn" id="ownerBtn" onclick="selectUserType('owner')" style="padding: 1rem; border: 2px solid #e9ecef; background: white; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
-                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏠</div>
-                    <div style="font-weight: 600;">Propriétaire</div>
-                    <div style="font-size: 0.8rem; color: #666;">Je loue mes places</div>
+                <button class="user-type-btn" id="ownerBtn" onclick="selectUserType('owner')">
+                    <div class="user-type-icon">🏠</div>
+                    <div class="user-type-title">Propriétaire</div>
+                    <div class="user-type-subtitle">Je loue mes places</div>
                 </button>
             </div>
 
