@@ -626,33 +626,80 @@ p {
 }
 
 .auth-container {
-  max-width: 400px;
-  margin: 4rem auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: min(440px, calc(100% - 2rem));
+  margin: clamp(2rem, 6vw, 4rem) auto;
+  background: var(--surface-color);
+  padding: clamp(1.5rem, 4vw, 2rem);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-heavy);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.auth-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .tabs {
   display: flex;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #e9ecef;
+  margin-bottom: var(--spacing-xl);
+  border-bottom: 2px solid var(--border-color);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  overflow: hidden;
 }
 
 .tab {
   flex: 1;
-  padding: 1rem;
+  padding: clamp(0.8rem, 2.5vw, 1rem);
   text-align: center;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.3s;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  background: var(--background-color);
+  color: var(--text-secondary);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab:hover {
+  background: rgba(74, 144, 226, 0.05);
+  color: var(--primary-color);
 }
 
 .tab.active {
-  border-bottom-color: #4A90E2;
-  color: #4A90E2;
+  border-bottom-color: var(--primary-color);
+  color: var(--primary-color);
   font-weight: 600;
+  background: var(--surface-color);
+}
+
+.tab-content {
+  animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .navigation-interface {
