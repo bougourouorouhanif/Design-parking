@@ -158,51 +158,67 @@
 
     <script>
         let selectedUserType = 'driver';
+        let selectedLoginType = 'driver';
 
         function switchTab(tab) {
             // Update tab buttons
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelector(`.tab:nth-child(${tab === 'login' ? '1' : '2'})`).classList.add('active');
-            
+
             // Update tab content
             document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
             document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
         }
 
+        function selectLoginType(type) {
+            selectedLoginType = type;
+
+            // Reset buttons
+            document.getElementById('loginDriverBtn').style.borderColor = '#e9ecef';
+            document.getElementById('loginDriverBtn').style.backgroundColor = 'white';
+            document.getElementById('loginOwnerBtn').style.borderColor = '#e9ecef';
+            document.getElementById('loginOwnerBtn').style.backgroundColor = 'white';
+
+            // Highlight selected
+            const selectedBtn = document.getElementById('login' + type.charAt(0).toUpperCase() + type.slice(1) + 'Btn');
+            selectedBtn.style.borderColor = '#4A90E2';
+            selectedBtn.style.backgroundColor = '#f8f9ff';
+        }
+
         function selectUserType(type) {
             selectedUserType = type;
-            
+
             // Reset buttons
             document.getElementById('driverBtn').style.borderColor = '#e9ecef';
             document.getElementById('driverBtn').style.backgroundColor = 'white';
             document.getElementById('ownerBtn').style.borderColor = '#e9ecef';
             document.getElementById('ownerBtn').style.backgroundColor = 'white';
-            
+
             // Highlight selected
             const selectedBtn = document.getElementById(type + 'Btn');
-            selectedBtn.style.borderColor = '#667eea';
+            selectedBtn.style.borderColor = '#4A90E2';
             selectedBtn.style.backgroundColor = '#f8f9ff';
         }
 
         function handleLogin(event) {
             event.preventDefault();
-            
+
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-            
+
             // Simulate login
             localStorage.setItem('user', JSON.stringify({
                 email: email,
                 name: email.split('@')[0],
-                type: 'driver'
+                type: selectedLoginType
             }));
-            
+
             // Show success notification
             showNotification('Connexion réussie!', 'success');
-            
-            // Redirect after short delay
+
+            // Redirect based on user type
             setTimeout(() => {
-                window.location.href = '/dashboard';
+                window.location.href = selectedLoginType === 'owner' ? '/owner' : '/dashboard';
             }, 1000);
         }
 
