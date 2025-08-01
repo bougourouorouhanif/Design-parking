@@ -685,19 +685,22 @@ p {
 }
 
 .payment-form {
-  max-width: 500px;
-  margin: 2rem auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: min(500px, calc(100% - 2rem));
+  margin: var(--spacing-xl) auto;
+  background: var(--surface-color);
+  padding: clamp(1.5rem, 4vw, 2rem);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-heavy);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .payment-summary {
-  background: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  background: var(--background-color);
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-xl);
+  border: 1px solid var(--border-color);
 }
 
 .auth-container {
