@@ -410,25 +410,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
 }
 
-.floating-action {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
-  color: white;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
-  transition: transform 0.3s;
-}
-
-.floating-action:hover {
-  transform: scale(1.1);
-}
+/* Bouton flottant supprimé - navigation via menu burger */
 
 @media (max-width: 768px) {
   .search-form {
