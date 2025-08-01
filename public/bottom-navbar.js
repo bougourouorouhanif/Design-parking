@@ -252,10 +252,6 @@ class BottomNavbar {
     }
 
     // Fonctions utilitaires
-    getFavoritesCount() {
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-        return favorites.length;
-    }
 
     getNotificationCount() {
         const count = localStorage.getItem('notificationCount') || '0';
