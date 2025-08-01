@@ -3133,11 +3133,67 @@ input:checked + .slider:before {
   z-index: 1;
 }
 
+.revenue-progress {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.progress-ring {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.progress-percentage {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+}
+
+.progress-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .revenue-breakdown {
   display: grid;
   gap: 8px;
   position: relative;
   z-index: 1;
+  margin-bottom: 15px;
+}
+
+.revenue-forecast {
+  position: relative;
+  z-index: 1;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.forecast-item {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.forecast-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.forecast-value {
+  color: #7ED6A7;
+  font-size: 1.1rem;
 }
 
 .breakdown-item {
