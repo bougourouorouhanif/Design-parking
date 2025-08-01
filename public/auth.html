@@ -176,15 +176,13 @@
             selectedLoginType = type;
 
             // Reset buttons
-            document.getElementById('loginDriverBtn').style.borderColor = '#e9ecef';
-            document.getElementById('loginDriverBtn').style.backgroundColor = 'white';
-            document.getElementById('loginOwnerBtn').style.borderColor = '#e9ecef';
-            document.getElementById('loginOwnerBtn').style.backgroundColor = 'white';
+            document.querySelectorAll('#loginForm .user-type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
 
             // Highlight selected
             const selectedBtn = document.getElementById('login' + type.charAt(0).toUpperCase() + type.slice(1) + 'Btn');
-            selectedBtn.style.borderColor = '#4A90E2';
-            selectedBtn.style.backgroundColor = '#f8f9ff';
+            selectedBtn.classList.add('active');
         }
 
         function selectUserType(type) {
