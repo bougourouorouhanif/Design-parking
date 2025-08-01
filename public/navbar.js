@@ -152,7 +152,7 @@ function updateUserProfile() {
     const userAvatar = document.getElementById('userAvatar');
     const userName = document.getElementById('userName');
     const userRole = document.getElementById('userRole');
-    
+
     if (userProfile && userAvatar) {
         if (user.name) {
             // Utilisateur connecté
@@ -166,6 +166,63 @@ function updateUserProfile() {
             if (userName) userName.textContent = 'Connexion';
             if (userRole) userRole.textContent = 'Cliquez ici';
         }
+    }
+
+    // Adapter le menu selon le rôle de l'utilisateur
+    adaptMenuForUserRole(user);
+}
+
+function adaptMenuForUserRole(user) {
+    const mobileMenuLinks = document.querySelector('.mobile-menu-links');
+    if (!mobileMenuLinks) return;
+
+    // Définir les liens selon le rôle
+    let menuItems = [];
+
+    if (user.type === 'owner') {
+        // Menu pour propriétaires
+        menuItems = [
+            { href: '/owner', icon: '🏠', text: 'Tableau de bord' },
+            { href: '/add-spot', icon: '➕', text: 'Ajouter place' },
+            { href: '/owner-reservations', icon: '📅', text: 'Réservations' },
+            { href: '/owner-earnings', icon: '💰', text: 'Revenus' },
+            { href: '/owner-profile', icon: '👤', text: 'Profil' },
+            { href: '#', icon: '🔐', text: 'Déconnexion', onclick: 'logout()' }
+        ];
+    } else {
+        // Menu pour conducteurs (par défaut)
+        menuItems = [
+            { href: '/', icon: '🏠', text: 'Accueil' },
+            { href: '/map', icon: '🗺️', text: 'Rechercher une place' },
+            { href: '/dashboard', icon: '📊', text: 'Mes réservations' },
+            { href: '/payment', icon: '💳', text: 'Paiements' },
+            { href: '/navigation', icon: '🧭', text: 'Navigation' },
+            { href: user.name ? '#' : '/auth', icon: '🔐', text: user.name ? 'Déconnexion' : 'Connexion', onclick: user.name ? 'logout()' : null }
+        ];
+    }
+
+    // Reconstruire le menu
+    mobileMenuLinks.innerHTML = '';
+    menuItems.forEach(item => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = item.href;
+        a.innerHTML = `${item.icon} ${item.text}`;
+        a.onclick = function() {
+            closeMobileMenu();
+            if (item.onclick) {
+                eval(item.onclick);
+            }
+        };
+        li.appendChild(a);
+        mobileMenuLinks.appendChild(li);
+    });
+}
+
+function logout() {
+    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+        localStorage.removeItem('user');
+        window.location.href = '/auth';
     }
 }
 
