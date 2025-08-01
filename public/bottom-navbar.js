@@ -349,9 +349,7 @@ class BottomNavbar {
             this.updateBadge('notifications', e.detail.count);
         });
 
-        document.addEventListener('updateFavoritesCount', (e) => {
-            this.updateBadge('favorites', e.detail.count);
-        });
+
 
         // Responsive
         window.addEventListener('resize', () => {
