@@ -189,15 +189,13 @@
             selectedUserType = type;
 
             // Reset buttons
-            document.getElementById('driverBtn').style.borderColor = '#e9ecef';
-            document.getElementById('driverBtn').style.backgroundColor = 'white';
-            document.getElementById('ownerBtn').style.borderColor = '#e9ecef';
-            document.getElementById('ownerBtn').style.backgroundColor = 'white';
+            document.querySelectorAll('#registerForm .user-type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
 
             // Highlight selected
             const selectedBtn = document.getElementById(type + 'Btn');
-            selectedBtn.style.borderColor = '#4A90E2';
-            selectedBtn.style.backgroundColor = '#f8f9ff';
+            selectedBtn.classList.add('active');
         }
 
         function handleLogin(event) {
