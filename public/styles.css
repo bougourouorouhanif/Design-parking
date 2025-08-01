@@ -451,18 +451,35 @@ p {
 
 .parking-spot {
   display: grid;
-  grid-template-columns: 100px 1fr auto;
-  gap: 1rem;
-  align-items: center;
-  padding: 1rem;
-  border: 2px solid #e9ecef;
-  border-radius: 12px;
-  margin: 1rem 0;
-  transition: border-color 0.3s;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+  align-items: stretch;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  margin: var(--spacing-md) 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--surface-color);
+  box-shadow: var(--shadow-light);
+}
+
+@media (min-width: 480px) {
+  .parking-spot {
+    grid-template-columns: 100px 1fr auto;
+    align-items: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .parking-spot {
+    grid-template-columns: 120px 1fr auto;
+  }
 }
 
 .parking-spot:hover {
-  border-color: #4A90E2;
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
 }
 
 .spot-image {
