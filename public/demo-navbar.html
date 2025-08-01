@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parky - Démonstration des améliorations UI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="navbar-enhanced.css">
+    <script src="navbar.js" defer></script>
+    <script src="bottom-navbar.js" defer></script>
+    <style>
+        .demo-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .icon-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .icon-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .icon-demo:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.2);
+        }
+        
+        .icon-demo .icon {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .icon-demo span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .navbar-preview {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: white;
+        }
+        
+        .demo-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        
+        .demo-burger, .demo-notification {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-burger:hover, .demo-notification:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+        
+        .demo-logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-logo::before {
+            content: '🅿️';
+            margin-right: 0.5rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+        
+        .feature-card .icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            color: white;
+        }
+        
+        .bottom-preview {
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .demo-bottom-navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+        
+        .demo-bottom-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        
+        .demo-bottom-item:hover, .demo-bottom-item.active {
+            color: var(--primary-color);
+            background: rgba(74, 144, 226, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .demo-bottom-item .icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 0.25rem;
+        }
+        
+        .demo-bottom-item span {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar moderne -->
+    <header class="header">
+        <div class="container">
+            <nav class="modern-nav">
+                <div class="nav-left">
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
+                </div>
+                
+                <div class="nav-center">
+                    <a href="/home" class="logo centered">Parky</a>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="notification-icon enhanced" onclick="toggleNotifications()">
+                        <div class="icon icon-bell icon-white icon-interactive"></div>
+                        <span class="notification-badge" id="notificationCount">3</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Menu mobile -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul class="mobile-menu-links">
+            <li><a href="/home">
+                <div class="icon icon-home icon-interactive"></div>
+                <span class="menu-text">Accueil</span>
+            </a></li>
+            <li><a href="/map">
+                <div class="icon icon-map icon-interactive"></div>
+                <span class="menu-text">Rechercher une place</span>
+            </a></li>
+            <li><a href="/profile">
+                <div class="icon icon-profile icon-interactive"></div>
+                <span class="menu-text">Mon Profil</span>
+            </a></li>
+            <li><a href="/payment">
+                <div class="icon icon-payment icon-interactive"></div>
+                <span class="menu-text">Paiement</span>
+            </a></li>
+            <li><a href="/navigation">
+                <div class="icon icon-navigation icon-interactive"></div>
+                <span class="menu-text">Navigation</span>
+            </a></li>
+            <li><a href="#" onclick="alert('Déconnexion')">
+                <div class="icon icon-logout icon-interactive"></div>
+                <span class="menu-text">Déconnexion</span>
+            </a></li>
+        </ul>
+    </div>
+
+    <main class="container" style="padding-top: 2rem;">
+        <h1 style="text-align: center; color: var(--primary-color); margin-bottom: 3rem;">
+            🎨 Démonstration des améliorations UI - Parky
+        </h1>
+
+        <!-- Section des icônes -->
+        <div class="demo-section">
+            <h2>🎯 Système d'icônes modernes</h2>
+            <p>Nouvelles icônes SVG personnalisées avec animations et états interactifs :</p>
+            
+            <div class="icon-showcase">
+                <div class="icon-demo">
+                    <div class="icon icon-home icon-interactive icon-animated"></div>
+                    <span>Accueil</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-search icon-interactive icon-pulse"></div>
+                    <span>Recherche</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-map icon-interactive"></div>
+                    <span>Carte</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-parking icon-interactive icon-bounce"></div>
+                    <span>Parking</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-profile icon-interactive"></div>
+                    <span>Profil</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-payment icon-interactive"></div>
+                    <span>Paiement</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-bell icon-interactive icon-with-badge"></div>
+                    <span>Notifications</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-navigation icon-interactive"></div>
+                    <span>Navigation</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-reservations icon-interactive"></div>
+                    <span>Réservations</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-dashboard icon-interactive"></div>
+                    <span>Tableau de bord</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-earnings icon-interactive"></div>
+                    <span>Revenus</span>
+                </div>
+                <div class="icon-demo">
+                    <div class="icon icon-add icon-interactive"></div>
+                    <span>Ajouter</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section navbar top -->
+        <div class="demo-section">
+            <h2>📱 Navbar supérieure améliorée</h2>
+            <p>Design moderne avec effet glassmorphism, animations fluides et éléments interactifs :</p>
+            
+            <div class="navbar-preview">
+                <div class="demo-navbar">
+                    <div class="demo-burger">
+                        <div class="icon icon-menu icon-white"></div>
+                    </div>
+                    <div class="demo-logo">Parky</div>
+                    <div class="demo-notification">
+                        <div class="icon icon-bell icon-white icon-with-badge">
+                            <span class="icon-badge">3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon icon-menu"></div>
+                    <h3>Menu Burger Amélioré</h3>
+                    <p>Animation fluide, effet glassmorphism et feedback visuel</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon icon-bell"></div>
+                    <h3>Notifications Modernes</h3>
+                    <p>Badge animé, dropdown élégant avec backdrop blur</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon icon-parking"></div>
+                    <h3>Logo Interactif</h3>
+                    <p>Effet hover, ombre portée et animation de scaling</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section navbar bottom -->
+        <div class="demo-section">
+            <h2>🔥 Navigation inférieure redesignée</h2>
+            <p>Interface épurée avec icônes modernes et animations subtiles :</p>
+            
+            <div class="bottom-preview">
+                <div class="demo-bottom-navbar">
+                    <div class="demo-bottom-item active">
+                        <div class="icon icon-home"></div>
+                        <span>Accueil</span>
+                    </div>
+                    <div class="demo-bottom-item">
+                        <div class="icon icon-search"></div>
+                        <span>Recherche</span>
+                    </div>
+                    <div class="demo-bottom-item">
+                        <div class="icon icon-reservations"></div>
+                        <span>Réservations</span>
+                    </div>
+                    <div class="demo-bottom-item">
+                        <div class="icon icon-bell icon-with-badge">
+                            <span class="icon-badge">2</span>
+                        </div>
+                        <span>Notifications</span>
+                    </div>
+                    <div class="demo-bottom-item">
+                        <div class="icon icon-profile"></div>
+                        <span>Profil</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section fonctionnalités -->
+        <div class="demo-section">
+            <h2>✨ Nouvelles fonctionnalités</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="icon icon-interactive"></div>
+                    <h3>Icônes Interactives</h3>
+                    <p>Hover effects, animations et feedback visuel pour chaque interaction</p>
+                </div>
+                
+                <div class="feature-card" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333;">
+                    <div class="icon icon-navigation" style="color: #333;"></div>
+                    <h3>Design Responsive</h3>
+                    <p>Adaptation parfaite sur tous les appareils avec breakpoints optimisés</p>
+                </div>
+                
+                <div class="feature-card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333;">
+                    <div class="icon icon-dashboard" style="color: #333;"></div>
+                    <h3>Performance Optimisée</h3>
+                    <p>Animations CSS hardware-accelerated et chargement optimisé</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 3rem 0; color: var(--text-secondary);">
+            <p>🚀 <strong>Parky</strong> - Interface utilisateur moderne et intuitive</p>
+            <p>Testez la navigation en cliquant sur le menu burger ci-dessus !</p>
+        </div>
+    </main>
+
+    <!-- Bottom navbar moderne -->
+    <div class="bottom-navbar">
+        <div class="bottom-nav-content">
+            <a href="/" class="bottom-nav-item active">
+                <div class="bottom-nav-icon">
+                    <div class="icon icon-home"></div>
+                </div>
+                <span class="bottom-nav-label">Accueil</span>
+            </a>
+            <a href="/map" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <div class="icon icon-search"></div>
+                </div>
+                <span class="bottom-nav-label">Recherche</span>
+            </a>
+            <a href="/dashboard" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <div class="icon icon-reservations"></div>
+                </div>
+                <span class="bottom-nav-label">Réservations</span>
+            </a>
+            <a href="#" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <div class="icon icon-bell icon-with-badge">
+                        <span class="bottom-nav-badge">2</span>
+                    </div>
+                </div>
+                <span class="bottom-nav-label">Notifications</span>
+            </a>
+            <a href="/profile" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <div class="icon icon-profile"></div>
+                </div>
+                <span class="bottom-nav-label">Profil</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Simuler l'état utilisateur connecté
+        localStorage.setItem('user', JSON.stringify({
+            name: 'Demo User',
+            type: 'driver'
+        }));
+
+        // Animation des icônes de démonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            const iconDemos = document.querySelectorAll('.icon-demo');
+            iconDemos.forEach((demo, index) => {
+                demo.style.animationDelay = `${index * 0.1}s`;
+                demo.style.animation = 'fadeInUp 0.6s ease forwards';
+            });
+
+            // Interaction avec les items de la bottom navbar de démonstration
+            const demoBottomItems = document.querySelectorAll('.demo-bottom-item');
+            demoBottomItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    demoBottomItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
