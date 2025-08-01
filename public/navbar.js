@@ -207,7 +207,7 @@ function adaptMenuForUserRole(user) {
         const li = document.createElement('li');
         const a = document.createElement('a');
         a.href = item.href;
-        a.innerHTML = `${item.icon} ${item.text}`;
+        a.innerHTML = `${item.icon} <span class="menu-text">${item.text}</span>`;
         a.onclick = function() {
             closeMobileMenu();
             if (item.onclick) {
