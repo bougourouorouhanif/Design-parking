@@ -150,7 +150,7 @@
 
                 <div class="form-group">
                     <label for="confirmPassword">Confirmer le mot de passe</label>
-                    <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                    <input type="password" id="confirmPassword" placeholder="••••••���•" required>
                 </div>
 
                 <div style="margin: 1rem 0;">
@@ -275,20 +275,56 @@
         function socialLogin(provider) {
             // Simulate social login
             showNotification(`Connexion avec ${provider} en cours...`, 'info');
-            
+
             setTimeout(() => {
                 localStorage.setItem('user', JSON.stringify({
                     email: 'user@' + provider + '.com',
                     name: 'Utilisateur ' + provider,
                     type: 'driver'
                 }));
-                
+
                 showNotification('Connexion réussie!', 'success');
-                
+
                 setTimeout(() => {
                     window.location.href = '/home';
                 }, 1000);
             }, 1500);
+        }
+
+        // MODE DEMO - Connexion rapide sans formulaire
+        function quickDemoLogin(userType) {
+            const demoUsers = {
+                driver: {
+                    email: 'demo.conducteur@parky.com',
+                    name: 'Conducteur Demo',
+                    phone: '+33 6 12 34 56 78',
+                    type: 'driver'
+                },
+                owner: {
+                    email: 'demo.proprietaire@parky.com',
+                    name: 'Propriétaire Demo',
+                    phone: '+33 6 87 65 43 21',
+                    type: 'owner'
+                }
+            };
+
+            const selectedUser = demoUsers[userType];
+
+            // Sauvegarder l'utilisateur demo
+            localStorage.setItem('user', JSON.stringify(selectedUser));
+
+            // Générer des données demo
+            if (typeof generateDemoData === 'function') {
+                generateDemoData();
+            }
+
+            // Afficher notification
+            showNotification(`🎭 Connexion en mode Demo ${userType === 'owner' ? 'Propriétaire' : 'Conducteur'}!`, 'success');
+
+            // Redirection selon le type
+            setTimeout(() => {
+                window.location.href = userType === 'owner' ? '/owner' : '/home';
+            }, 1000);
         }
 
         function showNotification(message, type) {
