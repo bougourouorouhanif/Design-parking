@@ -483,25 +483,53 @@ p {
 }
 
 .spot-image {
-  width: 100px;
-  height: 80px;
-  background: #e9ecef;
-  border-radius: 8px;
+  width: 100%;
+  max-width: 120px;
+  height: clamp(60px, 12vw, 80px);
+  background: var(--border-color);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+@media (min-width: 480px) {
+  .spot-image {
+    width: 100px;
+    margin: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .spot-image {
+    width: 120px;
+  }
+}
+
+.spot-image:hover {
+  transform: scale(1.05);
 }
 
 .spot-info h3 {
-  margin-bottom: 0.5rem;
-  color: #333;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
 }
 
 .spot-details {
   display: flex;
-  gap: 1rem;
-  margin: 0.5rem 0;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-sm) 0;
+}
+
+@media (max-width: 479px) {
+  .spot-details {
+    justify-content: center;
+  }
 }
 
 .spot-tag {
