@@ -19,28 +19,28 @@ class BottomNavbar {
         this.defaultItems = [
             {
                 id: 'home',
-                icon: '🏠',
+                icon: '<div class="icon icon-home icon-interactive"></div>',
                 label: 'Accueil',
                 href: '/',
                 badge: null
             },
             {
                 id: 'search',
-                icon: '🔍',
+                icon: '<div class="icon icon-search icon-interactive"></div>',
                 label: 'Recherche',
                 href: '/map',
                 badge: null
             },
             {
                 id: 'reservations',
-                icon: '📅',
+                icon: '<div class="icon icon-reservations icon-interactive"></div>',
                 label: 'Réservations',
                 href: '/dashboard',
                 badge: null
             },
             {
                 id: 'notifications',
-                icon: '🔔',
+                icon: '<div class="icon icon-bell icon-interactive icon-with-badge"></div>',
                 label: 'Notifications',
                 href: '#',
                 badge: this.getNotificationCount(),
@@ -49,7 +49,7 @@ class BottomNavbar {
             },
             {
                 id: 'profile',
-                icon: '👤',
+                icon: '<div class="icon icon-profile icon-interactive"></div>',
                 label: 'Profil',
                 href: '/profile',
                 badge: null
