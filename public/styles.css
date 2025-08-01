@@ -2274,9 +2274,21 @@ input:checked + .slider:before {
 
 /* Containers spécifiques */
 .reservations-container,
-.earnings-container {
+.earnings-container,
+.profile-container {
   margin-top: 20px;
-  margin-bottom: 100px;
+  margin-bottom: 120px;
+  padding-bottom: 20px;
+}
+
+/* Padding pour toutes les pages propriétaires */
+body:has(.owner-header) {
+  padding-bottom: 100px;
+}
+
+/* Override pour les containers spécifiques */
+.container:has(.owner-bottom-navbar) {
+  margin-bottom: 120px;
 }
 
 /* Quick stats améliorées */
