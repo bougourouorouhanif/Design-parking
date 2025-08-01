@@ -192,7 +192,7 @@ function adaptMenuForUserRole(user) {
     } else {
         // Menu pour conducteurs (par défaut)
         menuItems = [
-            { href: '/', icon: '🏠', text: 'Accueil' },
+            { href: '/home', icon: '🏠', text: 'Accueil' },
             { href: '/map', icon: '🗺️', text: 'Rechercher une place' },
             { href: '/dashboard', icon: '📊', text: 'Mes réservations' },
             { href: '/payment', icon: '💳', text: 'Paiements' },
