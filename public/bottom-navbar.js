@@ -32,12 +32,11 @@ class BottomNavbar {
                 badge: null
             },
             {
-                id: 'favorites',
-                icon: '❤️',
-                label: 'Favoris',
-                href: '/favorites',
-                badge: this.getFavoritesCount(),
-                dataIcon: 'heart'
+                id: 'reservations',
+                icon: '📅',
+                label: 'Réservations',
+                href: '/dashboard',
+                badge: null
             },
             {
                 id: 'notifications',
@@ -52,7 +51,7 @@ class BottomNavbar {
                 id: 'profile',
                 icon: '👤',
                 label: 'Profil',
-                href: '/dashboard',
+                href: '/profile',
                 badge: null
             }
         ];

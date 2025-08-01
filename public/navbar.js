@@ -194,8 +194,8 @@ function adaptMenuForUserRole(user) {
         menuItems = [
             { href: '/home', icon: '🏠', text: 'Accueil' },
             { href: '/map', icon: '🗺️', text: 'Rechercher une place' },
-            { href: '/dashboard', icon: '📊', text: 'Mes réservations' },
-            { href: '/payment', icon: '💳', text: 'Paiements' },
+            { href: '/profile', icon: '👤', text: 'Mon Profil' },
+            { href: '/payment', icon: '💳', text: 'Paiement' },
             { href: '/navigation', icon: '🧭', text: 'Navigation' },
             { href: user.name ? '#' : '/auth', icon: '🔐', text: user.name ? 'Déconnexion' : 'Connexion', onclick: user.name ? 'logout()' : null }
         ];
