@@ -30,7 +30,18 @@
         <!-- Login Form -->
         <div id="loginForm" class="tab-content">
             <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">Connectez-vous</h2>
-            
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                <button class="btn" id="loginDriverBtn" onclick="selectLoginType('driver')" style="padding: 1rem; border: 2px solid #4A90E2; background: #f8f9ff; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">🚗</div>
+                    <div style="font-weight: 600;">Conducteur</div>
+                </button>
+                <button class="btn" id="loginOwnerBtn" onclick="selectLoginType('owner')" style="padding: 1rem; border: 2px solid #e9ecef; background: white; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.3rem;">🏠</div>
+                    <div style="font-weight: 600;">Propriétaire</div>
+                </button>
+            </div>
+
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label for="loginEmail">Email</label>
