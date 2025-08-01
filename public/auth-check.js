@@ -1,51 +1,42 @@
-// Script de vérification d'authentification
+// Script de vérification d'authentification - MODE DEMO (vérifications désactivées)
 (function() {
     'use strict';
-    
-    // Pages qui ne nécessitent pas d'authentification
-    const publicPages = ['/auth', '/auth.html', '/', '/index.html'];
-    
-    // Obtenir la page actuelle
-    const currentPath = window.location.pathname;
-    
-    // Vérifier si c'est une page publique
-    const isPublicPage = publicPages.some(page => 
-        currentPath === page || currentPath.endsWith(page)
-    );
-    
-    // Si ce n'est pas une page publique, vérifier l'authentification
-    if (!isPublicPage) {
-        const user = localStorage.getItem('user');
-        
-        if (!user) {
-            // Rediriger vers l'authentification si pas connecté
-            showAuthRedirectMessage();
-            setTimeout(() => {
-                window.location.href = '/auth';
-            }, 2000);
-            return;
-        }
-        
-        try {
-            const userData = JSON.parse(user);
-            
-            // Vérifier les permissions de page selon le type d'utilisateur
-            if (currentPath.includes('/owner') && userData.type !== 'owner') {
-                showAccessDeniedMessage();
-                setTimeout(() => {
-                    window.location.href = userData.type === 'owner' ? '/owner' : '/home';
-                }, 2000);
-                return;
-            }
-            
-            // Adapter l'interface selon le type d'utilisateur
-            adaptInterfaceForUser(userData);
-            
-        } catch (error) {
-            console.error('Erreur de parsing des données utilisateur:', error);
-            localStorage.removeItem('user');
-            window.location.href = '/auth';
-        }
+
+    // MODE DEMO: Créer automatiquement un utilisateur fictif si aucun n'existe
+    let user = localStorage.getItem('user');
+
+    if (!user) {
+        // Créer un utilisateur fictif par défaut
+        const demoUser = {
+            email: 'demo@parky.com',
+            name: 'Utilisateur Demo',
+            phone: '+33 6 12 34 56 78',
+            type: 'driver' // Par défaut conducteur, peut être changé
+        };
+
+        localStorage.setItem('user', JSON.stringify(demoUser));
+        user = JSON.stringify(demoUser);
+        console.log('🎭 Mode Demo activé - Utilisateur fictif créé automatiquement');
+    }
+
+    // Toujours adapter l'interface selon l'utilisateur (même fictif)
+    try {
+        const userData = JSON.parse(user);
+        adaptInterfaceForUser(userData);
+
+        // MODE DEMO: Permettre l'accès à toutes les pages même avec un type d'utilisateur différent
+        // (Pas de vérification de permissions strictes)
+
+    } catch (error) {
+        console.error('Erreur de parsing des données utilisateur:', error);
+        // En cas d'erreur, recréer un utilisateur demo
+        const demoUser = {
+            email: 'demo@parky.com',
+            name: 'Utilisateur Demo',
+            type: 'driver'
+        };
+        localStorage.setItem('user', JSON.stringify(demoUser));
+        adaptInterfaceForUser(demoUser);
     }
     
     function showAuthRedirectMessage() {
