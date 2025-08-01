@@ -128,7 +128,7 @@
             </div>
         </div>
 
-        <!-- Vue d'ensemble financière -->
+        <!-- Vue d'ensemble financière améliorée -->
         <div class="financial-overview">
             <div class="overview-card main-revenue">
                 <div class="card-header">
@@ -143,6 +143,25 @@
                 </div>
                 <div class="revenue-amount">€2,847.50</div>
                 <div class="revenue-subtitle">Ce mois-ci</div>
+                <div class="revenue-progress">
+                    <div class="progress-ring">
+                        <svg width="100" height="100">
+                            <circle cx="50" cy="50" r="40" stroke="#e9ecef" stroke-width="8" fill="none"/>
+                            <circle cx="50" cy="50" r="40" stroke="url(#gradient)" stroke-width="8" fill="none"
+                                    stroke-dasharray="251.2" stroke-dashoffset="62.8" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#7ED6A7;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="progress-text">
+                            <div class="progress-percentage">75%</div>
+                            <div class="progress-label">Objectif mensuel</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="revenue-breakdown">
                     <div class="breakdown-item">
                         <span class="breakdown-label">Revenus bruts:</span>
@@ -155,6 +174,12 @@
                     <div class="breakdown-item">
                         <span class="breakdown-label">Taxes:</span>
                         <span class="breakdown-value deduction">-€1.00</span>
+                    </div>
+                </div>
+                <div class="revenue-forecast">
+                    <div class="forecast-item">
+                        <span class="forecast-label">Prévision fin de mois:</span>
+                        <span class="forecast-value">€3,796</span>
                     </div>
                 </div>
             </div>
