@@ -182,22 +182,22 @@ function adaptMenuForUserRole(user) {
     if (user.type === 'owner') {
         // Menu pour propriétaires
         menuItems = [
-            { href: '/owner', icon: '🏠', text: 'Tableau de bord' },
-            { href: '/add-spot', icon: '➕', text: 'Ajouter place' },
-            { href: '/owner-reservations', icon: '📅', text: 'Réservations' },
-            { href: '/owner-earnings', icon: '💰', text: 'Revenus' },
-            { href: '/owner-profile', icon: '👤', text: 'Profil' },
-            { href: '#', icon: '🔐', text: 'Déconnexion', onclick: 'logout()' }
+            { href: '/owner', icon: '<div class="icon icon-dashboard icon-interactive"></div>', text: 'Tableau de bord' },
+            { href: '/add-spot', icon: '<div class="icon icon-add icon-interactive"></div>', text: 'Ajouter place' },
+            { href: '/owner-reservations', icon: '<div class="icon icon-reservations icon-interactive"></div>', text: 'Réservations' },
+            { href: '/owner-earnings', icon: '<div class="icon icon-earnings icon-interactive"></div>', text: 'Revenus' },
+            { href: '/owner-profile', icon: '<div class="icon icon-profile icon-interactive"></div>', text: 'Profil' },
+            { href: '#', icon: '<div class="icon icon-logout icon-interactive"></div>', text: 'Déconnexion', onclick: 'logout()' }
         ];
     } else {
         // Menu pour conducteurs (par défaut)
         menuItems = [
-            { href: '/home', icon: '🏠', text: 'Accueil' },
-            { href: '/map', icon: '🗺️', text: 'Rechercher une place' },
-            { href: '/profile', icon: '👤', text: 'Mon Profil' },
-            { href: '/payment', icon: '💳', text: 'Paiement' },
-            { href: '/navigation', icon: '🧭', text: 'Navigation' },
-            { href: user.name ? '#' : '/auth', icon: '🔐', text: user.name ? 'Déconnexion' : 'Connexion', onclick: user.name ? 'logout()' : null }
+            { href: '/home', icon: '<div class="icon icon-home icon-interactive"></div>', text: 'Accueil' },
+            { href: '/map', icon: '<div class="icon icon-map icon-interactive"></div>', text: 'Rechercher une place' },
+            { href: '/profile', icon: '<div class="icon icon-profile icon-interactive"></div>', text: 'Mon Profil' },
+            { href: '/payment', icon: '<div class="icon icon-payment icon-interactive"></div>', text: 'Paiement' },
+            { href: '/navigation', icon: '<div class="icon icon-navigation icon-interactive"></div>', text: 'Navigation' },
+            { href: user.name ? '#' : '/auth', icon: '<div class="icon icon-logout icon-interactive"></div>', text: user.name ? 'Déconnexion' : 'Connexion', onclick: user.name ? 'logout()' : null }
         ];
     }
 
