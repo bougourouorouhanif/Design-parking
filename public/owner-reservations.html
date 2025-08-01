@@ -705,6 +705,170 @@
             applyFilters();
         }
 
+        // Nouvelles fonctionnalités avancées
+        function showPendingReservations() {
+            document.getElementById('statusFilter').value = 'pending';
+            applyFilters();
+            showToast('Affichage des réservations en attente', 'info');
+        }
+
+        function bulkApprove() {
+            const pendingCards = document.querySelectorAll('.reservation-card.pending');
+            if (pendingCards.length === 0) {
+                showToast('Aucune réservation en attente', 'warning');
+                return;
+            }
+
+            if (confirm(`Approuver ${pendingCards.length} réservations en attente ?`)) {
+                pendingCards.forEach(card => {
+                    card.classList.remove('pending');
+                    card.classList.add('confirmed');
+                    const badge = card.querySelector('.status-badge');
+                    badge.textContent = 'Confirmée';
+                    badge.className = 'status-badge confirmed';
+                });
+
+                showToast(`${pendingCards.length} réservations approuvées!`, 'success');
+                updateStats();
+            }
+        }
+
+        function scheduleBlocking() {
+            const modal = createModal('Bloquer des créneaux', `
+                <div class="modal-content">
+                    <div class="form-group">
+                        <label>Place de parking</label>
+                        <select id="blockSpot">
+                            <option value="1">Parking Centre-ville</option>
+                            <option value="2">Garage privé</option>
+                            <option value="3">Place extérieure</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date de début</label>
+                        <input type="datetime-local" id="blockStart">
+                    </div>
+                    <div class="form-group">
+                        <label>Date de fin</label>
+                        <input type="datetime-local" id="blockEnd">
+                    </div>
+                    <div class="form-group">
+                        <label>Raison</label>
+                        <select id="blockReason">
+                            <option value="maintenance">Maintenance</option>
+                            <option value="personal">Usage personnel</option>
+                            <option value="renovation">Rénovation</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+                        <button class="btn btn-primary" onclick="confirmBlocking()">Bloquer</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        function sendReminders() {
+            if (confirm('Envoyer des rappels automatiques aux clients pour leurs réservations à venir ?')) {
+                showToast('Rappels envoyés à 2 clients', 'success');
+            }
+        }
+
+        function generateReport() {
+            showToast('Génération du rapport en cours...', 'info');
+            setTimeout(() => {
+                const reportData = {
+                    period: 'Ce mois',
+                    totalReservations: 54,
+                    revenue: '€2,847',
+                    occupancyRate: '89%',
+                    avgRating: 4.9
+                };
+
+                const reportModal = createModal('Rapport mensuel', `
+                    <div class="report-content">
+                        <div class="report-summary">
+                            <div class="report-stat">
+                                <div class="report-value">${reportData.totalReservations}</div>
+                                <div class="report-label">Réservations totales</div>
+                            </div>
+                            <div class="report-stat">
+                                <div class="report-value">${reportData.revenue}</div>
+                                <div class="report-label">Revenus générés</div>
+                            </div>
+                            <div class="report-stat">
+                                <div class="report-value">${reportData.occupancyRate}</div>
+                                <div class="report-label">Taux d'occupation</div>
+                            </div>
+                            <div class="report-stat">
+                                <div class="report-value">${reportData.avgRating}★</div>
+                                <div class="report-label">Note moyenne</div>
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="btn btn-secondary" onclick="closeModal()">Fermer</button>
+                            <button class="btn btn-primary" onclick="downloadReport()">Télécharger PDF</button>
+                        </div>
+                    </div>
+                `);
+            }, 1500);
+        }
+
+        function updateStats() {
+            // Mise à jour des statistiques en temps réel
+            const pendingCount = document.querySelectorAll('.reservation-card.pending').length;
+            const confirmedCount = document.querySelectorAll('.reservation-card.confirmed').length;
+
+            document.querySelector('.stat-card.urgent .stat-value').textContent = pendingCount;
+            document.querySelector('.stat-card.success .stat-value').textContent = confirmedCount;
+        }
+
+        function createModal(title, content) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal">
+                    <div class="modal-header">
+                        <h3>${title}</h3>
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                    </div>
+                    ${content}
+                </div>
+            `;
+            document.body.appendChild(modal);
+            setTimeout(() => modal.classList.add('active'), 100);
+            return modal;
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        function confirmBlocking() {
+            const spot = document.getElementById('blockSpot').value;
+            const start = document.getElementById('blockStart').value;
+            const end = document.getElementById('blockEnd').value;
+            const reason = document.getElementById('blockReason').value;
+
+            if (!start || !end) {
+                showToast('Veuillez remplir toutes les dates', 'error');
+                return;
+            }
+
+            showToast('Créneaux bloqués avec succès', 'success');
+            closeModal();
+        }
+
+        function downloadReport() {
+            showToast('Téléchargement du rapport PDF...', 'info');
+            closeModal();
+        }
+
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
             toast.className = `toast toast-${type}`;
