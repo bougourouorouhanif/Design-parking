@@ -368,6 +368,14 @@
             window.location.href = '/auth-modern.html';
         }
 
+        function resetDemo() {
+            localStorage.removeItem('notifications');
+            if (window.burgerMenu) {
+                burgerMenu.updateNotificationBadge();
+                showDemoToast('Notifications supprimées! 🗑️', 'success');
+            }
+        }
+
         function updateStatusIndicator() {
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             const userTypeEl = document.getElementById('currentUserType');
