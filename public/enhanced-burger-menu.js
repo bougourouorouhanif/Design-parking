@@ -139,10 +139,8 @@ class EnhancedBurgerMenu {
         document.body.classList.remove('driver-interface', 'owner-interface');
         document.body.classList.add(`${this.currentUser.type}-interface`);
 
-        // Ajouter la classe pour bottom navbar si conducteur
-        if (this.currentUser.type === 'driver') {
-            document.body.classList.add('with-bottom-navbar');
-        }
+        // Ajouter la classe pour bottom navbar (toujours maintenant)
+        document.body.classList.add('with-bottom-navbar');
     }
 
     createMenuStructure() {
