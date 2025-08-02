@@ -117,8 +117,12 @@ class EnhancedBurgerMenu {
         const userData = localStorage.getItem('user');
         if (userData) {
             this.currentUser = JSON.parse(userData);
+            // S'assurer que les conducteurs restent conducteurs
+            if (this.currentUser.type !== 'owner') {
+                this.currentUser.type = 'driver';
+            }
         } else {
-            // Utilisateur demo par défaut
+            // Utilisateur demo par défaut (toujours conducteur)
             this.currentUser = {
                 name: 'Utilisateur Demo',
                 email: 'demo@parky.com',
@@ -131,6 +135,11 @@ class EnhancedBurgerMenu {
         // Ajouter la classe CSS correspondante au body
         document.body.classList.remove('driver-interface', 'owner-interface');
         document.body.classList.add(`${this.currentUser.type}-interface`);
+
+        // Ajouter la classe pour bottom navbar si conducteur
+        if (this.currentUser.type === 'driver') {
+            document.body.classList.add('with-bottom-navbar');
+        }
     }
 
     createMenuStructure() {
