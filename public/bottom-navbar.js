@@ -4,11 +4,11 @@ class BottomNavbar {
         this.options = {
             theme: options.theme || 'light', // light, dark
             style: options.style || 'default', // default, floating, compact
-            alwaysVisible: options.alwaysVisible || false,
+            alwaysVisible: options.alwaysVisible || true, // Toujours visible pour les conducteurs
             showLabels: options.showLabels !== false,
             customItems: options.customItems || null,
             onItemClick: options.onItemClick || null,
-            autoHide: options.autoHide || false,
+            autoHide: false, // Désactiver le masquage automatique
             ...options
         };
 
