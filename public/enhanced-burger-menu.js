@@ -523,6 +523,23 @@ class EnhancedBurgerMenu {
                 }
             }
         });
+
+        // Mettre à jour la bottom navbar
+        this.updateBottomNavBadge();
+    }
+
+    updateBottomNavBadge() {
+        const count = this.getNotificationCount();
+        const badge = document.getElementById('bottomNotificationBadge');
+
+        if (badge) {
+            if (count > 0) {
+                badge.textContent = count;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
     }
 
     simulateNotifications() {
