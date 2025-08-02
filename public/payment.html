@@ -3,448 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paiement - Parky</title>
+    <title>Parky - Paiements</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="navbar-enhanced.css">
+    <script src="auth-check.js"></script>
+    <script src="navbar.js" defer></script>
+    <script src="bottom-navbar.js" defer></script>
 </head>
 <body>
+    <!-- Navbar moderne -->
     <header class="header">
         <div class="container">
-            <nav class="nav">
-                <a href="/" class="logo">Parky</a>
-                <ul class="nav-links">
-                    <li><a href="/map">Carte</a></li>
-                    <li><a href="/dashboard">Mes réservations</a></li>
-                    <li><a href="/owner">Propriétaire</a></li>
-                    <li><a href="/auth">Connexion</a></li>
-                </ul>
+            <nav class="modern-nav">
+                <div class="nav-left">
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
+                </div>
+                
+                <div class="nav-center">
+                    <a href="/home" class="logo centered">Parky</a>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="notification-icon enhanced" onclick="goToNotifications()">
+                        <div class="icon icon-bell icon-white icon-interactive"></div>
+                        <span class="notification-badge" id="notificationCount">2</span>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
 
-    <div class="container" style="padding: 2rem 20px;">
-        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
-            <button onclick="history.back()" class="btn btn-secondary" style="padding: 0.5rem 1rem;">← Retour</button>
-            <h1>Finaliser ma réservation</h1>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 400px; gap: 2rem; align-items: start;">
-            <div>
-                <!-- Booking Summary -->
-                <div class="card" style="margin-bottom: 2rem;">
-                    <h2>📋 Récapitulatif de la réservation</h2>
-                    
-                    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 1rem; margin: 1.5rem 0;">
-                        <div style="background: #f8f9fa; border-radius: 8px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
-                            🏢
-                        </div>
-                        <div>
-                            <h3 style="margin: 0 0 0.5rem 0;" id="bookingSpotName">Parking Centre-ville</h3>
-                            <p style="color: #666; margin: 0;" id="bookingAddress">15 Rue de la République, 75001 Paris</p>
-                            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
-                                <span class="spot-tag covered">Couvert</span>
-                                <span class="spot-tag">Sécurisé</span>
-                                <span class="spot-tag">24h/24</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 0.2rem;">📅 Date et heure d'arrivée</div>
-                                <div id="bookingStart">Aujourd'hui à 15:00</div>
-                            </div>
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 0.2rem;">🕐 Date et heure de départ</div>
-                                <div id="bookingEnd">Aujourd'hui à 18:00</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="font-weight: 600; margin-bottom: 0.2rem;">🚗 Véhicule</div>
-                            <div id="bookingVehicle">Peugeot 308 - AB-123-CD</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Payment Method -->
-                <div class="payment-form">
-                    <h2>💳 Méthode de paiement</h2>
-                    
-                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-                        <label style="flex: 1; cursor: pointer;">
-                            <input type="radio" name="paymentMethod" value="card" checked onchange="selectPaymentMethod('card')" style="margin-right: 0.5rem;">
-                            <span style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem; border: 2px solid #e9ecef; border-radius: 8px; transition: all 0.3s;" id="cardMethod">
-                                💳 Carte bancaire
-                            </span>
-                        </label>
-                        <label style="flex: 1; cursor: pointer;">
-                            <input type="radio" name="paymentMethod" value="paypal" onchange="selectPaymentMethod('paypal')" style="margin-right: 0.5rem;">
-                            <span style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem; border: 2px solid #e9ecef; border-radius: 8px; transition: all 0.3s;" id="paypalMethod">
-                                🅿️ PayPal
-                            </span>
-                        </label>
-                        <label style="flex: 1; cursor: pointer;">
-                            <input type="radio" name="paymentMethod" value="apple" onchange="selectPaymentMethod('apple')" style="margin-right: 0.5rem;">
-                            <span style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem; border: 2px solid #e9ecef; border-radius: 8px; transition: all 0.3s;" id="appleMethod">
-                                🍎 Apple Pay
-                            </span>
-                        </label>
-                    </div>
-
-                    <!-- Card Payment Form -->
-                    <div id="cardPaymentForm">
-                        <form onsubmit="processPayment(event)">
-                            <div class="form-group">
-                                <label for="cardNumber">Numéro de carte *</label>
-                                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
-                            </div>
-
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
-                                <div class="form-group">
-                                    <label for="expMonth">Mois *</label>
-                                    <select id="expMonth" required>
-                                        <option value="">MM</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="expYear">Année *</label>
-                                    <select id="expYear" required>
-                                        <option value="">YYYY</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2025">2025</option>
-                                        <option value="2026">2026</option>
-                                        <option value="2027">2027</option>
-                                        <option value="2028">2028</option>
-                                        <option value="2029">2029</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cvv">CVV *</label>
-                                    <input type="text" id="cvv" placeholder="123" maxlength="4" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="cardName">Nom sur la carte *</label>
-                                <input type="text" id="cardName" placeholder="Jean Dupont" required>
-                            </div>
-
-                            <div style="margin: 1rem 0;">
-                                <label style="display: flex; align-items: center; gap: 0.5rem;">
-                                    <input type="checkbox" id="saveCard">
-                                    Enregistrer cette carte pour mes prochaines réservations
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- PayPal Payment -->
-                    <div id="paypalPaymentForm" style="display: none;">
-                        <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 8px;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🅿️</div>
-                            <h3>Paiement PayPal</h3>
-                            <p style="color: #666;">Vous serez redirigé vers PayPal pour finaliser votre paiement de manière sécurisée.</p>
-                            <button type="button" onclick="processPayPal()" class="btn btn-primary" style="margin-top: 1rem;">
-                                Continuer avec PayPal
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Apple Pay Payment -->
-                    <div id="applePaymentForm" style="display: none;">
-                        <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 8px;">
-                            <div style="font-size: 3rem; margin-bottom: 1rem;">🍎</div>
-                            <h3>Apple Pay</h3>
-                            <p style="color: #666;">Utilisez Touch ID ou Face ID pour un paiement rapide et sécurisé.</p>
-                            <button type="button" onclick="processApplePay()" class="btn" style="background: #000; color: white; margin-top: 1rem;">
-                                Payer avec Apple Pay
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Billing Address -->
-                    <div style="margin-top: 2rem;">
-                        <h3>📮 Adresse de facturation</h3>
-                        
-                        <div style="margin: 1rem 0;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem;">
-                                <input type="checkbox" id="sameAsUser" checked onchange="toggleBillingAddress()">
-                                Utiliser mon adresse de profil
-                            </label>
-                        </div>
-
-                        <div id="billingAddressForm" style="display: none;">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                                <div class="form-group">
-                                    <label for="billingFirstName">Prénom</label>
-                                    <input type="text" id="billingFirstName" placeholder="Jean">
-                                </div>
-                                <div class="form-group">
-                                    <label for="billingLastName">Nom</label>
-                                    <input type="text" id="billingLastName" placeholder="Dupont">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="billingAddress">Adresse</label>
-                                <input type="text" id="billingAddress" placeholder="123 Rue de la Paix">
-                            </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                                <div class="form-group">
-                                    <label for="billingCity">Ville</label>
-                                    <input type="text" id="billingCity" placeholder="Paris">
-                                </div>
-                                <div class="form-group">
-                                    <label for="billingZip">Code postal</label>
-                                    <input type="text" id="billingZip" placeholder="75001">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Payment Summary -->
-            <div class="card" style="position: sticky; top: 2rem;">
-                <h3>💰 Récapitulatif des prix</h3>
-                
-                <div style="margin: 1.5rem 0;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>Durée de stationnement:</span>
-                        <span id="paymentDuration">3 heures</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>Prix unitaire:</span>
-                        <span>€12/heure</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>Sous-total:</span>
-                        <span id="paymentSubtotal">€36.00</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>Commission plateforme:</span>
-                        <span id="paymentCommission">€3.60</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>TVA (20%):</span>
-                        <span id="paymentTax">€7.92</span>
-                    </div>
-                    <hr style="margin: 1rem 0;">
-                    <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold;">
-                        <span>Total à payer:</span>
-                        <span id="paymentTotal" style="color: #28a745;">€47.52</span>
-                    </div>
-                </div>
-
-                <div style="background: #e7f3ff; padding: 1rem; border-radius: 8px; margin: 1rem 0; font-size: 0.9rem;">
-                    <div style="font-weight: 600; margin-bottom: 0.5rem;">🛡️ Votre réservation est protégée</div>
-                    <ul style="margin: 0; padding-left: 1.2rem;">
-                        <li>Annulation gratuite jusqu'à 2h avant</li>
-                        <li>Remboursement en cas de problème</li>
-                        <li>Support client 24h/7j</li>
-                    </ul>
-                </div>
-
-                <button onclick="finalizePayment()" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 1rem; margin-bottom: 1rem;">
-                    🔒 Réserver €47.52
-                </button>
-
-                <div style="text-align: center; font-size: 0.8rem; color: #666;">
-                    <div style="margin-bottom: 0.5rem;">🔒 Paiement 100% sécurisé</div>
-                    <div>SSL • Cryptage bancaire • Conformité PCI DSS</div>
-                </div>
-
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
-                    <h4>📞 Besoin d'aide ?</h4>
-                    <p style="font-size: 0.9rem; color: #666; margin: 0.5rem 0;">
-                        Notre support client est disponible 24h/7j
-                    </p>
-                    <button class="btn btn-secondary" style="width: 100%; font-size: 0.9rem;" onclick="contactSupport()">
-                        💬 Contacter le support
-                    </button>
-                </div>
-            </div>
-        </div>
+    <!-- Menu mobile -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul class="mobile-menu-links">
+            <!-- Le contenu sera généré par navbar.js -->
+        </ul>
     </div>
 
-    <script>
-        function loadBookingDetails() {
-            const bookingDetails = JSON.parse(localStorage.getItem('bookingDetails') || '{}');
-            
-            if (bookingDetails.spotName) {
-                document.getElementById('bookingSpotName').textContent = bookingDetails.spotName;
-                document.getElementById('bookingAddress').textContent = bookingDetails.address;
-                document.getElementById('bookingVehicle').textContent = bookingDetails.vehicle;
-                
-                // Format dates
-                const start = new Date(bookingDetails.start);
-                const end = new Date(bookingDetails.end);
-                
-                document.getElementById('bookingStart').textContent = start.toLocaleDateString('fr-FR') + ' à ' + start.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'});
-                document.getElementById('bookingEnd').textContent = end.toLocaleDateString('fr-FR') + ' à ' + end.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'});
-                
-                // Calculate duration and update prices
-                const hours = Math.ceil((end - start) / (1000 * 60 * 60));
-                document.getElementById('paymentDuration').textContent = hours + ' heure' + (hours > 1 ? 's' : '');
-                
-                const subtotal = hours * 12;
-                const commission = subtotal * 0.1;
-                const tax = (subtotal + commission) * 0.2;
-                const total = subtotal + commission + tax;
-                
-                document.getElementById('paymentSubtotal').textContent = '€' + subtotal.toFixed(2);
-                document.getElementById('paymentCommission').textContent = '€' + commission.toFixed(2);
-                document.getElementById('paymentTax').textContent = '€' + tax.toFixed(2);
-                document.getElementById('paymentTotal').textContent = '€' + total.toFixed(2);
-                
-                // Update button text
-                document.querySelector('.btn-primary').textContent = `🔒 Payer €${total.toFixed(2)}`;
-            }
+    <main class="container" style="padding: 2rem 0;">
+        <div class="page-header">
+            <div class="header-icon">
+                <div class="icon icon-payment"></div>
+            </div>
+            <div class="header-text">
+                <h1>Paiements</h1>
+                <p>Gérez vos modes de paiement et historique des transactions</p>
+            </div>
+        </div>
+
+        <div class="payment-sections">
+            <!-- Modes de paiement -->
+            <div class="payment-section">
+                <h2>💳 Modes de paiement</h2>
+                <div class="payment-methods">
+                    <div class="payment-method active">
+                        <div class="method-icon">💳</div>
+                        <div class="method-info">
+                            <h3>Carte **** 1234</h3>
+                            <p>Expire 12/25</p>
+                        </div>
+                        <div class="method-status">Défaut</div>
+                    </div>
+                    
+                    <div class="payment-method">
+                        <div class="method-icon">📱</div>
+                        <div class="method-info">
+                            <h3>Apple Pay</h3>
+                            <p>iPhone de Demo</p>
+                        </div>
+                        <div class="method-actions">
+                            <button class="btn-small">Définir par défaut</button>
+                        </div>
+                    </div>
+                    
+                    <div class="add-payment-method">
+                        <div class="icon icon-add"></div>
+                        <span>Ajouter un mode de paiement</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historique -->
+            <div class="payment-section">
+                <h2>📊 Historique des paiements</h2>
+                <div class="payment-history">
+                    <div class="payment-item">
+                        <div class="payment-icon success">✅</div>
+                        <div class="payment-details">
+                            <h3>Parking Centre-ville</h3>
+                            <p>15 janvier 2024 - 2h30</p>
+                        </div>
+                        <div class="payment-amount">12,50€</div>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <div class="payment-icon success">✅</div>
+                        <div class="payment-details">
+                            <h3>Parking Gare</h3>
+                            <p>12 janvier 2024 - 1h45</p>
+                        </div>
+                        <div class="payment-amount">8,75€</div>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <div class="payment-icon pending">⏳</div>
+                        <div class="payment-details">
+                            <h3>Remboursement</h3>
+                            <p>10 janvier 2024</p>
+                        </div>
+                        <div class="payment-amount">-15,00€</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
-        function selectPaymentMethod(method) {
-            // Reset all method styles
-            document.getElementById('cardMethod').style.borderColor = '#e9ecef';
-            document.getElementById('paypalMethod').style.borderColor = '#e9ecef';
-            document.getElementById('appleMethod').style.borderColor = '#e9ecef';
-            
-            // Hide all forms
-            document.getElementById('cardPaymentForm').style.display = 'none';
-            document.getElementById('paypalPaymentForm').style.display = 'none';
-            document.getElementById('applePaymentForm').style.display = 'none';
-            
-            // Show selected method
-            if (method === 'card') {
-                document.getElementById('cardMethod').style.borderColor = '#667eea';
-                document.getElementById('cardPaymentForm').style.display = 'block';
-            } else if (method === 'paypal') {
-                document.getElementById('paypalMethod').style.borderColor = '#667eea';
-                document.getElementById('paypalPaymentForm').style.display = 'block';
-            } else if (method === 'apple') {
-                document.getElementById('appleMethod').style.borderColor = '#667eea';
-                document.getElementById('applePaymentForm').style.display = 'block';
-            }
+        .header-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        function toggleBillingAddress() {
-            const checkbox = document.getElementById('sameAsUser');
-            const form = document.getElementById('billingAddressForm');
-            form.style.display = checkbox.checked ? 'none' : 'block';
+        .header-icon .icon {
+            width: 30px;
+            height: 30px;
+            color: white;
         }
 
-        function finalizePayment() {
-            const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-            
-            if (selectedMethod === 'card') {
-                processPayment();
-            } else if (selectedMethod === 'paypal') {
-                processPayPal();
-            } else if (selectedMethod === 'apple') {
-                processApplePay();
-            }
+        .payment-sections {
+            display: grid;
+            gap: 2rem;
         }
 
-        function processPayment(event) {
-            if (event) event.preventDefault();
-            
-            // Validate card form
-            const cardNumber = document.getElementById('cardNumber').value;
-            const expMonth = document.getElementById('expMonth').value;
-            const expYear = document.getElementById('expYear').value;
-            const cvv = document.getElementById('cvv').value;
-            const cardName = document.getElementById('cardName').value;
-            
-            if (!cardNumber || !expMonth || !expYear || !cvv || !cardName) {
-                showNotification('Veuillez remplir tous les champs de la carte', 'error');
-                return;
-            }
-            
-            // Simulate payment processing
-            showNotification('Traitement du paiement en cours...', 'info');
-            
-            setTimeout(() => {
-                showNotification('Paiement confirmé! Réservation créée avec succès.', 'success');
-                
-                // Clear booking details
-                localStorage.removeItem('bookingDetails');
-                
-                setTimeout(() => {
-                    window.location.href = '/dashboard';
-                }, 2000);
-            }, 2000);
+        .payment-section {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
-        function processPayPal() {
-            showNotification('Redirection vers PayPal...', 'info');
-            
-            setTimeout(() => {
-                showNotification('Paiement PayPal confirmé!', 'success');
-                localStorage.removeItem('bookingDetails');
-                setTimeout(() => {
-                    window.location.href = '/dashboard';
-                }, 2000);
-            }, 2000);
+        .payment-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
         }
 
-        function processApplePay() {
-            showNotification('Authentification Apple Pay...', 'info');
-            
-            setTimeout(() => {
-                showNotification('Paiement Apple Pay confirmé!', 'success');
-                localStorage.removeItem('bookingDetails');
-                setTimeout(() => {
-                    window.location.href = '/dashboard';
-                }, 2000);
-            }, 1500);
+        .payment-methods {
+            display: grid;
+            gap: 1rem;
         }
 
-        function contactSupport() {
-            alert('Support client: support@parkshare.fr ou 01 23 45 67 89');
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            transition: all 0.3s ease;
         }
 
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.style.borderLeftColor = type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff';
-            notification.innerHTML = `
-                <div style="font-weight: 600;">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'} ${message}</div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 4000);
+        .payment-method:hover {
+            border-color: var(--primary-color);
         }
 
-        // Format card number input
-        document.getElementById('cardNumber').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
-            e.target.value = value;
-        });
-
-        // CVV input validation
-        document.getElementById('cvv').addEventListener('input', function(e) {
-            e.target.value = e.target.value.replace(/\D/g, '');
-        });
-
-        // Initialize
-        window.onload = function() {
-            loadBookingDetails();
-            selectPaymentMethod('card');
+        .payment-method.active {
+            border-color: var(--primary-color);
+            background: rgba(74, 144, 226, 0.05);
         }
-    </script>
+
+        .method-icon {
+            font-size: 2rem;
+        }
+
+        .method-info {
+            flex: 1;
+        }
+
+        .method-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .method-info p {
+            margin: 0.25rem 0 0 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .method-status {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .add-payment-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px dashed #e9ecef;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .add-payment-method:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .payment-history {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .payment-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .payment-icon.success {
+            background: #28a745;
+            color: white;
+        }
+
+        .payment-icon.pending {
+            background: #ffc107;
+            color: white;
+        }
+
+        .payment-details {
+            flex: 1;
+        }
+
+        .payment-details h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .payment-details p {
+            margin: 0.25rem 0 0 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .payment-amount {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-small:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
 </body>
 </html>
