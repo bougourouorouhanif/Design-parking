@@ -108,7 +108,12 @@ class EnhancedBurgerMenu {
         this.attachEventListeners();
         this.updateUserProfile();
         this.setActiveMenuItem();
-        
+
+        // Créer la bottom navbar pour les conducteurs
+        if (this.currentUser.type === 'driver') {
+            this.createBottomNavbar();
+        }
+
         // Simuler des notifications
         this.simulateNotifications();
     }
@@ -624,7 +629,7 @@ class EnhancedBurgerMenu {
 // Initialiser le menu burger
 let burgerMenu;
 
-// Initialisation quand le DOM est chargé
+// Initialisation quand le DOM est charg��
 document.addEventListener('DOMContentLoaded', () => {
     burgerMenu = new EnhancedBurgerMenu();
 });
