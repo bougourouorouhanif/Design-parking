@@ -308,6 +308,53 @@ class EnhancedBurgerMenu {
         });
     }
 
+    watchBottomNavbar() {
+        // Vérifier toutes les 2 secondes que la navbar est présente et visible
+        setInterval(() => {
+            this.ensureNavbarPersistence();
+        }, 2000);
+
+        // Vérifier lors des changements de page
+        window.addEventListener('beforeunload', () => {
+            this.ensureNavbarPersistence();
+        });
+
+        // Vérifier lors du redimensionnement
+        window.addEventListener('resize', () => {
+            this.ensureNavbarPersistence();
+        });
+    }
+
+    ensureNavbarPersistence() {
+        const navbar = document.getElementById('fixedBottomNavbar');
+
+        if (!navbar) {
+            // Recréer la navbar si elle n'existe pas
+            this.createBottomNavbar();
+            return;
+        }
+
+        // Forcer les styles
+        navbar.style.cssText += `
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            z-index: 9999 !important;
+            transform: translateY(0) !important;
+        `;
+
+        // S'assurer du padding du body
+        document.body.style.paddingBottom = '85px';
+
+        // Marquer l'élément actif
+        this.setActiveBottomNavItem();
+    }
+
     generateMenuItems() {
         const menuNav = document.getElementById('menuNavigation');
         if (!menuNav) return;
