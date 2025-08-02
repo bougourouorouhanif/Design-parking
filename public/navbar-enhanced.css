@@ -534,23 +534,40 @@
 .mobile-menu.active .mobile-menu-links a:nth-child(5) { animation-delay: 0.3s; }
 .mobile-menu.active .mobile-menu-links a:nth-child(6) { animation-delay: 0.35s; }
 
-/* Responsive design */
+/* Responsive design - Navbar toujours visible pour les conducteurs */
 @media (max-width: 768px) {
   .bottom-navbar {
-    display: block;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
-  
+
   body {
-    padding-bottom: 85px;
+    padding-bottom: 85px !important;
   }
 }
 
+/* Navbar visible aussi sur desktop pour les conducteurs */
 @media (min-width: 769px) {
-  .bottom-navbar {
+  /* Afficher la navbar pour les conducteurs sur desktop aussi */
+  body.driver-interface .bottom-navbar {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  body.driver-interface {
+    padding-bottom: 85px !important;
+  }
+
+  /* Masquer pour les propriétaires sur desktop */
+  body.owner-interface .bottom-navbar {
     display: none;
   }
-  
-  body {
+
+  body.owner-interface {
     padding-bottom: 0;
   }
 }
