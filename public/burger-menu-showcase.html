@@ -471,31 +471,6 @@
         let initStartTime = performance.now();
 
         // Fonctions de démonstration avancées
-        function switchToDriver() {
-            if (window.burgerMenu) {
-                burgerMenu.switchUserType('driver');
-                updateStatusPanel();
-                showDemoToast('🚗 Interface conducteur activée avec succès!', 'success');
-                
-                // Simulation d'ajout d'une notification spécifique conducteur
-                setTimeout(() => {
-                    burgerMenu.addRandomNotification();
-                }, 1000);
-            }
-        }
-
-        function switchToOwner() {
-            if (window.burgerMenu) {
-                burgerMenu.switchUserType('owner');
-                updateStatusPanel();
-                showDemoToast('🏢 Interface propriétaire activée avec succès!', 'success');
-                
-                // Simulation d'ajout d'une notification spécifique propriétaire
-                setTimeout(() => {
-                    burgerMenu.addRandomNotification();
-                }, 1000);
-            }
-        }
 
         function addTestNotification() {
             if (window.burgerMenu) {
