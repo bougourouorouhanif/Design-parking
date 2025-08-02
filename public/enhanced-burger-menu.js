@@ -109,10 +109,8 @@ class EnhancedBurgerMenu {
         this.updateUserProfile();
         this.setActiveMenuItem();
 
-        // Créer la bottom navbar pour les conducteurs
-        if (this.currentUser.type === 'driver') {
-            this.createBottomNavbar();
-        }
+        // Créer la bottom navbar (toujours visible maintenant)
+        this.createBottomNavbar();
 
         // Simuler des notifications
         this.simulateNotifications();
