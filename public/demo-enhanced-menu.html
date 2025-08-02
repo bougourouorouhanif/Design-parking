@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Burger Ultra-Moderne - Parky</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="enhanced-burger-menu.css">
+    
+    <style>
+        /* Styles pour la page de démonstration */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-top: 70px;
+            color: #333;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .demo-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .demo-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .demo-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .card-description {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .demo-button {
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
+        }
+
+        .demo-button:active {
+            transform: translateY(0);
+        }
+
+        .demo-button.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .status-indicator {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 500;
+        }
+
+        .status-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+
+        .status-info {
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .user-type-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .demo-title {
+                font-size: 2rem;
+            }
+            
+            .demo-container {
+                padding: 1rem;
+            }
+            
+            .demo-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .demo-button {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .status-indicator {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+            }
+        }
+
+        /* Animation d'entrée */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .demo-card,
+        .feature-item {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .demo-card:nth-child(1) { animation-delay: 0.1s; }
+        .demo-card:nth-child(2) { animation-delay: 0.2s; }
+        .demo-card:nth-child(3) { animation-delay: 0.3s; }
+        .demo-card:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Le header et menu burger seront créés automatiquement par le JavaScript -->
+    
+    <main class="demo-container">
+        <div class="demo-header">
+            <h1 class="demo-title">Menu Burger Ultra-Moderne</h1>
+            <p class="demo-subtitle">
+                Interface révolutionnaire pour conducteurs et propriétaires
+            </p>
+        </div>
+
+        <div class="demo-buttons">
+            <button class="demo-button" onclick="switchToDriver()">
+                🚗 Mode Conducteur
+            </button>
+            <button class="demo-button" onclick="switchToOwner()">
+                🏢 Mode Propriétaire
+            </button>
+            <button class="demo-button secondary" onclick="addTestNotification()">
+                🔔 Ajouter Notification Test
+            </button>
+            <button class="demo-button secondary" onclick="goToAuth()">
+                🔐 Page Connexion
+            </button>
+        </div>
+
+        <div class="demo-grid">
+            <div class="demo-card">
+                <div class="card-icon">🎨</div>
+                <h3 class="card-title">Design Ultra-Moderne</h3>
+                <p class="card-description">
+                    Interface avec glassmorphism, animations fluides et effets visuels 
+                    sophistiqués pour une expérience utilisateur exceptionnelle.
+                </p>
+            </div>
+
+            <div class="demo-card">
+                <div class="card-icon">👥</div>
+                <h3 class="card-title">Deux Types d'Utilisateurs</h3>
+                <p class="card-description">
+                    Menu adaptatif qui change automatiquement selon le type d'utilisateur : 
+                    conducteur ou propriétaire avec des options spécifiques.
+                </p>
+            </div>
+
+            <div class="demo-card">
+                <div class="card-icon">🔔</div>
+                <h3 class="card-title">Notifications Intelligentes</h3>
+                <p class="card-description">
+                    Système de notifications en temps réel avec badges, 
+                    compteurs et catégorisation automatique.
+                </p>
+            </div>
+
+            <div class="demo-card">
+                <div class="card-icon">📱</div>
+                <h3 class="card-title">100% Responsive</h3>
+                <p class="card-description">
+                    Parfaitement optimisé pour tous les appareils avec 
+                    animations tactiles et gestes intuitifs.
+                </p>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <span class="feature-icon">⚡</span>
+                <div class="feature-title">Performance Optimisée</div>
+                <div class="feature-desc">Animations 60fps avec CSS Hardware Acceleration</div>
+            </div>
+
+            <div class="feature-item">
+                <span class="feature-icon">🎯</span>
+                <div class="feature-title">Navigation Intelligente</div>
+                <div class="feature-desc">Détection automatique de la page active</div>
+            </div>
+
+            <div class="feature-item">
+                <span class="feature-icon">🛡️</span>
+                <div class="feature-title">Sécurisé</div>
+                <div class="feature-desc">Gestion sécurisée des sessions utilisateur</div>
+            </div>
+
+            <div class="feature-item">
+                <span class="feature-icon">♿</span>
+                <div class="feature-title">Accessible</div>
+                <div class="feature-desc">Support complet ARIA et navigation clavier</div>
+            </div>
+        </div>
+    </main>
+
+    <div class="status-indicator">
+        <div class="status-title">Statut Utilisateur</div>
+        <div class="status-info">
+            Type: <span class="user-type-badge" id="currentUserType">Conducteur</span><br>
+            <span id="currentUserName">Utilisateur Demo</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="enhanced-burger-menu.js"></script>
+    <script>
+        // Fonctions de démonstration
+        function switchToDriver() {
+            if (window.burgerMenu) {
+                burgerMenu.switchUserType('driver');
+                updateStatusIndicator();
+                showDemoToast('Interface conducteur activée! 🚗', 'success');
+            }
+        }
+
+        function switchToOwner() {
+            if (window.burgerMenu) {
+                burgerMenu.switchUserType('owner');
+                updateStatusIndicator();
+                showDemoToast('Interface propriétaire activée! 🏢', 'success');
+            }
+        }
+
+        function addTestNotification() {
+            if (window.burgerMenu) {
+                burgerMenu.addRandomNotification();
+                showDemoToast('Notification de test ajoutée! 🔔', 'info');
+            }
+        }
+
+        function goToAuth() {
+            window.location.href = '/auth-modern.html';
+        }
+
+        function updateStatusIndicator() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const userTypeEl = document.getElementById('currentUserType');
+            const userNameEl = document.getElementById('currentUserName');
+            
+            if (userTypeEl) {
+                userTypeEl.textContent = user.type === 'owner' ? 'Propriétaire' : 'Conducteur';
+            }
+            if (userNameEl) {
+                userNameEl.textContent = user.name || 'Utilisateur Demo';
+            }
+        }
+
+        function showDemoToast(message, type) {
+            if (window.burgerMenu) {
+                burgerMenu.showToast(message, type);
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attendre que le menu burger soit initialisé
+            setTimeout(() => {
+                updateStatusIndicator();
+                
+                // Ajouter quelques notifications de démo si nécessaire
+                const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+                if (notifications.length === 0) {
+                    setTimeout(() => addTestNotification(), 1000);
+                    setTimeout(() => addTestNotification(), 2000);
+                }
+            }, 500);
+        });
+
+        // Mettre à jour l'indicateur quand l'utilisateur change
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'user') {
+                updateStatusIndicator();
+            }
+        });
+    </script>
+</body>
+</html>
