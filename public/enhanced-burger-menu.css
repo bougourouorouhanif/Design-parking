@@ -795,14 +795,28 @@
 }
 
 /* Padding pour le body quand bottom navbar est active */
-body.with-bottom-navbar {
-  padding-bottom: 85px;
+body.with-bottom-navbar,
+body.driver-interface {
+  padding-bottom: 85px !important;
 }
 
-/* Responsive pour bottom navbar */
+/* S'assurer que la navbar est toujours visible */
+body {
+  padding-bottom: 85px !important;
+}
+
+/* Responsive pour bottom navbar - toujours visible */
 @media (max-width: 768px) {
-  .bottom-navbar.show {
-    display: block;
+  .bottom-navbar {
+    display: block !important;
+    visibility: visible !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .bottom-navbar {
+    display: block !important;
+    visibility: visible !important;
   }
 }
 
