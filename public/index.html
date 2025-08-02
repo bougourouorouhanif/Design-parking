@@ -47,7 +47,7 @@
                 <div>Réservations effectuées</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">4.8���</div>
+                <div class="stat-value">4.8⭐</div>
                 <div>Note moyenne</div>
             </div>
             <div class="stat-card">
@@ -101,13 +101,31 @@
         </div>
     </section>
 
-
-
     <div style="background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%); color: white; padding: 1rem; text-align: center; margin: 2rem 0; border-radius: 16px;">
         <h3 style="margin-bottom: 0.5rem;">💰 Vous partez ?</h3>
         <p style="margin: 0;">Gagnez de l'argent avec votre place libre</p>
-        <a href="/add-spot" class="btn" style="background: white; color: #4A90E2; margin-top: 1rem;">Partager ma place</a>
+        <a href="/add-spot.html" class="btn" style="background: white; color: #4A90E2; margin-top: 1rem;">Partager ma place</a>
     </div>
+
+    <!-- Bouton flottant pour changer de type d'utilisateur (pour démo) -->
+    <button onclick="switchUserType()" style="
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+        color: white;
+        border: none;
+        padding: 12px 16px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        z-index: 500;
+        transition: all 0.3s ease;
+    " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        🔄 Changer Type
+    </button>
 
     <script>
         function searchParking(event) {
@@ -118,7 +136,15 @@
             // Simulate search and redirect to map
             localStorage.setItem('searchLocation', location);
             localStorage.setItem('searchDateTime', datetime);
-            window.location.href = '/map';
+            
+            // Utiliser le toast du menu burger
+            if (window.burgerMenu) {
+                burgerMenu.showToast(`Recherche pour "${location}" en cours...`, 'info');
+            }
+            
+            setTimeout(() => {
+                window.location.href = '/map.html';
+            }, 1000);
         }
 
         function goToSpot(id) {
@@ -129,252 +155,53 @@
                 timestamp: Date.now()
             }));
 
-            window.location.href = `/spot/${id}`;
-        }
-
-        // Set default datetime to now + 1 hour
-        document.getElementById('datetime').value = new Date(Date.now() + 3600000).toISOString().slice(0, 16);
-
-        // Fonctions pour la navbar moderne
-        function toggleMobileMenu() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-
-            menuToggle.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-
-            // Fermer les autres menus ouverts
-            closeNotifications();
-        }
-
-        function closeMobileMenu() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-
-            menuToggle.classList.remove('active');
-            mobileMenu.classList.remove('active');
-        }
-
-        function toggleNotifications() {
-            const dropdown = document.getElementById('notificationDropdown');
-            const isActive = dropdown.classList.contains('active');
-
-            // Fermer tous les autres menus
-            closeMobileMenu();
-
-            if (isActive) {
-                dropdown.classList.remove('active');
-            } else {
-                dropdown.classList.add('active');
-            }
-        }
-
-        function closeNotifications() {
-            const dropdown = document.getElementById('notificationDropdown');
-            dropdown.classList.remove('active');
-        }
-
-        function toggleUserMenu() {
-            // Redirection intelligente basée sur l'état de connexion
-            const user = localStorage.getItem('user');
-            if (user) {
-                // Utilisateur connecté - aller au dashboard
-                window.location.href = '/dashboard';
-            } else {
-                // Utilisateur non connecté - aller à la page de connexion
-                window.location.href = '/auth';
-            }
-        }
-
-        function markAllAsRead() {
-            const unreadItems = document.querySelectorAll('.notification-item.unread');
-            unreadItems.forEach(item => {
-                item.classList.remove('unread');
-            });
-
-            // Mettre à jour le badge
-            document.getElementById('notificationCount').textContent = '0';
-            document.getElementById('notificationCount').style.display = 'none';
-
-            showToast('Toutes les notifications ont été marquées comme lues', 'success');
-        }
-
-        function handleNotificationClick(notificationId) {
-            // Marquer comme lu
-            event.currentTarget.classList.remove('unread');
-
-            // Diminuer le compteur
-            const badge = document.getElementById('notificationCount');
-            const currentCount = parseInt(badge.textContent);
-            if (currentCount > 0) {
-                const newCount = currentCount - 1;
-                badge.textContent = newCount;
-                if (newCount === 0) {
-                    badge.style.display = 'none';
-                }
+            // Utiliser le toast du menu burger
+            if (window.burgerMenu) {
+                burgerMenu.showToast('Ouverture des détails de la place...', 'info');
             }
 
-            // Redirection intelligente basée sur le type de notification
-            switch(notificationId) {
-                case 1: // Réservation confirmée
-                    setTimeout(() => window.location.href = '/dashboard', 300);
-                    break;
-                case 2: // Nouvelles places
-                    setTimeout(() => window.location.href = '/map', 300);
-                    break;
-                case 3: // Rappel de réservation
-                    setTimeout(() => window.location.href = '/dashboard', 300);
-                    break;
-                case 4: // Paiement effectué
-                    setTimeout(() => window.location.href = '/dashboard', 300);
-                    break;
-                default:
-                    closeNotifications();
-            }
-        }
-
-        function showToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                top: 2rem;
-                right: 2rem;
-                background: ${type === 'success' ? '#7ED6A7' : type === 'error' ? '#FF4757' : '#4A90E2'};
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 12px;
-                box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-                z-index: 10000;
-                font-weight: 500;
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-            `;
-            toast.textContent = message;
-
-            document.body.appendChild(toast);
-
-            // Animation d'apparition
             setTimeout(() => {
-                toast.style.transform = 'translateX(0)';
-            }, 100);
-
-            // Suppression automatique
-            setTimeout(() => {
-                toast.style.transform = 'translateX(100%)';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+                window.location.href = `/spot.html?id=${id}`;
+            }, 500);
         }
 
-        function updateUserProfile() {
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
-            const userProfile = document.getElementById('userProfile');
-            const userAvatar = document.getElementById('userAvatar');
-            const userName = document.getElementById('userName');
-            const userRole = document.getElementById('userRole');
-
-            if (user.name) {
-                // Utilisateur connecté
-                userAvatar.textContent = user.name.charAt(0).toUpperCase();
-                userName.textContent = user.name.split(' ')[0];
-                userRole.textContent = user.type === 'owner' ? 'Propriétaire' : 'Conducteur';
-                userProfile.style.display = 'flex';
-            } else {
-                // Utilisateur non connecté
-                userAvatar.textContent = '?';
-                userName.textContent = 'Connexion';
-                userRole.textContent = 'Cliquez ici';
+        // Fonction pour changer de type d'utilisateur (pour demo)
+        function switchUserType() {
+            if (window.burgerMenu) {
+                const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+                const newType = currentUser.type === 'driver' ? 'owner' : 'driver';
+                burgerMenu.switchUserType(newType);
             }
         }
-
-        // Fermer les menus quand on clique à l'extérieur
-        document.addEventListener('click', function(event) {
-            const notificationIcon = document.querySelector('.notification-icon');
-            const notificationDropdown = document.getElementById('notificationDropdown');
-            const mobileMenuToggle = document.querySelector('.menu-toggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-
-            // Fermer notifications si clic à l'extérieur
-            if (notificationIcon && !notificationIcon.contains(event.target)) {
-                closeNotifications();
-            }
-
-            // Fermer menu mobile si clic à l'extérieur
-            if (mobileMenuToggle && !mobileMenuToggle.contains(event.target) && mobileMenu && !mobileMenu.contains(event.target)) {
-                closeMobileMenu();
-            }
-        });
 
         // Initialisation au chargement de la page
-        window.addEventListener('load', function() {
-            updateUserProfile();
-
-            // Initialiser la navbar inférieure
-            initBottomNavbar({
-                theme: 'light',
-                style: 'default',
-                alwaysVisible: false,
-                autoHide: true,
-                customItems: [
-                    {
-                        id: 'home',
-                        icon: '🏠',
-                        label: 'Accueil',
-                        href: '/',
-                        badge: null
-                    },
-                    {
-                        id: 'search',
-                        icon: '🔍',
-                        label: 'Recherche',
-                        href: '/map',
-                        badge: null
-                    },
-                    {
-                        id: 'reservations',
-                        icon: '📝',
-                        label: 'Réservations',
-                        href: '/dashboard',
-                        badge: null
-                    },
-                    {
-                        id: 'favorites',
-                        icon: '❤����',
-                        label: 'Favoris',
-                        href: '/favorites',
-                        badge: null,
-                        dataIcon: 'heart'
-                    },
-                    {
-                        id: 'profile',
-                        icon: '👤',
-                        label: 'Profil',
-                        href: '/dashboard',
-                        badge: null
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default datetime to now + 1 hour
+            const datetimeInput = document.getElementById('datetime');
+            if (datetimeInput) {
+                datetimeInput.value = new Date(Date.now() + 3600000).toISOString().slice(0, 16);
+            }
+            
+            // Ajouter le padding-top pour compenser le header fixe
+            document.body.style.paddingTop = '70px';
+            
+            // Attendre que le menu burger soit initialisé
+            setTimeout(() => {
+                // Ajouter une notification de démo si besoin
+                if (window.burgerMenu) {
+                    const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+                    if (notifications.length === 0) {
+                        burgerMenu.addRandomNotification();
                     }
-                ],
-                onItemClick: (item) => {
-                    console.log('Clicked on:', item.label);
-                    showToast(`Navigation vers ${item.label}`, 'info');
                 }
-            });
-
-            // Simuler de nouvelles notifications périodiquement
+            }, 2000);
+            
+            // Simuler de nouvelles notifications périodiquement pour la démo
             setInterval(() => {
-                const badge = document.getElementById('notificationCount');
-                if (badge) {
-                    const currentCount = parseInt(badge.textContent) || 0;
-                    if (currentCount < 5 && Math.random() < 0.1) { // 10% de chance toutes les 30 secondes
-                        badge.textContent = currentCount + 1;
-                        badge.style.display = 'flex';
-                        showToast('Nouvelle notification reçue!', 'info');
-
-                        // Mettre à jour aussi la navbar inférieure
-                        if (window.bottomNavbar) {
-                            window.bottomNavbar.updateBadge('notifications', currentCount + 1);
-                        }
-                    }
+                if (window.burgerMenu && Math.random() < 0.02) { // 2% de chance toutes les 10 secondes
+                    burgerMenu.addRandomNotification();
                 }
-            }, 30000);
+            }, 10000);
         });
     </script>
 </body>
