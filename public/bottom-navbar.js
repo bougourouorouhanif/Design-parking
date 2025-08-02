@@ -388,15 +388,38 @@ class BottomNavbar {
 
 // Fonction d'initialisation globale
 function initBottomNavbar(options = {}) {
+    // Options par défaut pour les conducteurs
+    const defaultOptions = {
+        alwaysVisible: true,
+        autoHide: false,
+        showLabels: true,
+        theme: 'light'
+    };
+
+    const mergedOptions = { ...defaultOptions, ...options };
+
     // Attendre que le DOM soit chargé
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            window.bottomNavbar = new BottomNavbar(options);
+            window.bottomNavbar = new BottomNavbar(mergedOptions);
         });
     } else {
-        window.bottomNavbar = new BottomNavbar(options);
+        window.bottomNavbar = new BottomNavbar(mergedOptions);
     }
 }
+
+// Auto-initialisation pour les conducteurs
+document.addEventListener('DOMContentLoaded', function() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    // Initialiser automatiquement pour les conducteurs
+    if (!user.type || user.type === 'driver') {
+        if (!window.bottomNavbar) {
+            console.log('🚗 Initialisation automatique de la navbar conducteur');
+            initBottomNavbar();
+        }
+    }
+});
 
 // Styles CSS pour l'animation ripple
 const rippleStyles = `
