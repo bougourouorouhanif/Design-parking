@@ -731,6 +731,40 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rendre les méthodes disponibles globalement pour les événements inline
 window.burgerMenu = burgerMenu;
 
+// Fonction globale pour gérer les clics de navigation
+window.handleNavClick = function(element) {
+    // Marquer comme actif
+    document.querySelectorAll('.bottom-nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    element.classList.add('active');
+
+    return true; // Permettre la navigation
+};
+
+// Vérifier et maintenir la navbar visible
+window.ensureBottomNavbar = function() {
+    if (!document.getElementById('fixedBottomNavbar') && window.burgerMenu) {
+        burgerMenu.createBottomNavbar();
+    }
+
+    // Forcer le style
+    const navbar = document.getElementById('fixedBottomNavbar');
+    if (navbar) {
+        navbar.style.cssText += `
+            position: fixed !important;
+            bottom: 0 !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            z-index: 9999 !important;
+        `;
+    }
+
+    // S'assurer du padding
+    document.body.style.paddingBottom = '85px';
+};
+
 // Export pour utilisation comme module
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = EnhancedBurgerMenu;
