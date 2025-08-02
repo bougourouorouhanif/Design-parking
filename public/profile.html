@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parky - Mon Profil</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="navbar-enhanced.css">
+    <script src="auth-check.js"></script>
+    <script src="navbar.js" defer></script>
+    <script src="bottom-navbar.js" defer></script>
+</head>
+<body>
+    <!-- Navbar moderne -->
+    <header class="header">
+        <div class="container">
+            <nav class="modern-nav">
+                <div class="nav-left">
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
+                </div>
+                
+                <div class="nav-center">
+                    <a href="/home" class="logo centered">Parky</a>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="notification-icon enhanced" onclick="goToNotifications()">
+                        <div class="icon icon-bell icon-white icon-interactive"></div>
+                        <span class="notification-badge" id="notificationCount">2</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Menu mobile -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul class="mobile-menu-links">
+            <!-- Le contenu sera généré par navbar.js -->
+        </ul>
+    </div>
+
+    <main class="container" style="padding: 2rem 0;">
+        <!-- En-tête du profil -->
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <div class="avatar-circle">
+                    <span id="userInitials">CD</span>
+                </div>
+                <button class="avatar-edit">
+                    <div class="icon icon-edit"></div>
+                </button>
+            </div>
+            <div class="profile-info">
+                <h1 id="userName">Conducteur Demo</h1>
+                <p id="userEmail">demo.conducteur@parky.com</p>
+                <div class="profile-badges">
+                    <span class="badge verified">✅ Compte vérifié</span>
+                    <span class="badge member">🌟 Membre depuis janvier 2024</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="profile-stats">
+            <div class="stat-card">
+                <div class="stat-icon">🚗</div>
+                <div class="stat-value">47</div>
+                <div class="stat-label">Réservations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value">289€</div>
+                <div class="stat-label">Économisé</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-value">4.8</div>
+                <div class="stat-label">Note moyenne</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Places favorites</div>
+            </div>
+        </div>
+
+        <!-- Sections du profil -->
+        <div class="profile-sections">
+            <!-- Informations personnelles -->
+            <div class="profile-section">
+                <h2>👤 Informations personnelles</h2>
+                <div class="profile-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Prénom</label>
+                            <input type="text" value="Conducteur" id="firstName">
+                        </div>
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <input type="text" value="Demo" id="lastName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" value="demo.conducteur@parky.com" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone</label>
+                        <input type="tel" value="+33 6 12 34 56 78" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label>Date de naissance</label>
+                        <input type="date" value="1990-01-15" id="birthDate">
+                    </div>
+                    <button class="btn btn-primary">Sauvegarder les modifications</button>
+                </div>
+            </div>
+
+            <!-- Véhicules -->
+            <div class="profile-section">
+                <h2>🚗 Mes véhicules</h2>
+                <div class="vehicles-list">
+                    <div class="vehicle-item">
+                        <div class="vehicle-icon">🚗</div>
+                        <div class="vehicle-info">
+                            <h3>Peugeot 308</h3>
+                            <p>AB-123-CD • Essence</p>
+                        </div>
+                        <div class="vehicle-actions">
+                            <button class="btn-small">Modifier</button>
+                            <button class="btn-small danger">Supprimer</button>
+                        </div>
+                    </div>
+                    
+                    <div class="vehicle-item">
+                        <div class="vehicle-icon">🚙</div>
+                        <div class="vehicle-info">
+                            <h3>Renault Captur</h3>
+                            <p>EF-456-GH • Hybride</p>
+                        </div>
+                        <div class="vehicle-actions">
+                            <button class="btn-small">Modifier</button>
+                            <button class="btn-small danger">Supprimer</button>
+                        </div>
+                    </div>
+                    
+                    <div class="add-vehicle">
+                        <div class="icon icon-add"></div>
+                        <span>Ajouter un véhicule</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Préférences -->
+            <div class="profile-section">
+                <h2>⚙️ Préférences</h2>
+                <div class="preferences-list">
+                    <div class="preference-item">
+                        <div class="pref-content">
+                            <h3>Notifications push</h3>
+                            <p>Recevoir des notifications sur votre appareil</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="pref-content">
+                            <h3>Notifications email</h3>
+                            <p>Recevoir des emails pour les réservations importantes</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="pref-content">
+                            <h3>Localisation automatique</h3>
+                            <p>Utiliser votre position pour des suggestions personnalisées</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="preference-item">
+                        <div class="pref-content">
+                            <h3>Mode sombre</h3>
+                            <p>Utiliser un thème sombre pour l'interface</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions du compte -->
+            <div class="profile-section">
+                <h2>🔐 Sécurité du compte</h2>
+                <div class="account-actions">
+                    <button class="action-btn">
+                        <div class="icon icon-lock"></div>
+                        <div class="action-content">
+                            <h3>Changer le mot de passe</h3>
+                            <p>Dernière modification il y a 3 mois</p>
+                        </div>
+                    </button>
+                    
+                    <button class="action-btn">
+                        <div class="icon icon-download"></div>
+                        <div class="action-content">
+                            <h3>Télécharger mes données</h3>
+                            <p>Exporter toutes vos informations personnelles</p>
+                        </div>
+                    </button>
+                    
+                    <button class="action-btn danger">
+                        <div class="icon icon-trash"></div>
+                        <div class="action-content">
+                            <h3>Supprimer le compte</h3>
+                            <p>Cette action est irréversible</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .profile-avatar {
+            position: relative;
+        }
+
+        .avatar-circle {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .avatar-edit {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .profile-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .badge.verified {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .badge.member {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .profile-sections {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .profile-section {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .profile-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .vehicles-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .vehicle-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+        }
+
+        .vehicle-icon {
+            font-size: 2rem;
+        }
+
+        .vehicle-info {
+            flex: 1;
+        }
+
+        .vehicle-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .vehicle-info p {
+            margin: 0.25rem 0 0 0;
+            color: var(--text-secondary);
+        }
+
+        .vehicle-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-vehicle {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px dashed #e9ecef;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .add-vehicle:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .preferences-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .preference-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+        }
+
+        .pref-content h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .pref-content p {
+            margin: 0.25rem 0 0 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .toggle-slider {
+            width: 44px;
+            height: 24px;
+            background: #e9ecef;
+            border-radius: 24px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input[type="checkbox"]:checked + .toggle-slider {
+            background: var(--primary-color);
+        }
+
+        input[type="checkbox"]:checked + .toggle-slider::before {
+            transform: translateX(20px);
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        .account-actions {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .action-btn:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(74, 144, 226, 0.1);
+        }
+
+        .action-btn.danger:hover {
+            border-color: #dc3545;
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.1);
+        }
+
+        .action-btn .icon {
+            width: 24px;
+            height: 24px;
+            color: var(--primary-color);
+        }
+
+        .action-btn.danger .icon {
+            color: #dc3545;
+        }
+
+        .action-content h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .action-content p {
+            margin: 0.25rem 0 0 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-small:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-small.danger {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .btn-small.danger:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .vehicle-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <script>
+        // Initialiser les informations utilisateur
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (user.name) {
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userInitials').textContent = user.name.charAt(0).toUpperCase();
+            }
+            
+            if (user.email) {
+                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('email').value = user.email;
+            }
+            
+            if (user.phone) {
+                document.getElementById('phone').value = user.phone;
+            }
+        });
+    </script>
+</body>
+</html>
