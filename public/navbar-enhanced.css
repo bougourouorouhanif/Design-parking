@@ -403,23 +403,43 @@
   transform: scale(1.05);
 }
 
-/* Bottom navbar améliorée */
+/* Bottom navbar améliorée - Toujours fixe et visible */
 .bottom-navbar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  transition: transform 0.3s ease;
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  border-top: 1px solid rgba(74, 144, 226, 0.2) !important;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15) !important;
+  z-index: 9999 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transform: translateY(0) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
+/* Désactiver le masquage automatique pour les conducteurs */
 .bottom-navbar.hidden {
-  transform: translateY(100%);
+  transform: translateY(0) !important;
+}
+
+/* Améliorer la visibilité avec un effet glassmorphism plus prononcé */
+.bottom-navbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(248, 249, 250, 0.95) 100%);
+  z-index: -1;
+  border-radius: 0;
 }
 
 .bottom-nav-content {
