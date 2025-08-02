@@ -215,13 +215,76 @@
   transform: scale(0.95);
 }
 
-/* Icônes colorées */
-.icon-primary { color: var(--primary-color); }
-.icon-secondary { color: var(--secondary-color); }
+/* Nouvelles icônes pour les notifications et interfaces */
+.icon-check::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='20,6 9,17 4,12'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.icon-trash::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='3,6 5,6 21,6'/%3E%3Cpath d='M19,6v14a2 2 0 0 1-2,2H7a2 2 0 0 1-2-2V6m3,0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2,2v2'/%3E%3Cline x1='10' x2='10' y1='11' y2='17'/%3E%3Cline x1='14' x2='14' y1='11' y2='17'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.icon-all::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0'/%3E%3Cpath d='M8 12h8'/%3E%3Cpath d='M12 8v8'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.icon-unread::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.icon-system::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* Couleurs améliorées avec plus de variété */
+.icon-primary { color: #4A90E2; }
+.icon-secondary { color: #7ED6A7; }
 .icon-success { color: #28a745; }
 .icon-warning { color: #ffc107; }
 .icon-danger { color: #dc3545; }
+.icon-info { color: #17a2b8; }
+.icon-purple { color: #6f42c1; }
+.icon-orange { color: #fd7e14; }
+.icon-pink { color: #e83e8c; }
+.icon-teal { color: #20c997; }
 .icon-white { color: #ffffff; }
+.icon-dark { color: #343a40; }
+.icon-light { color: #f8f9fa; }
+
+/* Couleurs spécifiques par catégorie d'icônes */
+.icon-home { color: #4A90E2; }
+.icon-search { color: #7ED6A7; }
+.icon-map { color: #fd7e14; }
+.icon-parking { color: #6f42c1; }
+.icon-profile { color: #17a2b8; }
+.icon-payment { color: #28a745; }
+.icon-bell { color: #ffc107; }
+.icon-navigation { color: #e83e8c; }
+.icon-reservations { color: #20c997; }
+.icon-dashboard { color: #4A90E2; }
+.icon-earnings { color: #28a745; }
+.icon-add { color: #7ED6A7; }
+.icon-logout { color: #dc3545; }
 
 /* Badges pour les icônes */
 .icon-with-badge {
