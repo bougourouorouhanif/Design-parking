@@ -691,17 +691,8 @@ class EnhancedBurgerMenu {
         });
     }
 
-    // Méthodes publiques pour l'utilisation externe
-    switchUserType(newType) {
-        if (this.currentUser) {
-            this.currentUser.type = newType;
-            localStorage.setItem('user', JSON.stringify(this.currentUser));
-            this.loadUser();
-            this.updateUserProfile();
-            this.generateMenuItems();
-            this.showToast(`Interface ${newType === 'owner' ? 'propriétaire' : 'conducteur'} activée`, 'success');
-        }
-    }
+    // Les conducteurs ne peuvent pas basculer vers propriétaire
+    // Cette fonctionnalité a été supprimée
 
     updateUser(userData) {
         this.currentUser = { ...this.currentUser, ...userData };
