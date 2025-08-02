@@ -442,6 +442,49 @@
   border-radius: 0;
 }
 
+/* Indicateur coloré en haut de la navbar pour identifier le type d'utilisateur */
+.bottom-navbar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 50%,
+    var(--primary-color) 100%);
+  z-index: 1;
+  animation: navbarGlow 3s ease-in-out infinite;
+}
+
+@keyframes navbarGlow {
+  0%, 100% {
+    opacity: 0.8;
+    background: linear-gradient(90deg,
+      var(--primary-color) 0%,
+      var(--secondary-color) 50%,
+      var(--primary-color) 100%);
+  }
+  50% {
+    opacity: 1;
+    background: linear-gradient(90deg,
+      var(--secondary-color) 0%,
+      var(--primary-color) 50%,
+      var(--secondary-color) 100%);
+  }
+}
+
+/* Style spécial pour l'interface conducteur */
+body.driver-interface .bottom-navbar::after {
+  background: linear-gradient(90deg,
+    #4A90E2 0%,
+    #7ED6A7 25%,
+    #17a2b8 50%,
+    #28a745 75%,
+    #4A90E2 100%);
+}
+
 .bottom-nav-content {
   display: flex;
   justify-content: space-around;
