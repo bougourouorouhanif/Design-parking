@@ -481,19 +481,18 @@
         }
 
         function resetDemo() {
-            // Réinitialiser les données de démo
+            // Réinitialiser les notifications
             localStorage.removeItem('notifications');
-            
-            // Réinitialiser l'utilisateur par défaut
-            const defaultUser = {
-                name: 'Utilisateur Demo',
-                email: 'demo@parky.com',
-                type: 'driver'
-            };
-            localStorage.setItem('user', JSON.stringify(defaultUser));
-            
-            // Recharger la page pour réinitialiser complètement
-            window.location.reload();
+
+            if (window.burgerMenu) {
+                burgerMenu.updateNotificationBadge();
+                showDemoToast('🗑️ Notifications supprimées!', 'success');
+                updateStatusPanel();
+            }
+        }
+
+        function goToAuth() {
+            window.location.href = '/auth-modern.html';
         }
 
         function updateStatusPanel() {
