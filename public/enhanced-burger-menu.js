@@ -152,25 +152,29 @@ class EnhancedBurgerMenu {
         header.className = 'enhanced-header';
         header.innerHTML = `
             <nav class="enhanced-nav">
-                <a href="/" class="enhanced-logo">
-                    Parky
-                </a>
-                
-                <div class="nav-actions">
-                    <div class="enhanced-notification-icon" onclick="burgerMenu.goToNotifications()">
-                        <div class="icon icon-bell"></div>
-                        <div class="notification-badge" id="notificationBadge" style="display: none;">0</div>
-                    </div>
-                    
+                <div class="nav-left">
                     <button class="enhanced-burger" onclick="burgerMenu.toggle()">
                         <div class="burger-line"></div>
                         <div class="burger-line"></div>
                         <div class="burger-line"></div>
                     </button>
                 </div>
+
+                <div class="nav-center">
+                    <a href="/" class="enhanced-logo">
+                        Parky
+                    </a>
+                </div>
+
+                <div class="nav-right">
+                    <div class="enhanced-notification-icon" onclick="burgerMenu.goToNotifications()">
+                        <div class="icon icon-bell"></div>
+                        <div class="notification-badge" id="notificationBadge" style="display: none;">0</div>
+                    </div>
+                </div>
             </nav>
         `;
-        
+
         document.body.insertBefore(header, document.body.firstChild);
     }
 
