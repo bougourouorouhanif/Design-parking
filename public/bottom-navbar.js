@@ -281,15 +281,18 @@ class BottomNavbar {
     }
 
     hide() {
-        if (this.navbarElement && this.isVisible) {
-            this.navbarElement.classList.add('hidden');
-            this.isVisible = false;
-        }
+        // Désactivé pour les conducteurs - la navbar reste toujours visible
+        console.log('🚗 Navbar conducteur : masquage désactivé pour une meilleure expérience');
+        return;
     }
 
     show() {
-        if (this.navbarElement && !this.isVisible) {
+        // S'assurer que la navbar est toujours visible
+        if (this.navbarElement) {
             this.navbarElement.classList.remove('hidden');
+            this.navbarElement.style.display = 'block';
+            this.navbarElement.style.visibility = 'visible';
+            this.navbarElement.style.opacity = '1';
             this.isVisible = true;
         }
     }
