@@ -224,30 +224,31 @@ class EnhancedBurgerMenu {
 
         const navbar = document.createElement('nav');
         navbar.className = 'bottom-navbar show';
+        navbar.id = 'fixedBottomNavbar';
         navbar.innerHTML = `
             <div class="bottom-nav-content">
-                <a href="/" class="bottom-nav-item" data-page="home">
+                <a href="/" class="bottom-nav-item" data-page="home" onclick="return handleNavClick(this)">
                     <div class="bottom-nav-icon">
                         <div class="icon icon-home"></div>
                     </div>
                     <span class="bottom-nav-label">Accueil</span>
                 </a>
 
-                <a href="/map.html" class="bottom-nav-item" data-page="search">
+                <a href="/map.html" class="bottom-nav-item" data-page="search" onclick="return handleNavClick(this)">
                     <div class="bottom-nav-icon">
                         <div class="icon icon-map"></div>
                     </div>
                     <span class="bottom-nav-label">Recherche</span>
                 </a>
 
-                <a href="/dashboard.html" class="bottom-nav-item" data-page="reservations">
+                <a href="/dashboard.html" class="bottom-nav-item" data-page="reservations" onclick="return handleNavClick(this)">
                     <div class="bottom-nav-icon">
                         <div class="icon icon-reservations"></div>
                     </div>
                     <span class="bottom-nav-label">Réservations</span>
                 </a>
 
-                <a href="/notifications.html" class="bottom-nav-item" data-page="notifications">
+                <a href="/notifications.html" class="bottom-nav-item" data-page="notifications" onclick="return handleNavClick(this)">
                     <div class="bottom-nav-icon">
                         <div class="icon icon-bell"></div>
                         <div class="bottom-nav-badge" id="bottomNotificationBadge" style="display: none;">0</div>
@@ -255,7 +256,7 @@ class EnhancedBurgerMenu {
                     <span class="bottom-nav-label">Notifications</span>
                 </a>
 
-                <a href="/profile.html" class="bottom-nav-item" data-page="profile">
+                <a href="/profile.html" class="bottom-nav-item" data-page="profile" onclick="return handleNavClick(this)">
                     <div class="bottom-nav-icon">
                         <div class="icon icon-profile"></div>
                     </div>
@@ -268,6 +269,27 @@ class EnhancedBurgerMenu {
 
         // Marquer l'élément actif
         this.setActiveBottomNavItem();
+
+        // S'assurer que la navbar reste visible
+        this.ensureNavbarVisibility();
+    }
+
+    ensureNavbarVisibility() {
+        // Forcer la visibilité de la navbar
+        const navbar = document.getElementById('fixedBottomNavbar');
+        if (navbar) {
+            navbar.style.cssText += `
+                position: fixed !important;
+                bottom: 0 !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                z-index: 9999 !important;
+            `;
+        }
+
+        // S'assurer que le body a le bon padding
+        document.body.style.paddingBottom = '85px';
     }
 
     setActiveBottomNavItem() {
