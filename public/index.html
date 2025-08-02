@@ -6,48 +6,12 @@
     <title>Parky - Trouvez ou proposez une place de parking en temps réel</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
-    <link rel="stylesheet" href="navbar-enhanced.css">
+    <link rel="stylesheet" href="enhanced-burger-menu.css">
     <script src="auth-check.js"></script>
-    <script src="navbar.js" defer></script>
-    <script src="bottom-navbar.js" defer></script>
+    <script src="enhanced-burger-menu.js" defer></script>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <nav class="modern-nav">
-                <!-- Menu burger à gauche -->
-                <div class="nav-left">
-                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
-                        <div class="menu-line"></div>
-                        <div class="menu-line"></div>
-                        <div class="menu-line"></div>
-                    </div>
-                </div>
-
-                <!-- Logo centré -->
-                <div class="nav-center">
-                    <a href="/home" class="logo centered">Parky</a>
-                </div>
-
-                <!-- Notifications à droite -->
-                <div class="nav-right">
-                    <div class="notification-icon enhanced" onclick="goToNotifications()">
-                        <div class="icon icon-bell icon-white icon-interactive"></div>
-                        <span class="notification-badge" id="notificationCount">3</span>
-
-
-                    </div>
-                </div>
-
-                <!-- Menu mobile -->
-                <div class="mobile-menu" id="mobileMenu">
-                    <ul class="mobile-menu-links">
-                        <!-- Le contenu sera généré dynamiquement par navbar.js -->
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </header>
+    <!-- Le header sera créé automatiquement par le JavaScript du menu burger -->
 
     <section class="hero">
         <div class="container">
@@ -374,7 +338,7 @@
                     },
                     {
                         id: 'favorites',
-                        icon: '❤���',
+                        icon: '❤����',
                         label: 'Favoris',
                         href: '/favorites',
                         badge: null,
