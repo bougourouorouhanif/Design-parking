@@ -176,7 +176,7 @@ class EnhancedBurgerMenu {
 
                 <div class="nav-center">
                     <a href="/" class="enhanced-logo">
-                        Parky
+                        <img src="https://cdn.builder.io/api/v1/image/assets%2F96978c9754124e37a6ee74f0620d0233%2F3c5ad54b27894763b7367918961e5249?format=webp&width=800" alt="Parky" class="logo-image" />
                     </a>
                 </div>
 
