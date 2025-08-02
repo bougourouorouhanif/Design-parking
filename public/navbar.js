@@ -22,22 +22,14 @@ function closeMobileMenu() {
     }
 }
 
+function goToNotifications() {
+    // Rediriger vers la page de notifications
+    window.location.href = '/notifications.html';
+}
+
 function toggleNotifications() {
-    const dropdown = document.getElementById('notificationDropdown');
-    if (!dropdown) return;
-    
-    const isActive = dropdown.classList.contains('active');
-    
-    // Fermer tous les autres menus
-    closeMobileMenu();
-    
-    if (isActive) {
-        dropdown.classList.remove('active');
-    } else {
-        dropdown.classList.add('active');
-        // Charger les notifications si nécessaire
-        loadNotifications();
-    }
+    // Fonction conservée pour compatibilité - redirige maintenant vers la page
+    goToNotifications();
 }
 
 function closeNotifications() {
@@ -184,7 +176,7 @@ function adaptMenuForUserRole(user) {
         menuItems = [
             { href: '/owner', icon: '<div class="icon icon-dashboard icon-interactive"></div>', text: 'Tableau de bord' },
             { href: '/add-spot', icon: '<div class="icon icon-add icon-interactive"></div>', text: 'Ajouter place' },
-            { href: '/owner-reservations', icon: '<div class="icon icon-reservations icon-interactive"></div>', text: 'Réservations' },
+            { href: '/owner-reservations', icon: '<div class="icon icon-reservations icon-interactive"></div>', text: 'R��servations' },
             { href: '/owner-earnings', icon: '<div class="icon icon-earnings icon-interactive"></div>', text: 'Revenus' },
             { href: '/owner-profile', icon: '<div class="icon icon-profile icon-interactive"></div>', text: 'Profil' },
             { href: '#', icon: '<div class="icon icon-logout icon-interactive"></div>', text: 'Déconnexion', onclick: 'logout()' }
