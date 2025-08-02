@@ -219,6 +219,74 @@ class EnhancedBurgerMenu {
         document.body.appendChild(menu);
     }
 
+    createBottomNavbar() {
+        // Supprimer l'ancienne navbar si elle existe
+        const existingNavbar = document.querySelector('.bottom-navbar');
+        if (existingNavbar) {
+            existingNavbar.remove();
+        }
+
+        const navbar = document.createElement('nav');
+        navbar.className = 'bottom-navbar show';
+        navbar.innerHTML = `
+            <div class="bottom-nav-content">
+                <a href="/" class="bottom-nav-item" data-page="home">
+                    <div class="bottom-nav-icon">
+                        <div class="icon icon-home"></div>
+                    </div>
+                    <span class="bottom-nav-label">Accueil</span>
+                </a>
+
+                <a href="/map.html" class="bottom-nav-item" data-page="search">
+                    <div class="bottom-nav-icon">
+                        <div class="icon icon-map"></div>
+                    </div>
+                    <span class="bottom-nav-label">Recherche</span>
+                </a>
+
+                <a href="/dashboard.html" class="bottom-nav-item" data-page="reservations">
+                    <div class="bottom-nav-icon">
+                        <div class="icon icon-reservations"></div>
+                    </div>
+                    <span class="bottom-nav-label">Réservations</span>
+                </a>
+
+                <a href="/notifications.html" class="bottom-nav-item" data-page="notifications">
+                    <div class="bottom-nav-icon">
+                        <div class="icon icon-bell"></div>
+                        <div class="bottom-nav-badge" id="bottomNotificationBadge" style="display: none;">0</div>
+                    </div>
+                    <span class="bottom-nav-label">Notifications</span>
+                </a>
+
+                <a href="/profile.html" class="bottom-nav-item" data-page="profile">
+                    <div class="bottom-nav-icon">
+                        <div class="icon icon-profile"></div>
+                    </div>
+                    <span class="bottom-nav-label">Profil</span>
+                </a>
+            </div>
+        `;
+
+        document.body.appendChild(navbar);
+
+        // Marquer l'élément actif
+        this.setActiveBottomNavItem();
+    }
+
+    setActiveBottomNavItem() {
+        const currentPath = window.location.pathname;
+        const navItems = document.querySelectorAll('.bottom-nav-item');
+
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            const href = item.getAttribute('href');
+            if (href === currentPath || (currentPath === '/index.html' && href === '/')) {
+                item.classList.add('active');
+            }
+        });
+    }
+
     generateMenuItems() {
         const menuNav = document.getElementById('menuNavigation');
         if (!menuNav) return;
