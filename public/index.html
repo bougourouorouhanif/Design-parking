@@ -81,7 +81,7 @@
                     <span class="spot-tag">2 min à pied</span>
                     <span class="spot-tag">Libre jusqu'à 18h</span>
                 </div>
-                <p>���� 8 Avenue des Champs, Paris 75008</p>
+                <p>📍 8 Avenue des Champs, Paris 75008</p>
             </div>
             <div class="price">€8/h</div>
         </div>
@@ -147,14 +147,7 @@
             }, 500);
         }
 
-        // Fonction pour changer de type d'utilisateur (pour demo)
-        function switchUserType() {
-            if (window.burgerMenu) {
-                const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-                const newType = currentUser.type === 'driver' ? 'owner' : 'driver';
-                burgerMenu.switchUserType(newType);
-            }
-        }
+
 
         // Initialisation au chargement de la page
         document.addEventListener('DOMContentLoaded', function() {
