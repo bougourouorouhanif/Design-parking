@@ -114,6 +114,9 @@ class EnhancedBurgerMenu {
 
         // Simuler des notifications
         this.simulateNotifications();
+
+        // Surveiller la navbar en continu
+        this.watchBottomNavbar();
     }
 
     loadUser() {
