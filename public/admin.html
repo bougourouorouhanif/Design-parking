@@ -627,6 +627,27 @@
             });
         }
 
+        // Fonction pour basculer l'affichage des sections
+        function toggleSection(type) {
+            const sections = {
+                users: {
+                    title: 'Gestion complète des utilisateurs',
+                    content: 'Redirection vers la page de gestion complète des utilisateurs...'
+                },
+                moderation: {
+                    title: 'Interface de modération complète',
+                    content: 'Redirection vers la page de modération avancée...'
+                }
+            };
+
+            const section = sections[type];
+            if (section) {
+                showNotification(`${section.title}\n\n${section.content}`, 'info');
+                // Ici, vous pourriez rediriger vers une page dédiée
+                // window.location.href = `/admin/${type}.html`;
+            }
+        }
+
         // Fonction pour afficher les détails des métriques
         function showMetricDetails(type) {
             const details = {
