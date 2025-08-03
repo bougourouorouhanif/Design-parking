@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Parky</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="enhanced-burger-menu.css">
+    <script src="auth-check.js"></script>
+    <script src="enhanced-burger-menu.js" defer></script>
+</head>
+<body>
+    <!-- Le header sera créé automatiquement par le JavaScript du menu burger -->
+
+    <section class="hero">
+        <div class="container">
+            <h1>Bienvenue sur Parky</h1>
+            <p>Votre solution de parking intelligente</p>
+            
+            <div class="search-container">
+                <form class="search-form" onsubmit="searchParking(event)">
+                    <div class="form-group">
+                        <label for="location">Où ?</label>
+                        <input type="text" id="location" placeholder="Où cherchez-vous?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="datetime">Quand ?</label>
+                        <input type="datetime-local" id="datetime" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        🔍 Trouver une place
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">2,847</div>
+                <div>Places disponibles</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">15,293</div>
+                <div>Réservations effectuées</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4.8⭐</div>
+                <div>Note moyenne</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">€8.50</div>
+                <div>Prix moyen/heure</div>
+            </div>
+        </div>
+
+        <h2>📍 Places disponibles près de vous</h2>
+        
+        <div class="parking-spot" onclick="goToSpot(1)">
+            <div class="spot-image">🏢</div>
+            <div class="spot-info">
+                <h3>Parking Centre-ville</h3>
+                <div class="spot-details">
+                    <span class="spot-tag covered">Couvert</span>
+                    <span class="spot-tag">5 min à pied</span>
+                    <span class="spot-tag">Disponible maintenant</span>
+                </div>
+                <p>📍 15 Rue de la République, Paris 75001</p>
+            </div>
+            <div class="price">€12/h</div>
+        </div>
+
+        <div class="parking-spot" onclick="goToSpot(2)">
+            <div class="spot-image">🏠</div>
+            <div class="spot-info">
+                <h3>Garage privé</h3>
+                <div class="spot-details">
+                    <span class="spot-tag outdoor">Extérieur</span>
+                    <span class="spot-tag">2 min à pied</span>
+                    <span class="spot-tag">Libre jusqu'à 18h</span>
+                </div>
+                <p>📍 8 Avenue des Champs, Paris 75008</p>
+            </div>
+            <div class="price">€8/h</div>
+        </div>
+
+        <div class="parking-spot" onclick="goToSpot(3)">
+            <div class="spot-image">🏪</div>
+            <div class="spot-info">
+                <h3>Parking Supermarché</h3>
+                <div class="spot-details">
+                    <span class="spot-tag covered">Couvert</span>
+                    <span class="spot-tag">3 min à pied</span>
+                    <span class="spot-tag">24h/24</span>
+                </div>
+                <p>📍 25 Boulevard Saint-Germain, Paris 75005</p>
+            </div>
+            <div class="price">€6/h</div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%); color: white; padding: 1rem; text-align: center; margin: 2rem 0; border-radius: 16px;">
+            <h3 style="margin-bottom: 0.5rem;">💰 Vous partez ?</h3>
+            <p style="margin: 0;">Gagnez de l'argent avec votre place libre</p>
+            <a href="/add-spot.html" class="btn" style="background: white; color: #4A90E2; margin-top: 1rem;">Partager ma place</a>
+        </div>
+    </section>
+
+    <script>
+        function searchParking(event) {
+            event.preventDefault();
+            const location = document.getElementById('location').value;
+            const datetime = document.getElementById('datetime').value;
+            
+            localStorage.setItem('searchLocation', location);
+            localStorage.setItem('searchDateTime', datetime);
+            
+            if (window.burgerMenu) {
+                burgerMenu.showToast(`Recherche pour "${location}" en cours...`, 'info');
+            }
+            
+            setTimeout(() => {
+                window.location.href = '/map.html';
+            }, 1000);
+        }
+
+        function goToSpot(id) {
+            localStorage.setItem('navigationContext', JSON.stringify({
+                from: 'home',
+                section: 'places-disponibles',
+                timestamp: Date.now()
+            }));
+
+            if (window.burgerMenu) {
+                burgerMenu.showToast('Ouverture des détails de la place...', 'info');
+            }
+
+            setTimeout(() => {
+                window.location.href = `/spot.html?id=${id}`;
+            }, 500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const datetimeInput = document.getElementById('datetime');
+            if (datetimeInput) {
+                datetimeInput.value = new Date(Date.now() + 3600000).toISOString().slice(0, 16);
+            }
+            
+            document.body.style.paddingTop = '70px';
+            
+            setTimeout(() => {
+                if (window.burgerMenu) {
+                    const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+                    if (notifications.length === 0) {
+                        burgerMenu.addRandomNotification();
+                    }
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
