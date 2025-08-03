@@ -197,10 +197,31 @@
   border: 1px solid var(--admin-border);
   overflow: hidden;
   transition: all var(--transition-base);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.admin-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  pointer-events: none;
+  z-index: 1;
 }
 
 .admin-card:hover {
-  box-shadow: var(--admin-shadow-lg);
+  box-shadow: var(--admin-shadow-xl);
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.admin-card > * {
+  position: relative;
+  z-index: 2;
 }
 
 .card-title {
