@@ -51,7 +51,12 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // Ajouter des gestionnaires pour les boutons de réservation
-    const reserveButtons = document.querySelectorAll('.btn:contains("Réserver")');
+    const allButtons = document.querySelectorAll('.btn');
+    const reserveButtons = Array.from(allButtons).filter(button =>
+        button.textContent.includes('Réserver') ||
+        button.innerHTML.includes('Réserver')
+    );
+
     reserveButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
