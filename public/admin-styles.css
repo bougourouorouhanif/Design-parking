@@ -102,11 +102,13 @@
   position: relative;
   overflow: hidden;
   transition: all var(--transition-base);
+  cursor: pointer;
 }
 
 .metric-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--admin-shadow-lg);
+  transform: translateY(-4px);
+  box-shadow: var(--admin-shadow-xl);
+  border-color: var(--admin-primary);
 }
 
 .metric-card::before {
@@ -117,6 +119,22 @@
   right: 0;
   height: 4px;
   background: linear-gradient(90deg, var(--admin-primary), var(--admin-secondary));
+}
+
+.metric-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(16, 185, 129, 0.05));
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.metric-card:hover::after {
+  opacity: 1;
 }
 
 .metric-value {
