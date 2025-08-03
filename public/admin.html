@@ -166,6 +166,82 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Sections réduites en dessous des graphiques -->
+                    <div class="secondary-sections">
+                        <!-- Gestion des utilisateurs - Version compacte -->
+                        <div class="admin-card users-management compact">
+                            <h2 class="card-title">
+                                <span class="card-icon">👥</span>
+                                Gestion des utilisateurs
+                                <button onclick="toggleSection('users')" class="btn btn-sm btn-secondary expand-btn">
+                                    <span class="btn-icon">👁️</span>
+                                    Voir plus
+                                </button>
+                            </h2>
+
+                            <div class="compact-stats">
+                                <div class="compact-stat">
+                                    <span class="compact-stat-value">9,845</span>
+                                    <span class="compact-stat-label">Conducteurs</span>
+                                </div>
+                                <div class="compact-stat">
+                                    <span class="compact-stat-value">2,567</span>
+                                    <span class="compact-stat-label">Propriétaires</span>
+                                </div>
+                                <div class="compact-stat">
+                                    <span class="compact-stat-value">435</span>
+                                    <span class="compact-stat-label">Inactifs</span>
+                                </div>
+                            </div>
+
+                            <div class="recent-activity">
+                                <div class="activity-item">
+                                    <span class="activity-user">Marie Dubois</span>
+                                    <span class="activity-action">Inscription conducteur</span>
+                                    <span class="activity-time">Il y a 2h</span>
+                                </div>
+                                <div class="activity-item">
+                                    <span class="activity-user">Jean Martin</span>
+                                    <span class="activity-action">Ajout place parking</span>
+                                    <span class="activity-time">Il y a 4h</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modération du contenu - Version compacte -->
+                        <div class="admin-card content-moderation compact">
+                            <h2 class="card-title">
+                                <span class="card-icon">🛡️</span>
+                                Modération
+                                <button onclick="toggleSection('moderation')" class="btn btn-sm btn-secondary expand-btn">
+                                    <span class="btn-icon">👁️</span>
+                                    Voir plus
+                                </button>
+                            </h2>
+
+                            <div class="moderation-summary">
+                                <div class="summary-stat urgent">
+                                    <span class="summary-value">3</span>
+                                    <span class="summary-label">Urgent</span>
+                                </div>
+                                <div class="summary-stat pending">
+                                    <span class="summary-value">7</span>
+                                    <span class="summary-label">En attente</span>
+                                </div>
+                                <div class="summary-stat reviews">
+                                    <span class="summary-value">12</span>
+                                    <span class="summary-label">Avis</span>
+                                </div>
+                            </div>
+
+                            <div class="urgent-alert">
+                                <span class="alert-icon">🚨</span>
+                                <span class="alert-text">Signalement urgent - Garage Marais</span>
+                                <button onclick="resolveReport(1)" class="btn btn-sm btn-danger">Traiter</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="dashboard-sidebar">
