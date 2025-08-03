@@ -212,13 +212,40 @@
                         </div>
                     </div>
 
-                    <!-- Vue financière -->
+                    <!-- Graphiques Analytics -->
+                    <div class="admin-card analytics-overview">
+                        <h2 class="card-title">
+                            <span class="card-icon">📊</span>
+                            Analytics et Performances
+                        </h2>
+
+                        <div class="charts-grid">
+                            <div class="chart-container">
+                                <h4 class="chart-title">Revenus des 6 derniers mois</h4>
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+
+                            <div class="chart-container">
+                                <h4 class="chart-title">Répartition utilisateurs</h4>
+                                <canvas id="usersChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="charts-grid-full">
+                            <div class="chart-container">
+                                <h4 class="chart-title">Activité quotidienne (7 derniers jours)</h4>
+                                <canvas id="activityChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vue financière détaillée -->
                     <div class="admin-card financial-overview">
                         <h2 class="card-title">
                             <span class="card-icon">💰</span>
-                            Vue financière
+                            Vue financière détaillée
                         </h2>
-                        
+
                         <div class="financial-grid">
                             <div class="financial-section">
                                 <h4 class="financial-title">Revenus par mois</h4>
@@ -242,7 +269,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="financial-section">
                                 <h4 class="financial-title">Commissions par segment</h4>
                                 <div class="financial-data">
@@ -260,6 +287,13 @@
                                         <span class="financial-total">€28,950</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="charts-grid-single">
+                            <div class="chart-container">
+                                <h4 class="chart-title">Évolution des commissions</h4>
+                                <canvas id="commissionsChart"></canvas>
                             </div>
                         </div>
                     </div>
