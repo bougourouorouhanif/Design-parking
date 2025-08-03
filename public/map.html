@@ -6,52 +6,12 @@
     <title>Carte des parkings - Parky</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
-    <link rel="stylesheet" href="navbar-enhanced.css">
-    <script src="navbar.js" defer></script>
-    <script src="bottom-navbar.js" defer></script>
+    <link rel="stylesheet" href="enhanced-burger-menu.css">
+    <script src="auth-check.js"></script>
+    <script src="enhanced-burger-menu.js" defer></script>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <nav class="modern-nav">
-                <!-- Menu burger à gauche -->
-                <div class="nav-left">
-                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
-                        <div class="menu-line"></div>
-                        <div class="menu-line"></div>
-                        <div class="menu-line"></div>
-                    </div>
-                </div>
-
-                <!-- Logo centré -->
-                <div class="nav-center">
-                    <a href="/" class="logo centered">Parky</a>
-                </div>
-
-                <!-- Notifications à droite -->
-                <div class="nav-right">
-                    <div class="notification-icon enhanced" onclick="toggleNotifications()">
-                        🔔
-                        <span class="notification-badge" id="notificationCount">2</span>
-                    </div>
-                </div>
-
-                <!-- Menu mobile -->
-                <div class="mobile-menu" id="mobileMenu">
-                    <div class="mobile-menu-content">
-                        <ul class="mobile-menu-links">
-                            <li><a href="/home" onclick="closeMobileMenu()">🏠 Accueil</a></li>
-                            <li><a href="/map" onclick="closeMobileMenu()">🗺️ Rechercher une place</a></li>
-                            <li><a href="/dashboard" onclick="closeMobileMenu()">📊 Mes réservations</a></li>
-                            <li><a href="/payment" onclick="closeMobileMenu()">💳 Paiements</a></li>
-                            <li><a href="/navigation" onclick="closeMobileMenu()">🧭 Navigation</a></li>
-                            <li><a href="/auth" onclick="closeMobileMenu()">🔐 Connexion</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
+    <!-- Le header sera créé automatiquement par le JavaScript du menu burger -->
 
     <div class="filter-bar">
         <div class="container" style="max-width: none;">
@@ -92,7 +52,7 @@
         </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 400px; height: calc(100vh - 120px);">
+    <div style="display: grid; grid-template-columns: 1fr 400px; height: calc(100vh - 190px); margin-top: 70px;">
         <div class="map-container" style="margin: 0; border-radius: 0; height: 100%; position: relative;">
             <div style="position: absolute; top: 20px; left: 20px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                 📍 <strong>Paris Centre</strong> - 23 places disponibles
@@ -211,7 +171,12 @@
 
     <script>
         function selectSpot(id) {
-            window.location.href = `/spot/${id}`;
+            if (window.burgerMenu) {
+                burgerMenu.showToast('Ouverture des détails de la place...', 'info');
+            }
+            setTimeout(() => {
+                window.location.href = `/spot.html?id=${id}`;
+            }, 500);
         }
 
         function filterSpots() {
@@ -243,6 +208,10 @@
                 
                 spot.style.display = show ? 'grid' : 'none';
             });
+            
+            if (window.burgerMenu) {
+                burgerMenu.showToast('Filtres appliqués', 'success');
+            }
         }
 
         function clearFilters() {
@@ -251,66 +220,27 @@
             document.getElementById('maxDistance').value = '';
             document.getElementById('availableNow').checked = false;
             filterSpots();
+            
+            if (window.burgerMenu) {
+                burgerMenu.showToast('Filtres supprimés', 'info');
+            }
         }
 
         // Load search parameters if coming from homepage
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.paddingTop = '70px';
+            
             const searchLocation = localStorage.getItem('searchLocation');
             if (searchLocation) {
                 // Update map location indicator
-                document.querySelector('.map-container div').innerHTML = `📍 <strong>${searchLocation}</strong> - 23 places trouvées`;
+                const mapIndicator = document.querySelector('.map-container div');
+                if (mapIndicator) {
+                    mapIndicator.innerHTML = `📍 <strong>${searchLocation}</strong> - 23 places trouvées`;
+                }
                 localStorage.removeItem('searchLocation');
                 localStorage.removeItem('searchDateTime');
             }
-
-            // Initialiser la navbar inférieure pour la page carte
-            initBottomNavbar({
-                theme: 'light',
-                style: 'floating',
-                alwaysVisible: false,
-                customItems: [
-                    {
-                        id: 'home',
-                        icon: '🏠',
-                        label: 'Accueil',
-                        href: '/',
-                        badge: null
-                    },
-                    {
-                        id: 'search',
-                        icon: '🗺️',
-                        label: 'Carte',
-                        href: '/map',
-                        badge: null
-                    },
-                    {
-                        id: 'filters',
-                        icon: '🔧',
-                        label: 'Filtres',
-                        href: '#',
-                        badge: null,
-                        onClick: () => {
-                            document.querySelector('.filter-bar').scrollIntoView({ behavior: 'smooth' });
-                        }
-                    },
-                    {
-                        id: 'favorites',
-                        icon: '❤️',
-                        label: 'Favoris',
-                        href: '/favorites',
-                        badge: null,
-                        dataIcon: 'heart'
-                    },
-                    {
-                        id: 'profile',
-                        icon: '👤',
-                        label: 'Profil',
-                        href: '/dashboard',
-                        badge: null
-                    }
-                ]
-            });
-        }
+        });
     </script>
 </body>
 </html>
