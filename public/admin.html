@@ -659,6 +659,76 @@
             });
         }
 
+        // Animation des compteurs
+        function animateCounters() {
+            const counters = document.querySelectorAll('.metric-value[data-target]');
+
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const isPercentage = counter.textContent.includes('%');
+                const isCurrency = counter.textContent.includes('€');
+                const isThousands = counter.textContent.includes('K');
+
+                let start = 0;
+                const increment = target / 100;
+                const timer = setInterval(() => {
+                    start += increment;
+
+                    if (start >= target) {
+                        start = target;
+                        clearInterval(timer);
+                    }
+
+                    let displayValue = Math.floor(start);
+
+                    if (isCurrency && isThousands) {
+                        counter.textContent = `€${displayValue}K`;
+                    } else if (isCurrency) {
+                        counter.textContent = `€${displayValue.toLocaleString()}`;
+                    } else if (isPercentage) {
+                        counter.textContent = `${displayValue}%`;
+                    } else {
+                        counter.textContent = displayValue.toLocaleString();
+                    }
+                }, 20);
+            });
+        }
+
+        // Fonction pour afficher les détails des métriques
+        function showMetricDetails(type) {
+            const details = {
+                users: {
+                    title: 'Utilisateurs Actifs',
+                    content: 'Total: 12,847 utilisateurs\n• Conducteurs: 9,845 (76.6%)\n• Propriétaires: 2,567 (20.0%)\n• Admins: 435 (3.4%)\n\nCroissance: +15% ce mois\n+1,695 nouveaux utilisateurs'
+                },
+                spots: {
+                    title: 'Places de Parking',
+                    content: 'Total: 3,294 places en ligne\n• Disponibles: 2,847 (86.4%)\n• Réservées: 447 (13.6%)\n• En maintenance: 23 (0.7%)\n\nCroissance: +8% ce mois\n+243 nouvelles places'
+                },
+                revenue: {
+                    title: 'Chiffre d\'Affaires',
+                    content: 'Janvier 2024: €289,450\n• Réservations: €245,230 (84.7%)\n• Abonnements: €32,150 (11.1%)\n• Services: €12,070 (4.2%)\n\nCroissance: +22% vs Décembre\n+€51,560 d\'augmentation'
+                },
+                satisfaction: {
+                    title: 'Satisfaction Client',
+                    content: 'Taux global: 89%\n• 5 étoiles: 67% (5,342 avis)\n• 4 étoiles: 22% (1,754 avis)\n• 3 étoiles: 8% (638 avis)\n• 1-2 étoiles: 3% (239 avis)\n\nTendance: -2% ce mois\nAméliorations nécessaires'
+                },
+                bookings: {
+                    title: 'Réservations Quotidiennes',
+                    content: 'Moyenne: 2,847 réservations/jour\n• Pic: 3,200 (mercredi)\n• Creux: 1,650 (dimanche)\n• Heures de pointe: 8h-10h, 18h-20h\n\nCroissance: +12% ce mois\n+305 réservations/jour en moyenne'
+                },
+                commissions: {
+                    title: 'Commissions Journalières',
+                    content: 'Moyenne: €28,900/jour\n• Taux moyen: 12.5%\n• Particuliers: €22,567 (78%)\n• Entreprises: €6,383 (22%)\n\nCroissance: +18% ce mois\n+€4,420/jour en moyenne'
+                }
+            };
+
+            const detail = details[type];
+            if (detail) {
+                showNotification(`${detail.title}\n\n${detail.content}`, 'info');
+            }
+        }
+
         // Fonctions administratives
         function exportData() {
             showNotification('Export des données en cours...', 'info');
