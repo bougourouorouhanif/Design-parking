@@ -1039,34 +1039,40 @@
   .admin-container {
     padding: 0 1rem;
   }
-  
+
   .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .secondary-sections {
     grid-template-columns: 1fr;
-  }
-  
-  .search-controls {
-    flex-direction: column;
-  }
-  
-  .mod-item-header {
-    flex-direction: column;
     gap: 1rem;
+  }
+
+  .compact-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .moderation-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .activity-item {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .urgent-alert {
+    flex-direction: column;
+    gap: 0.75rem;
     align-items: stretch;
   }
-  
-  .mod-item-actions {
-    justify-content: stretch;
-  }
-  
-  .mod-item-actions .btn {
-    flex: 1;
-    justify-content: center;
-  }
-  
+
   .support-stats {
     grid-template-columns: 1fr;
   }
-  
+
   .quick-actions-grid {
     grid-template-columns: 1fr;
   }
