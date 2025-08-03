@@ -503,14 +503,14 @@ class EnhancedBurgerMenu {
 
     handleItemClick(href) {
         this.close();
-        
+
         // Ajouter un petit délai pour l'animation
         setTimeout(() => {
             if (href.startsWith('#')) {
                 return; // Ne pas naviguer pour les liens anchor
             }
-            
-            // Vérifier si la page existe, sinon rediriger vers home
+
+            // Utiliser la fonction améliorée de navigation
             this.navigateToPage(href);
         }, 200);
     }
