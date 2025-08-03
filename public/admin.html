@@ -35,35 +35,47 @@
 
             <!-- Métriques clés -->
             <div class="metrics-grid">
-                <div class="metric-card metric-users">
-                    <div class="metric-value">12,847</div>
+                <div class="metric-card metric-users" onclick="showMetricDetails('users')">
+                    <div class="metric-icon">👥</div>
+                    <div class="metric-value" data-target="12847">0</div>
                     <div class="metric-label">Utilisateurs actifs</div>
                     <div class="metric-change positive">+15% ce mois</div>
+                    <div class="metric-trend">📈</div>
                 </div>
-                <div class="metric-card metric-spots">
-                    <div class="metric-value">3,294</div>
+                <div class="metric-card metric-spots" onclick="showMetricDetails('spots')">
+                    <div class="metric-icon">🅿️</div>
+                    <div class="metric-value" data-target="3294">0</div>
                     <div class="metric-label">Places en ligne</div>
                     <div class="metric-change positive">+8% ce mois</div>
+                    <div class="metric-trend">📈</div>
                 </div>
-                <div class="metric-card metric-revenue">
-                    <div class="metric-value">€289K</div>
+                <div class="metric-card metric-revenue" onclick="showMetricDetails('revenue')">
+                    <div class="metric-icon">💰</div>
+                    <div class="metric-value" data-target="289">€0K</div>
                     <div class="metric-label">CA mensuel</div>
                     <div class="metric-change positive">+22% ce mois</div>
+                    <div class="metric-trend">📈</div>
                 </div>
-                <div class="metric-card metric-satisfaction">
-                    <div class="metric-value">89%</div>
+                <div class="metric-card metric-satisfaction" onclick="showMetricDetails('satisfaction')">
+                    <div class="metric-icon">⭐</div>
+                    <div class="metric-value" data-target="89">0%</div>
                     <div class="metric-label">Taux satisfaction</div>
                     <div class="metric-change negative">-2% ce mois</div>
+                    <div class="metric-trend">📉</div>
                 </div>
-                <div class="metric-card metric-bookings">
-                    <div class="metric-value">2,847</div>
+                <div class="metric-card metric-bookings" onclick="showMetricDetails('bookings')">
+                    <div class="metric-icon">📅</div>
+                    <div class="metric-value" data-target="2847">0</div>
                     <div class="metric-label">Réservations/jour</div>
                     <div class="metric-change positive">+12% ce mois</div>
+                    <div class="metric-trend">📈</div>
                 </div>
-                <div class="metric-card metric-commissions">
-                    <div class="metric-value">€28.9K</div>
+                <div class="metric-card metric-commissions" onclick="showMetricDetails('commissions')">
+                    <div class="metric-icon">💳</div>
+                    <div class="metric-value" data-target="28.9">€0K</div>
                     <div class="metric-label">Commissions/jour</div>
                     <div class="metric-change positive">+18% ce mois</div>
+                    <div class="metric-trend">📈</div>
                 </div>
             </div>
 
@@ -191,7 +203,7 @@
                             <div class="mod-item-header">
                                 <div class="mod-item-info">
                                     <h4 class="mod-item-title">📝 Place en attente #P2024-156</h4>
-                                    <p class="mod-item-description">"Parking Bastille" - Documents à vérifier</p>
+                                    <p class="mod-item-description">"Parking Bastille" - Documents �� vérifier</p>
                                 </div>
                                 <span class="status-badge pending">En attente</span>
                             </div>
