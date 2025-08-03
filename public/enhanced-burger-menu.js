@@ -532,6 +532,22 @@ class EnhancedBurgerMenu {
         }, 200);
     }
 
+    // Fonction pour rediriger vers les pages avec gestion d'erreurs
+    navigateToPage(href) {
+        // Vérifier si nous sommes déjà sur la page
+        if (window.location.pathname === href) {
+            return;
+        }
+
+        // Ajouter .html si ce n'est pas présent et que ce n'est pas la racine
+        if (href !== '/' && !href.includes('.html') && !href.includes('#') && !href.includes('?')) {
+            href = href + '.html';
+        }
+
+        // Naviguer vers la page
+        window.location.href = href;
+    }
+
     logout() {
         if (this.currentUser.name) {
             if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
