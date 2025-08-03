@@ -10,42 +10,42 @@ class EnhancedBurgerMenu {
         this.menuItems = {
             driver: [
                 {
-                    href: '/home',
+                    href: '/home.html',
                     icon: 'icon-home',
                     text: 'Accueil',
                     section: 'main',
                     class: 'menu-item-home'
                 },
                 {
-                    href: '/map',
+                    href: '/map.html',
                     icon: 'icon-map',
                     text: 'Rechercher une place',
                     section: 'main',
                     class: 'menu-item-search'
                 },
                 {
-                    href: '/profile',
+                    href: '/profile.html',
                     icon: 'icon-profile',
                     text: 'Mon Profil',
                     section: 'account',
                     class: 'menu-item-profile'
                 },
                 {
-                    href: '/payment',
+                    href: '/payment.html',
                     icon: 'icon-payment',
                     text: 'Paiement',
                     section: 'account',
                     class: 'menu-item-payment'
                 },
                 {
-                    href: '/navigation',
+                    href: '/navigation.html',
                     icon: 'icon-navigation',
                     text: 'Navigation',
                     section: 'tools',
                     class: 'menu-item-navigation'
                 },
                 {
-                    href: '/notifications',
+                    href: '/notifications.html',
                     icon: 'icon-bell',
                     text: 'Notifications',
                     section: 'tools',
