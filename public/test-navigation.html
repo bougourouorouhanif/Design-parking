@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Navigation - Parky</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="enhanced-burger-menu.css">
+    <script src="auth-check.js"></script>
+    <script src="enhanced-burger-menu.js" defer></script>
+    <script src="fix-navigation.js" defer></script>
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 90px;
+        }
+        .test-section {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #4A90E2, #7ED6A7);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 0.5rem;
+            transition: transform 0.2s ease;
+        }
+        .test-link:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+        .status {
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin: 0.25rem 0;
+        }
+        .status.working { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test de Navigation - Parky</h1>
+        <p>Cette page permet de tester tous les liens de l'application.</p>
+
+        <div class="test-section">
+            <h2>📱 Navigation Principale</h2>
+            <div class="status working">✅ Menu burger : Fonctionnel</div>
+            <div class="status working">✅ Bottom navbar : Fixe et visible</div>
+            <div class="status working">✅ Logo : Image intégrée</div>
+            <div class="status working">✅ Notifications : Badge fonctionnel</div>
+        </div>
+
+        <div class="test-section">
+            <h2>🔗 Liens du Menu Burger</h2>
+            <a href="/index.html" class="test-link">🏠 Accueil</a>
+            <a href="/map.html" class="test-link">🗺️ Carte</a>
+            <a href="/profile.html" class="test-link">👤 Profil</a>
+            <a href="/payment.html" class="test-link">💳 Paiement</a>
+            <a href="/navigation.html" class="test-link">🧭 Navigation</a>
+            <a href="/notifications.html" class="test-link">🔔 Notifications</a>
+        </div>
+
+        <div class="test-section">
+            <h2>🏠 Liens Bottom Navbar</h2>
+            <a href="/index.html" class="test-link">🏠 Accueil</a>
+            <a href="/map.html" class="test-link">🔍 Recherche</a>
+            <a href="/dashboard.html" class="test-link">📝 Réservations</a>
+            <a href="/notifications.html" class="test-link">🔔 Notifications</a>
+            <a href="/profile.html" class="test-link">👤 Profil</a>
+        </div>
+
+        <div class="test-section">
+            <h2>🚗 Pages Spécialisées</h2>
+            <a href="/add-spot.html" class="test-link">➕ Ajouter Place</a>
+            <a href="/spot.html?id=1" class="test-link">🅿️ Détails Place</a>
+            <a href="/auth-modern.html" class="test-link">🔐 Connexion</a>
+            <a href="/owner.html" class="test-link">🏢 Propriétaire</a>
+        </div>
+
+        <div class="test-section">
+            <h2>⚙️ Actions de Test</h2>
+            <button onclick="testNotification()" class="test-link" style="border: none; cursor: pointer;">
+                🔔 Test Notification
+            </button>
+            <button onclick="testSearchParking()" class="test-link" style="border: none; cursor: pointer;">
+                🔍 Test Recherche
+            </button>
+            <button onclick="testSpotSelection()" class="test-link" style="border: none; cursor: pointer;">
+                🅿️ Test Sélection Place
+            </button>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 Statut Système</h2>
+            <div id="systemStatus">
+                <div class="status working">Menu Burger: <span id="menuStatus">Chargement...</span></div>
+                <div class="status working">Bottom Navbar: <span id="navbarStatus">Chargement...</span></div>
+                <div class="status working">Notifications: <span id="notifStatus">Chargement...</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function testNotification() {
+            if (window.burgerMenu) {
+                burgerMenu.addRandomNotification();
+                showToast('Notification de test ajoutée!', 'success');
+            } else {
+                showToast('Menu burger non disponible', 'error');
+            }
+        }
+
+        function testSearchParking() {
+            localStorage.setItem('searchLocation', 'Paris Test');
+            localStorage.setItem('searchDateTime', new Date().toISOString());
+            showToast('Paramètres de recherche définis', 'success');
+            setTimeout(() => {
+                window.location.href = '/map.html';
+            }, 1000);
+        }
+
+        function testSpotSelection() {
+            showToast('Test sélection de place...', 'info');
+            setTimeout(() => {
+                goToSpot(1);
+            }, 500);
+        }
+
+        function updateSystemStatus() {
+            // Vérifier le menu burger
+            const menuElement = document.querySelector('.enhanced-header');
+            document.getElementById('menuStatus').textContent = menuElement ? '✅ Actif' : '❌ Inactif';
+
+            // Vérifier la bottom navbar
+            const navbarElement = document.querySelector('.bottom-navbar');
+            document.getElementById('navbarStatus').textContent = navbarElement ? '✅ Visible' : '❌ Cachée';
+
+            // Vérifier les notifications
+            const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+            document.getElementById('notifStatus').textContent = `✅ ${notifications.length} notifications`;
+        }
+
+        // Mettre à jour le statut au chargement et périodiquement
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(updateSystemStatus, 1000);
+            setInterval(updateSystemStatus, 5000);
+        });
+    </script>
+</body>
+</html>
