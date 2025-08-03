@@ -876,7 +876,7 @@
   }
 }
 
-/* Animation au chargement */
+/* Animations avancées */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -888,9 +888,63 @@
   }
 }
 
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
 .admin-card,
 .metric-card {
-  animation: fadeInUp 0.6s ease-out;
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+.chart-container {
+  animation: scaleIn 0.8s ease-out both;
+}
+
+.dashboard-main .admin-card {
+  animation: slideInLeft 0.6s ease-out both;
+}
+
+.dashboard-sidebar .admin-card {
+  animation: slideInRight 0.6s ease-out both;
 }
 
 .metric-card:nth-child(1) { animation-delay: 0.1s; }
@@ -899,3 +953,38 @@
 .metric-card:nth-child(4) { animation-delay: 0.4s; }
 .metric-card:nth-child(5) { animation-delay: 0.5s; }
 .metric-card:nth-child(6) { animation-delay: 0.6s; }
+
+.chart-container:nth-child(1) { animation-delay: 0.3s; }
+.chart-container:nth-child(2) { animation-delay: 0.5s; }
+.chart-container:nth-child(3) { animation-delay: 0.7s; }
+
+/* Effets hover avancés */
+.metric-value {
+  transition: all var(--transition-base);
+}
+
+.metric-card:hover .metric-value {
+  animation: pulse 1s infinite;
+  color: var(--admin-primary);
+}
+
+.chart-container:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Glow effects */
+.btn-primary:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+.btn-success:hover {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-warning:hover {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+}
+
+.btn-danger:hover {
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
