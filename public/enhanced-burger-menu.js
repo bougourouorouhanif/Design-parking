@@ -230,7 +230,7 @@ class EnhancedBurgerMenu {
         navbar.id = 'fixedBottomNavbar';
         navbar.innerHTML = `
             <div class="bottom-nav-content">
-                <a href="/" class="bottom-nav-item" data-page="home" onclick="return handleNavClick(this)">
+                <a href="/index.html" class="bottom-nav-item" data-page="home" onclick="return handleNavClick(this)">
                     <div class="bottom-nav-icon">
                         <div class="icon icon-home"></div>
                     </div>
