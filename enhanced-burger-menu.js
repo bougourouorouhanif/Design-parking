@@ -10,42 +10,42 @@ class EnhancedBurgerMenu {
         this.menuItems = {
             driver: [
                 {
-                    href: '/home.html',
+                    href: '/home',
                     icon: 'icon-home',
                     text: 'Accueil',
                     section: 'main',
                     class: 'menu-item-home'
                 },
                 {
-                    href: '/map.html',
+                    href: '/map',
                     icon: 'icon-map',
                     text: 'Rechercher une place',
                     section: 'main',
                     class: 'menu-item-search'
                 },
                 {
-                    href: '/profile.html',
+                    href: '/profile',
                     icon: 'icon-profile',
                     text: 'Mon Profil',
                     section: 'account',
                     class: 'menu-item-profile'
                 },
                 {
-                    href: '/payment.html',
+                    href: '/payment',
                     icon: 'icon-payment',
                     text: 'Paiement',
                     section: 'account',
                     class: 'menu-item-payment'
                 },
                 {
-                    href: '/navigation.html',
+                    href: '/navigation',
                     icon: 'icon-navigation',
                     text: 'Navigation',
                     section: 'tools',
                     class: 'menu-item-navigation'
                 },
                 {
-                    href: '/notifications.html',
+                    href: '/notifications',
                     icon: 'icon-bell',
                     text: 'Notifications',
                     section: 'tools',
@@ -230,7 +230,7 @@ class EnhancedBurgerMenu {
         navbar.id = 'fixedBottomNavbar';
         navbar.innerHTML = `
             <div class="bottom-nav-content">
-                <a href="/index.html" class="bottom-nav-item" data-page="home" onclick="return handleNavClick(this)">
+                <a href="/" class="bottom-nav-item" data-page="home" onclick="return handleNavClick(this)">
                     <div class="bottom-nav-icon">
                         <div class="icon icon-home"></div>
                     </div>
@@ -249,14 +249,6 @@ class EnhancedBurgerMenu {
                         <div class="icon icon-reservations"></div>
                     </div>
                     <span class="bottom-nav-label">Réservations</span>
-                </a>
-
-                <a href="/notifications.html" class="bottom-nav-item" data-page="notifications" onclick="return handleNavClick(this)">
-                    <div class="bottom-nav-icon">
-                        <div class="icon icon-bell"></div>
-                        <div class="bottom-nav-badge" id="bottomNotificationBadge" style="display: none;">0</div>
-                    </div>
-                    <span class="bottom-nav-label">Notifications</span>
                 </a>
 
                 <a href="/profile.html" class="bottom-nav-item" data-page="profile" onclick="return handleNavClick(this)">
@@ -503,14 +495,14 @@ class EnhancedBurgerMenu {
 
     handleItemClick(href) {
         this.close();
-
+        
         // Ajouter un petit délai pour l'animation
         setTimeout(() => {
             if (href.startsWith('#')) {
                 return; // Ne pas naviguer pour les liens anchor
             }
-
-            // Utiliser la fonction améliorée de navigation
+            
+            // Vérifier si la page existe, sinon rediriger vers home
             this.navigateToPage(href);
         }, 200);
     }
@@ -530,22 +522,6 @@ class EnhancedBurgerMenu {
         setTimeout(() => {
             window.location.href = '/notifications.html';
         }, 200);
-    }
-
-    // Fonction pour rediriger vers les pages avec gestion d'erreurs
-    navigateToPage(href) {
-        // Vérifier si nous sommes déjà sur la page
-        if (window.location.pathname === href) {
-            return;
-        }
-
-        // Ajouter .html si ce n'est pas présent et que ce n'est pas la racine
-        if (href !== '/' && !href.includes('.html') && !href.includes('#') && !href.includes('?')) {
-            href = href + '.html';
-        }
-
-        // Naviguer vers la page
-        window.location.href = href;
     }
 
     logout() {
@@ -608,22 +584,6 @@ class EnhancedBurgerMenu {
             }
         });
 
-        // Mettre à jour la bottom navbar
-        this.updateBottomNavBadge();
-    }
-
-    updateBottomNavBadge() {
-        const count = this.getNotificationCount();
-        const badge = document.getElementById('bottomNotificationBadge');
-
-        if (badge) {
-            if (count > 0) {
-                badge.textContent = count;
-                badge.style.display = 'flex';
-            } else {
-                badge.style.display = 'none';
-            }
-        }
     }
 
     simulateNotifications() {
