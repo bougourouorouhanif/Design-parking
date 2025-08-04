@@ -747,21 +747,61 @@ SUPPORT:
         }
 
         function viewUser(id) {
-            showNotification(`Affichage du profil utilisateur ${id}`, 'info');
+            const users = {
+                1: {name: 'Marie Dubois', email: 'marie.d@email.com', type: 'Conducteur', status: 'Actif', joinDate: '15/01/2024'},
+                2: {name: 'Jean Martin', email: 'jean.m@email.com', type: 'Propriétaire', status: 'Actif', joinDate: '12/01/2024'}
+            };
+
+            const user = users[id];
+            if (user) {
+                showUserModal(user);
+            } else {
+                showNotification('Utilisateur non trouvé', 'error');
+            }
         }
 
         function resolveReport(id) {
             if (confirm('Marquer ce signalement comme résolu?')) {
+                updateModerationStats('resolve');
                 showNotification('Signalement résolu avec succès', 'success');
+
+                // Mise à jour visuelle
+                const urgentAlert = document.querySelector('.urgent-alert');
+                if (urgentAlert) {
+                    urgentAlert.style.opacity = '0.5';
+                    urgentAlert.style.textDecoration = 'line-through';
+                }
             }
         }
 
         function viewReport(id) {
-            showNotification(`Détails du signalement ${id}`, 'info');
+            const report = {
+                id: 'S2024-047',
+                title: 'Signalement - Garage Marais',
+                description: 'Accès refusé par propriétaire malgré réservation confirmée',
+                reporter: 'Marie Dubois',
+                reportDate: '2024-01-15 14:30',
+                priority: 'Urgent',
+                status: 'En cours'
+            };
+            showReportModal(report);
         }
 
         function contactUser(id) {
-            showNotification(`Interface de contact utilisateur ${id}`, 'info');
+            const contactModal = createModal('Contacter Utilisateur', `
+                <div class="contact-form">
+                    <label for="contactSubject">Sujet:</label>
+                    <input type="text" id="contactSubject" class="form-control" placeholder="Objet du message">
+
+                    <label for="contactMessage">Message:</label>
+                    <textarea id="contactMessage" class="form-control" rows="4" placeholder="Votre message..."></textarea>
+
+                    <div class="contact-actions">
+                        <button class="btn btn-primary" onclick="sendUserMessage(${id})">Envoyer</button>
+                        <button class="btn btn-secondary" onclick="closeModal(this)">Annuler</button>
+                    </div>
+                </div>
+            `);
         }
 
         function approveSpot(id) {
