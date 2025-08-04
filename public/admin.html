@@ -687,11 +687,63 @@
 
         // Fonctions administratives
         function exportData() {
-            showNotification('Export des données en cours...', 'info');
+            showProgressModal('Export des données en cours...', () => {
+                // Simulation d'export de données
+                const data = {
+                    users: 12847,
+                    spots: 3294,
+                    revenue: 289450,
+                    bookings: 2847,
+                    exportDate: new Date().toISOString(),
+                    platform: 'Parky Admin Dashboard'
+                };
+
+                const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `parky-admin-data-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                showNotification('Données exportées avec succès!', 'success');
+            });
         }
 
         function generateReport() {
-            showNotification('Génération du rapport mensuel...', 'info');
+            showProgressModal('Génération du rapport mensuel...', () => {
+                const reportContent = `RAPPORT MENSUEL PARKY - ${new Date().toLocaleDateString('fr-FR', {month: 'long', year: 'numeric'})}
+=====================================
+
+MÉTRIQUES CLÉS:
+- Utilisateurs actifs: 12,847 (+15%)
+- Places en ligne: 3,294 (+8%)
+- Chiffre d'affaires: €289,450 (+22%)
+- Taux de satisfaction: 89% (-2%)
+- Réservations/jour: 2,847 (+12%)
+- Commissions/jour: €28,900 (+18%)
+
+PERFORMANCE:
+- Uptime: 99.97%
+- Temps de réponse: 127ms
+- Erreurs: 0.02%
+
+SUPPORT:
+- Tickets ouverts: 23
+- Tickets résolus: 156
+- Satisfaction support: 4.7/5
+                `;
+
+                const blob = new Blob([reportContent], {type: 'text/plain'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `rapport-mensuel-${new Date().toISOString().split('T')[0]}.txt`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                showNotification('Rapport généré et téléchargé!', 'success');
+            });
         }
 
         function viewUser(id) {
@@ -739,7 +791,7 @@
         function sendNotification() {
             const message = prompt('Message à envoyer à tous les utilisateurs:');
             if (message) {
-                showNotification(`Notification envoy��e: "${message}"`, 'success');
+                showNotification(`Notification envoyée: "${message}"`, 'success');
             }
         }
 
