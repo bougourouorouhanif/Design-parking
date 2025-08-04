@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parky - Navigation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="navbar-enhanced.css">
+    <script src="auth-check.js"></script>
+    <script src="navbar.js" defer></script>
+    <script src="bottom-navbar.js" defer></script>
+</head>
+<body>
+    <!-- Navbar moderne -->
+    <header class="header">
+        <div class="container">
+            <nav class="modern-nav">
+                <div class="nav-left">
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
+                </div>
+                
+                <div class="nav-center">
+                    <a href="/home" class="logo centered">Parky</a>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="notification-icon enhanced" onclick="goToNotifications()">
+                        <div class="icon icon-bell icon-white icon-interactive"></div>
+                        <span class="notification-badge" id="notificationCount">2</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Menu mobile -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul class="mobile-menu-links">
+            <!-- Le contenu sera généré par navbar.js -->
+        </ul>
+    </div>
+
+    <main class="container" style="padding: 2rem 0;">
+        <div class="page-header">
+            <div class="header-icon">
+                <div class="icon icon-navigation"></div>
+            </div>
+            <div class="header-text">
+                <h1>Navigation</h1>
+                <p>Naviguez facilement vers vos places réservées</p>
+            </div>
+        </div>
+
+        <!-- Navigation active -->
+        <div class="navigation-section">
+            <h2>🎯 Navigation active</h2>
+            <div class="active-navigation">
+                <div class="nav-card">
+                    <div class="nav-header">
+                        <div class="nav-icon">📍</div>
+                        <div class="nav-destination">
+                            <h3>Parking Centre-ville</h3>
+                            <p>123 Rue de la Paix, Paris</p>
+                        </div>
+                        <div class="nav-time">5 min</div>
+                    </div>
+                    
+                    <div class="nav-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                        <div class="nav-distance">
+                            <span>1.2 km restants</span>
+                            <span>Arrivée prévue 15h05</span>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-actions">
+                        <button class="nav-btn primary">
+                            <div class="icon icon-navigation"></div>
+                            Ouvrir GPS
+                        </button>
+                        <button class="nav-btn secondary">
+                            <div class="icon icon-phone"></div>
+                            Appeler
+                        </button>
+                        <button class="nav-btn danger">
+                            <div class="icon icon-close"></div>
+                            Arrêter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historique de navigation -->
+        <div class="navigation-section">
+            <h2>📊 Historique de navigation</h2>
+            <div class="navigation-history">
+                <div class="history-item">
+                    <div class="history-icon completed">✅</div>
+                    <div class="history-details">
+                        <h3>Parking Gare SNCF</h3>
+                        <p>Aujourd'hui 12h30 - Navigation terminée</p>
+                        <div class="history-stats">
+                            <span>2.5 km • 8 min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="history-item">
+                    <div class="history-icon completed">✅</div>
+                    <div class="history-details">
+                        <h3>Parking République</h3>
+                        <p>Hier 14h15 - Navigation terminée</p>
+                        <div class="history-stats">
+                            <span>1.8 km • 6 min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="history-item">
+                    <div class="history-icon cancelled">❌</div>
+                    <div class="history-details">
+                        <h3>Parking Opéra</h3>
+                        <p>Hier 09h45 - Navigation annulée</p>
+                        <div class="history-stats">
+                            <span>3.2 km • Interrompu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Préférences de navigation -->
+        <div class="navigation-section">
+            <h2>⚙️ Préférences de navigation</h2>
+            <div class="nav-preferences">
+                <div class="preference-item">
+                    <div class="pref-icon">🗺️</div>
+                    <div class="pref-content">
+                        <h3>Application GPS préférée</h3>
+                        <select class="pref-select">
+                            <option>Google Maps</option>
+                            <option>Waze</option>
+                            <option>Apple Plans</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="preference-item">
+                    <div class="pref-icon">🚗</div>
+                    <div class="pref-content">
+                        <h3>Type de trajet</h3>
+                        <select class="pref-select">
+                            <option>Le plus rapide</option>
+                            <option>Le plus court</option>
+                            <option>Éviter les péages</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="preference-item">
+                    <div class="pref-icon">🔔</div>
+                    <div class="pref-content">
+                        <h3>Notifications</h3>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                            Alertes de navigation
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .header-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #e83e8c 0%, #ff6b9d 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-icon .icon {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+
+        .navigation-section {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .navigation-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .nav-card {
+            border: 2px solid #e9ecef;
+            border-radius: 16px;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+        }
+
+        .nav-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-icon {
+            font-size: 2rem;
+        }
+
+        .nav-destination {
+            flex: 1;
+        }
+
+        .nav-destination h3 {
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .nav-destination p {
+            margin: 0.25rem 0 0 0;
+            color: var(--text-secondary);
+        }
+
+        .nav-time {
+            background: #28a745;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .nav-progress {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-distance {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .nav-btn.primary {
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+            color: white;
+        }
+
+        .nav-btn.secondary {
+            background: #f8f9fa;
+            color: var(--text-primary);
+            border: 1px solid #e9ecef;
+        }
+
+        .nav-btn.danger {
+            background: #ff4757;
+            color: white;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .navigation-history {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+        }
+
+        .history-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .history-icon.completed {
+            background: #28a745;
+            color: white;
+        }
+
+        .history-icon.cancelled {
+            background: #dc3545;
+            color: white;
+        }
+
+        .history-details {
+            flex: 1;
+        }
+
+        .history-details h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .history-details p {
+            margin: 0.25rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .history-stats {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .nav-preferences {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .preference-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+        }
+
+        .pref-icon {
+            font-size: 1.5rem;
+        }
+
+        .pref-content {
+            flex: 1;
+        }
+
+        .pref-content h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .pref-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            background: white;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .toggle-slider {
+            width: 40px;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        input[type="checkbox"]:checked + .toggle-slider {
+            background: var(--primary-color);
+        }
+
+        input[type="checkbox"]:checked + .toggle-slider::before {
+            transform: translateX(20px);
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-actions {
+                flex-direction: column;
+            }
+            
+            .nav-btn {
+                min-width: auto;
+            }
+        }
+    </style>
+</body>
+</html>

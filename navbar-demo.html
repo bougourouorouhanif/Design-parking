@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démonstration Navbar Inférieure - Parky</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="navbar.js" defer></script>
+    <script src="bottom-navbar.js" defer></script>
+    <style>
+        .demo-container {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .demo-section {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .demo-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .demo-button {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+        
+        .demo-button.secondary {
+            background: #6c757d;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🚀 Démonstration Navbar Inférieure Parky</h1>
+        <p>Cette page présente toutes les fonctionnalités de la navbar inférieure personnalisable et animée.</p>
+        
+        <div class="demo-section">
+            <h2>🎨 Thèmes et Styles</h2>
+            <p>Changez l'apparence de la navbar en temps réel :</p>
+            
+            <div class="demo-controls">
+                <button class="demo-button" onclick="changeTheme('light')">
+                    ☀️ Thème Clair
+                </button>
+                <button class="demo-button" onclick="changeTheme('dark')">
+                    🌙 Thème Sombre
+                </button>
+                <button class="demo-button" onclick="changeStyle('default')">
+                    📱 Style Standard
+                </button>
+                <button class="demo-button" onclick="changeStyle('floating')">
+                    🎈 Style Flottant
+                </button>
+                <button class="demo-button" onclick="changeStyle('compact')">
+                    📦 Style Compact
+                </button>
+                <button class="demo-button secondary" onclick="toggleAutoHide()">
+                    👁️ Auto-masquage
+                </button>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🔢 Gestion des Badges</h2>
+            <p>Testez la mise à jour des badges de notification :</p>
+            
+            <div class="demo-controls">
+                <button class="demo-button" onclick="updateBadge('notifications', 5)">
+                    🔔 5 Notifications
+                </button>
+                <button class="demo-button" onclick="updateBadge('favorites', 12)">
+                    ❤️ 12 Favoris
+                </button>
+                <button class="demo-button" onclick="clearBadges()">
+                    🧹 Effacer Badges
+                </button>
+                <button class="demo-button" onclick="randomBadge()">
+                    🎲 Badge Aléatoire
+                </button>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>⚡ Animations</h2>
+            <p>Déclenchez des animations sur les icônes :</p>
+            
+            <div class="demo-controls">
+                <button class="demo-button" onclick="triggerAnimation('pulse')">
+                    💓 Animation Pulse
+                </button>
+                <button class="demo-button" onclick="triggerAnimation('heartbeat')">
+                    💗 Animation Battement
+                </button>
+                <button class="demo-button" onclick="triggerAnimation('shake')">
+                    🤝 Animation Secousse
+                </button>
+                <button class="demo-button" onclick="triggerAnimation('bounce')">
+                    🏀 Animation Rebond
+                </button>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🔧 Personnalisation Avancée</h2>
+            <p>Ajoutez ou modifiez les éléments de la navbar :</p>
+            
+            <div class="demo-controls">
+                <button class="demo-button" onclick="addCustomItem()">
+                    ➕ Ajouter Item
+                </button>
+                <button class="demo-button" onclick="removeItem()">
+                    ➖ Supprimer Item
+                </button>
+                <button class="demo-button" onclick="resetNavbar()">
+                    🔄 Reset Navbar
+                </button>
+                <button class="demo-button secondary" onclick="toggleVisibility()">
+                    👀 Basculer Visibilité
+                </button>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>📝 Code d'Exemple</h2>
+            <p>Voici comment initialiser la navbar avec vos propres paramètres :</p>
+            
+            <div class="code-block">
+initBottomNavbar({
+    theme: 'light', // 'light' ou 'dark'
+    style: 'floating', // 'default', 'floating', 'compact'
+    alwaysVisible: false, // true pour afficher sur desktop
+    autoHide: true, // masquer automatiquement au scroll
+    customItems: [
+        {
+            id: 'home',
+            icon: '🏠',
+            label: 'Accueil',
+            href: '/',
+            badge: null
+        },
+        {
+            id: 'custom',
+            icon: '⭐',
+            label: 'Custom',
+            href: '#',
+            badge: 5,
+            onClick: () => console.log('Custom action!')
+        }
+    ],
+    onItemClick: (item) => {
+        console.log('Clicked:', item.label);
+    }
+});
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🎯 Fonctionnalités</h2>
+            <ul style="line-height: 1.8;">
+                <li>✅ <strong>Responsive Design</strong> - S'adapte automatiquement aux différentes tailles d'écran</li>
+                <li>✅ <strong>Animations Fluides</strong> - Transitions CSS optimisées avec cubic-bezier</li>
+                <li>✅ <strong>Badges Dynamiques</strong> - Système de notification en temps réel</li>
+                <li>✅ <strong>Thèmes Personnalisables</strong> - Clair/sombre avec transitions</li>
+                <li>✅ <strong>Auto-masquage</strong> - Se cache automatiquement au scroll vers le bas</li>
+                <li>✅ <strong>Effet Ripple</strong> - Animation de clic moderne</li>
+                <li>✅ <strong>SafeArea Support</strong> - Compatible avec les encoches d'iPhone</li>
+                <li>✅ <strong>Accessibilité</strong> - Navigation au clavier et lecteurs d'écran</li>
+            </ul>
+        </div>
+        
+        <!-- Contenu factice pour tester le scroll -->
+        <div style="height: 150vh; background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 16px; margin: 2rem 0; display: flex; align-items: center; justify-content: center; color: #666;">
+            <div style="text-align: center;">
+                <h3>Zone de test du scroll</h3>
+                <p>Faites défiler pour tester l'auto-masquage de la navbar</p>
+                <p>⬇️ Scroll vers le bas pour masquer</p>
+                <p>⬆️ Scroll vers le haut pour afficher</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTheme = 'light';
+        let currentStyle = 'default';
+        let autoHideEnabled = false;
+        
+        // Initialiser la navbar de démonstration
+        window.addEventListener('load', function() {
+            initBottomNavbar({
+                theme: 'light',
+                style: 'default',
+                alwaysVisible: true, // Toujours visible pour la démo
+                autoHide: false,
+                customItems: [
+                    {
+                        id: 'home',
+                        icon: '🏠',
+                        label: 'Accueil',
+                        href: '/',
+                        badge: null
+                    },
+                    {
+                        id: 'search',
+                        icon: '🔍',
+                        label: 'Recherche',
+                        href: '/map',
+                        badge: null
+                    },
+                    {
+                        id: 'favorites',
+                        icon: '❤️',
+                        label: 'Favoris',
+                        href: '/favorites',
+                        badge: 3,
+                        dataIcon: 'heart'
+                    },
+                    {
+                        id: 'notifications',
+                        icon: '🔔',
+                        label: 'Notifications',
+                        href: '#',
+                        badge: 7,
+                        dataIcon: 'notification'
+                    },
+                    {
+                        id: 'profile',
+                        icon: '👤',
+                        label: 'Profil',
+                        href: '/dashboard',
+                        badge: null
+                    }
+                ],
+                onItemClick: (item) => {
+                    showToast(`Navigation vers ${item.label}`, 'info');
+                }
+            });
+        });
+        
+        function changeTheme(theme) {
+            currentTheme = theme;
+            if (window.bottomNavbar) {
+                window.bottomNavbar.changeTheme(theme);
+            }
+            showToast(`Thème changé: ${theme}`, 'success');
+        }
+        
+        function changeStyle(style) {
+            currentStyle = style;
+            if (window.bottomNavbar) {
+                window.bottomNavbar.changeStyle(style);
+            }
+            showToast(`Style changé: ${style}`, 'success');
+        }
+        
+        function toggleAutoHide() {
+            autoHideEnabled = !autoHideEnabled;
+            if (window.bottomNavbar) {
+                // Recréer avec les nouvelles options
+                initBottomNavbar({
+                    theme: currentTheme,
+                    style: currentStyle,
+                    alwaysVisible: true,
+                    autoHide: autoHideEnabled
+                });
+            }
+            showToast(`Auto-masquage: ${autoHideEnabled ? 'Activé' : 'Désactivé'}`, 'info');
+        }
+        
+        function updateBadge(itemId, count) {
+            if (window.bottomNavbar) {
+                window.bottomNavbar.updateBadge(itemId, count);
+            }
+            showToast(`Badge ${itemId}: ${count}`, 'info');
+        }
+        
+        function clearBadges() {
+            if (window.bottomNavbar) {
+                window.bottomNavbar.updateBadge('notifications', 0);
+                window.bottomNavbar.updateBadge('favorites', 0);
+            }
+            showToast('Badges effacés', 'success');
+        }
+        
+        function randomBadge() {
+            const items = ['notifications', 'favorites'];
+            const randomItem = items[Math.floor(Math.random() * items.length)];
+            const randomCount = Math.floor(Math.random() * 99) + 1;
+            updateBadge(randomItem, randomCount);
+        }
+        
+        function triggerAnimation(type) {
+            const icons = document.querySelectorAll('.bottom-nav-icon');
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            
+            if (randomIcon) {
+                randomIcon.style.animation = 'none';
+                setTimeout(() => {
+                    switch(type) {
+                        case 'pulse':
+                            randomIcon.style.animation = 'iconPulse 0.6s ease';
+                            break;
+                        case 'heartbeat':
+                            randomIcon.style.animation = 'heartbeat 0.8s ease';
+                            break;
+                        case 'shake':
+                            randomIcon.style.animation = 'shake 0.5s ease';
+                            break;
+                        case 'bounce':
+                            randomIcon.style.animation = 'bounceIn 0.6s ease';
+                            break;
+                    }
+                }, 10);
+            }
+            showToast(`Animation ${type} déclenchée!`, 'info');
+        }
+        
+        function addCustomItem() {
+            if (window.bottomNavbar) {
+                const customItem = {
+                    id: 'custom-' + Date.now(),
+                    icon: '⭐',
+                    label: 'Custom',
+                    href: '#',
+                    badge: Math.floor(Math.random() * 10),
+                    onClick: () => showToast('Item personnalisé cliqué!', 'success')
+                };
+                window.bottomNavbar.addItem(customItem);
+            }
+            showToast('Item personnalisé ajouté!', 'success');
+        }
+        
+        function removeItem() {
+            if (window.bottomNavbar) {
+                // Retirer le dernier item s'il y en a plus de 3
+                const customItems = document.querySelectorAll('.bottom-nav-item');
+                if (customItems.length > 3) {
+                    window.bottomNavbar.removeItem('profile');
+                    showToast('Item supprimé!', 'success');
+                } else {
+                    showToast('Minimum 3 items requis!', 'error');
+                }
+            }
+        }
+        
+        function resetNavbar() {
+            // Recréer la navbar avec les paramètres par défaut
+            window.location.reload();
+        }
+        
+        function toggleVisibility() {
+            const navbar = document.querySelector('.bottom-navbar');
+            if (navbar) {
+                navbar.style.display = navbar.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+        
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: ${type === 'success' ? '#7ED6A7' : type === 'error' ? '#FF4757' : '#4A90E2'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-weight: 500;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                max-width: 300px;
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parky - Paiements</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="navbar-enhanced.css">
+    <script src="auth-check.js"></script>
+    <script src="navbar.js" defer></script>
+    <script src="bottom-navbar.js" defer></script>
+</head>
+<body>
+    <!-- Navbar moderne -->
+    <header class="header">
+        <div class="container">
+            <nav class="modern-nav">
+                <div class="nav-left">
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
+                </div>
+                
+                <div class="nav-center">
+                    <a href="/home" class="logo centered">Parky</a>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="notification-icon enhanced" onclick="goToNotifications()">
+                        <div class="icon icon-bell icon-white icon-interactive"></div>
+                        <span class="notification-badge" id="notificationCount">2</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Menu mobile -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul class="mobile-menu-links">
+            <!-- Le contenu sera généré par navbar.js -->
+        </ul>
+    </div>
+
+    <main class="container" style="padding: 2rem 0;">
+        <div class="page-header">
+            <div class="header-icon">
+                <div class="icon icon-payment"></div>
+            </div>
+            <div class="header-text">
+                <h1>Paiements</h1>
+                <p>Gérez vos modes de paiement et historique des transactions</p>
+            </div>
+        </div>
+
+        <div class="payment-sections">
+            <!-- Modes de paiement -->
+            <div class="payment-section">
+                <h2>💳 Modes de paiement</h2>
+                <div class="payment-methods">
+                    <div class="payment-method active">
+                        <div class="method-icon">💳</div>
+                        <div class="method-info">
+                            <h3>Carte **** 1234</h3>
+                            <p>Expire 12/25</p>
+                        </div>
+                        <div class="method-status">Défaut</div>
+                    </div>
+                    
+                    <div class="payment-method">
+                        <div class="method-icon">📱</div>
+                        <div class="method-info">
+                            <h3>Apple Pay</h3>
+                            <p>iPhone de Demo</p>
+                        </div>
+                        <div class="method-actions">
+                            <button class="btn-small">Définir par défaut</button>
+                        </div>
+                    </div>
+                    
+                    <div class="add-payment-method">
+                        <div class="icon icon-add"></div>
+                        <span>Ajouter un mode de paiement</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historique -->
+            <div class="payment-section">
+                <h2>📊 Historique des paiements</h2>
+                <div class="payment-history">
+                    <div class="payment-item">
+                        <div class="payment-icon success">✅</div>
+                        <div class="payment-details">
+                            <h3>Parking Centre-ville</h3>
+                            <p>15 janvier 2024 - 2h30</p>
+                        </div>
+                        <div class="payment-amount">12,50€</div>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <div class="payment-icon success">✅</div>
+                        <div class="payment-details">
+                            <h3>Parking Gare</h3>
+                            <p>12 janvier 2024 - 1h45</p>
+                        </div>
+                        <div class="payment-amount">8,75€</div>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <div class="payment-icon pending">⏳</div>
+                        <div class="payment-details">
+                            <h3>Remboursement</h3>
+                            <p>10 janvier 2024</p>
+                        </div>
+                        <div class="payment-amount">-15,00€</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .header-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-icon .icon {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+
+        .payment-sections {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .payment-section {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .payment-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .payment-methods {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+
+        .payment-method.active {
+            border-color: var(--primary-color);
+            background: rgba(74, 144, 226, 0.05);
+        }
+
+        .method-icon {
+            font-size: 2rem;
+        }
+
+        .method-info {
+            flex: 1;
+        }
+
+        .method-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .method-info p {
+            margin: 0.25rem 0 0 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .method-status {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .add-payment-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px dashed #e9ecef;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .add-payment-method:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .payment-history {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .payment-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .payment-icon.success {
+            background: #28a745;
+            color: white;
+        }
+
+        .payment-icon.pending {
+            background: #ffc107;
+            color: white;
+        }
+
+        .payment-details {
+            flex: 1;
+        }
+
+        .payment-details h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .payment-details p {
+            margin: 0.25rem 0 0 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .payment-amount {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-small:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</body>
+</html>

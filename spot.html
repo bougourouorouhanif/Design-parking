@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de la place - Parky</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="modern-nav">
+                <!-- Menu burger à gauche -->
+                <div class="nav-left">
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
+                </div>
+
+                <!-- Logo centré -->
+                <div class="nav-center">
+                    <a href="/" class="logo centered">Parky</a>
+                </div>
+
+                <!-- Notifications à droite -->
+                <div class="nav-right">
+                    <div class="notification-icon enhanced" onclick="toggleNotifications()">
+                        🔔
+                        <span class="notification-badge" id="notificationCount">2</span>
+                    </div>
+                </div>
+
+                <!-- Menu mobile -->
+                <div class="mobile-menu" id="mobileMenu">
+                    <div class="mobile-menu-content">
+                        <ul class="mobile-menu-links">
+                            <li><a href="/" onclick="closeMobileMenu()">🏠 Accueil</a></li>
+                            <li><a href="/map" onclick="closeMobileMenu()">🗺️ Rechercher une place</a></li>
+                            <li><a href="/dashboard" onclick="closeMobileMenu()">📊 Mes réservations</a></li>
+                            <li><a href="/owner" onclick="closeMobileMenu()">🏢 Espace propriétaire</a></li>
+                            <li><a href="/add-spot" onclick="closeMobileMenu()">➕ Partager ma place</a></li>
+                            <li><a href="/auth" onclick="closeMobileMenu()">🔐 Connexion</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Breadcrumb contextuel amélioré -->
+        <div style="background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div class="container">
+                <div style="padding: 1rem 0; display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.95); font-size: 0.9rem; font-weight: 500;">
+                    <a href="/" style="color: rgba(255,255,255,0.8); text-decoration: none; padding: 0.25rem 0.5rem; border-radius: 6px; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='white'" onmouseout="this.style.background='transparent'; this.style.color='rgba(255,255,255,0.8)'">
+                        <span style="display: flex; align-items: center; gap: 0.3rem;">🏠 <span>Accueil</span></span>
+                    </a>
+                    <span style="color: rgba(255,255,255,0.4); font-weight: 300;">→</span>
+                    <span style="padding: 0.25rem 0.5rem; border-radius: 6px; background: rgba(255,255,255,0.1);" id="breadcrumbContext">Places disponibles</span>
+                    <span style="color: rgba(255,255,255,0.4); font-weight: 300;">→</span>
+                    <span style="color: white; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 6px; background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);" id="breadcrumbSpot">Détails de la place</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section d'informations rapides -->
+        <div style="background: linear-gradient(135deg, rgba(74, 144, 226, 0.95) 0%, rgba(126, 214, 167, 0.95) 100%); padding: 1.5rem 0; position: relative; overflow: hidden;">
+            <!-- Motif de fond décoratif -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+            <div class="container" style="position: relative; z-index: 2;">
+                <div style="display: flex; align-items: center; justify-content: space-between; color: white;">
+                    <!-- Cartes d'informations -->
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <!-- Carte Localisation -->
+                        <div class="info-card" style="background: linear-gradient(145deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); border-radius: 16px; padding: 1rem 1.25rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 32px rgba(0,0,0,0.1)'">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%); padding: 0.75rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3); font-size: 1.3rem;">📍</div>
+                                <div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">Vous consultez</div>
+                                    <div style="font-weight: 700; font-size: 1.15rem; margin-top: 0.2rem;" id="headerSpotName">Parking Centre-ville</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carte Prix -->
+                        <div class="info-card" style="background: linear-gradient(145deg, rgba(126, 214, 167, 0.3) 0%, rgba(126, 214, 167, 0.2) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(126, 214, 167, 0.4); border-radius: 16px; padding: 1rem 1.25rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 32px rgba(0,0,0,0.1)'">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="background: linear-gradient(135deg, #7ED6A7 0%, #5BC788 100%); padding: 0.75rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(126, 214, 167, 0.4); font-size: 1.3rem;">💰</div>
+                                <div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">À partir de</div>
+                                    <div style="font-weight: 800; font-size: 1.4rem; margin-top: 0.2rem; text-shadow: 0 2px 4px rgba(0,0,0,0.1);" id="headerSpotPrice">€12/h</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carte Rating -->
+                        <div class="info-card" style="background: linear-gradient(145deg, rgba(255,215,0,0.25) 0%, rgba(255,215,0,0.15) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(255,215,0,0.3); border-radius: 16px; padding: 1rem 1.25rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 32px rgba(0,0,0,0.1)'">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%); padding: 0.75rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3); font-size: 1.3rem;">⭐</div>
+                                <div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">Note moyenne</div>
+                                    <div style="font-weight: 700; font-size: 1.15rem; margin-top: 0.2rem;" id="headerSpotRating">4.8/5</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Boutons d'action améliorés -->
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button onclick="shareSpot()" class="btn premium-btn" style="background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 100%); backdrop-filter: blur(10px); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 0.75rem 1.25rem; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.15)'; this.style.background='linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.25) 100%)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'; this.style.background='linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 100%)'">
+                            <span style="display: flex; align-items: center; gap: 0.5rem;">📤 <span>Partager</span></span>
+                        </button>
+                        <button onclick="addToFavorites()" class="btn premium-btn" style="background: linear-gradient(135deg, rgba(220, 53, 69, 0.25) 0%, rgba(220, 53, 69, 0.15) 100%); backdrop-filter: blur(10px); color: white; border: 1px solid rgba(220, 53, 69, 0.3); padding: 0.75rem 1.25rem; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.15)'; this.style.background='linear-gradient(135deg, rgba(220, 53, 69, 0.35) 0%, rgba(220, 53, 69, 0.25) 100%)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'; this.style.background='linear-gradient(135deg, rgba(220, 53, 69, 0.25) 0%, rgba(220, 53, 69, 0.15) 100%)'">
+                            <span style="display: flex; align-items: center; gap: 0.5rem;">❤️ <span>Favoris</span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Effet de brillance animé -->
+            <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%); animation: shine 3s ease-in-out infinite; pointer-events: none;"></div>
+        </div>
+    </header>
+
+    <div class="container" style="padding: 2rem 20px;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+            <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <button onclick="history.back()" class="btn btn-secondary" style="padding: 0.5rem 1rem;">← Retour</button>
+                        <div>
+                            <h1 style="margin: 0; font-size: 2rem; color: #333;">Parking Centre-ville</h1>
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem; color: #666;">
+                                <span style="display: flex; align-items: center; gap: 0.3rem;">📍 15 Rue de la République, Paris 75001</span>
+                                <span style="display: flex; align-items: center; gap: 0.3rem;">🚶‍♂️ 5 min à pied</span>
+                                <span style="display: flex; align-items: center; gap: 0.3rem; color: #28a745; font-weight: 500;">✅ Disponible maintenant</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: right;">
+                        <div style="background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%); padding: 1rem 1.25rem; border-radius: 16px; border: 2px solid #4A90E2; box-shadow: 0 8px 24px rgba(74, 144, 226, 0.15); position: relative; overflow: hidden;">
+                            <!-- Effet de brillance d'arrière-plan -->
+                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 40%, rgba(74, 144, 226, 0.05) 50%, transparent 60%); pointer-events: none;"></div>
+
+                            <div style="position: relative; z-index: 2;">
+                                <div style="font-size: 0.75rem; color: #4A90E2; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">⚡ Réservation express</div>
+                                <button onclick="quickBook()" class="btn btn-primary" style="padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 700; border-radius: 12px; box-shadow: 0 6px 20px rgba(74, 144, 226, 0.3); transition: all 0.3s ease; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 28px rgba(74, 144, 226, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(74, 144, 226, 0.3)'">
+                                    <span style="position: relative; z-index: 2;">⚡ Réserver 2h - €24</span>
+                                    <!-- Effet de hover lumineux -->
+                                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s ease; pointer-events: none;" onmouseover="this.style.left='100%'"></div>
+                                </button>
+                                <div style="font-size: 0.7rem; color: #666; margin-top: 0.5rem; opacity: 0.8;">💳 Paiement sécurisé</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="background: #f8f9fa; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+                            🏢
+                        </div>
+                        <div style="background: #f8f9fa; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #666;">
+                            Photo 2
+                        </div>
+                        <div style="background: #f8f9fa; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #666;">
+                            Photo 3
+                        </div>
+                    </div>
+
+                    <div class="spot-details" style="margin-bottom: 1rem;">
+                        <span class="spot-tag covered">Couvert</span>
+                        <span class="spot-tag">Sécurisé</span>
+                        <span class="spot-tag">Accessible PMR</span>
+                        <span class="spot-tag">24h/24</span>
+                    </div>
+
+                    <h3>📍 Adresse</h3>
+                    <p style="margin-bottom: 1.5rem;">15 Rue de la République, 75001 Paris</p>
+
+                    <h3>��️ Description</h3>
+                    <p style="margin-bottom: 1.5rem;">
+                        Parking couvert et sécurisé au cœur du centre-ville. Accès facile par ascenseur. 
+                        Place de taille standard adaptée aux véhicules jusqu'à 4,80m de longueur. 
+                        Vidéosurveillance 24h/24. Entrée par badge fourni lors de la réservation.
+                    </p>
+
+                    <h3>🕒 Disponibilités</h3>
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; margin-bottom: 1.5rem;">
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Lun</div>
+                            <div style="color: #28a745;">Libre</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Mar</div>
+                            <div style="color: #28a745;">Libre</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Mer</div>
+                            <div style="color: #dc3545;">Occupé</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Jeu</div>
+                            <div style="color: #28a745;">Libre</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Ven</div>
+                            <div style="color: #ffc107;">16h-18h</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Sam</div>
+                            <div style="color: #28a745;">Libre</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #e9ecef; border-radius: 4px; font-size: 0.9rem;">
+                            <div style="font-weight: bold;">Dim</div>
+                            <div style="color: #28a745;">Libre</div>
+                        </div>
+                    </div>
+
+                    <h3>⭐ Avis (4.8/5)</h3>
+                    <div style="border-left: 4px solid #e9ecef; padding-left: 1rem; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <strong>Marie L.</strong>
+                            <span>⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p style="margin: 0; color: #666;">"Place facile d'accès, très pratique pour le shopping en centre-ville."</p>
+                    </div>
+                    <div style="border-left: 4px solid #e9ecef; padding-left: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <strong>Jean P.</strong>
+                            <span>⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p style="margin: 0; color: #666;">"Parking sécurisé, propriétaire très réactif. Je recommande!"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="position: sticky; top: 2rem;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div class="price" style="font-size: 2.5rem; margin-bottom: 0.5rem;">€12</div>
+                    <div style="color: #666;">par heure</div>
+                </div>
+
+                <form onsubmit="proceedToPayment(event)">
+                    <div class="form-group">
+                        <label for="startDateTime">Début de réservation</label>
+                        <input type="datetime-local" id="startDateTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDateTime">Fin de réservation</label>
+                        <input type="datetime-local" id="endDateTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicleInfo">Informations véhicule</label>
+                        <input type="text" id="vehicleInfo" placeholder="ex: Peugeot 308 - AB-123-CD" required>
+                    </div>
+
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Durée:</span>
+                            <span id="duration">- heures</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Prix unitaire:</span>
+                            <span>€12/heure</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Commission plateforme:</span>
+                            <span id="commission">€0</span>
+                        </div>
+                        <hr style="margin: 0.5rem 0;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem;">
+                            <span>Total:</span>
+                            <span id="totalPrice">€0</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 1rem;">
+                        Réserver
+                    </button>
+                </form>
+
+                <div style="margin-top: 1rem; text-align: center;">
+                    <p style="font-size: 0.9rem; color: #666;">
+                        🛡️ Annulation gratuite jusqu'à 2h avant
+                    </p>
+                    <p style="font-size: 0.9rem; color: #666;">
+                        💳 Paiement sécurisé
+                    </p>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                    <h4>📞 Propriétaire: Michel D.</h4>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0;">
+                        <span>⭐⭐⭐⭐⭐</span>
+                        <span style="color: #666;">(47 avis)</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #666;">
+                        Membre depuis 2019. Temps de réponse: &lt; 5 minutes
+                    </p>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="contactOwner()">
+                        💬 Contacter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculatePrice() {
+            const start = new Date(document.getElementById('startDateTime').value);
+            const end = new Date(document.getElementById('endDateTime').value);
+            
+            if (start && end && end > start) {
+                const hours = Math.ceil((end - start) / (1000 * 60 * 60));
+                const basePrice = hours * 12;
+                const commission = Math.ceil(basePrice * 0.1);
+                const total = basePrice + commission;
+                
+                document.getElementById('duration').textContent = hours + ' heure' + (hours > 1 ? 's' : '');
+                document.getElementById('commission').textContent = '€' + commission;
+                document.getElementById('totalPrice').textContent = '€' + total;
+            }
+        }
+
+        function proceedToPayment(event) {
+            event.preventDefault();
+            
+            const start = document.getElementById('startDateTime').value;
+            const end = document.getElementById('endDateTime').value;
+            const vehicle = document.getElementById('vehicleInfo').value;
+            
+            if (!start || !end || !vehicle) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+            
+            // Store booking details
+            localStorage.setItem('bookingDetails', JSON.stringify({
+                spotId: getSpotId(),
+                spotName: 'Parking Centre-ville',
+                address: '15 Rue de la République, 75001 Paris',
+                start: start,
+                end: end,
+                vehicle: vehicle,
+                price: document.getElementById('totalPrice').textContent
+            }));
+            
+            window.location.href = '/payment';
+        }
+
+        function contactOwner() {
+            alert('Fonction de contact en cours de développement');
+        }
+
+        function getSpotId() {
+            const path = window.location.pathname;
+            return path.split('/')[2] || '1';
+        }
+
+        // Set default times and add event listeners
+        document.getElementById('startDateTime').addEventListener('change', calculatePrice);
+        document.getElementById('endDateTime').addEventListener('change', calculatePrice);
+
+        // Set default start time to now + 1 hour
+        const now = new Date();
+        now.setHours(now.getHours() + 1);
+        document.getElementById('startDateTime').value = now.toISOString().slice(0, 16);
+
+        // Set default end time to now + 3 hours
+        now.setHours(now.getHours() + 2);
+        document.getElementById('endDateTime').value = now.toISOString().slice(0, 16);
+
+        calculatePrice();
+
+        // Nouvelles fonctions pour le header amélioré
+        function shareSpot() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Parky - Place de parking',
+                    text: 'Découvrez cette place de parking disponible sur Parky',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback pour les navigateurs qui ne supportent pas l'API Web Share
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showNotification('Lien copié dans le presse-papiers!', 'success');
+                });
+            }
+        }
+
+        function addToFavorites() {
+            const spotId = getSpotId();
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+            if (!favorites.includes(spotId)) {
+                favorites.push(spotId);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                showNotification('Place ajoutée aux favoris ❤️', 'success');
+
+                // Mettre à jour l'icône du bouton
+                document.querySelector('button[onclick="addToFavorites()"]').innerHTML = '💖 Ajouté aux favoris';
+            } else {
+                showNotification('Cette place est déjà dans vos favoris', 'info');
+            }
+        }
+
+        function quickBook() {
+            // Réservation express pour 2 heures à partir de maintenant
+            const start = new Date();
+            start.setMinutes(start.getMinutes() + 5); // Dans 5 minutes
+            const end = new Date(start);
+            end.setHours(end.getHours() + 2);
+
+            document.getElementById('startDateTime').value = start.toISOString().slice(0, 16);
+            document.getElementById('endDateTime').value = end.toISOString().slice(0, 16);
+            document.getElementById('vehicleInfo').value = 'Véhicule principal';
+
+            calculatePrice();
+
+            // Scroll vers la section de réservation
+            document.querySelector('.card[style*="sticky"]').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            showNotification('Réservation express pré-remplie! Vérifiez les détails.', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                max-width: 300px;
+                font-size: 0.9rem;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        function updateHeaderContext() {
+            const spotId = getSpotId();
+            const referrer = document.referrer;
+
+            // Mettre à jour le contexte du breadcrumb
+            if (referrer.includes('/map')) {
+                document.getElementById('breadcrumbContext').textContent = 'Carte';
+            } else if (referrer.includes('/dashboard')) {
+                document.getElementById('breadcrumbContext').textContent = 'Mes réservations';
+            } else {
+                document.getElementById('breadcrumbContext').textContent = 'Places disponibles';
+            }
+
+            // Vérifier si la place est dans les favoris
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            if (favorites.includes(spotId)) {
+                document.querySelector('button[onclick="addToFavorites()"]').innerHTML = '💖 Dans les favoris';
+            }
+        }
+
+        // Initialisation du header au chargement de la page
+        window.onload = function() {
+            updateHeaderContext();
+        }
+    </script>
+</body>
+</html>

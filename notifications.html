@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parky - Notifications</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <link rel="stylesheet" href="navbar-enhanced.css">
+    <script src="auth-check.js"></script>
+    <script src="navbar.js" defer></script>
+    <script src="bottom-navbar.js" defer></script>
+</head>
+<body>
+    <!-- Navbar moderne -->
+    <header class="header">
+        <div class="container">
+            <nav class="modern-nav">
+                <div class="nav-left">
+                    <div class="menu-toggle enhanced" onclick="toggleMobileMenu()">
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                        <div class="menu-line"></div>
+                    </div>
+                </div>
+                
+                <div class="nav-center">
+                    <a href="/home" class="logo centered">Parky</a>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="notification-icon enhanced active">
+                        <div class="icon icon-bell icon-white icon-interactive"></div>
+                        <span class="notification-badge" id="notificationCount">0</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Menu mobile -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul class="mobile-menu-links">
+            <!-- Le contenu sera généré par navbar.js -->
+        </ul>
+    </div>
+
+    <main class="notifications-page">
+        <div class="container">
+            <!-- Header de la page -->
+            <div class="page-header">
+                <div class="header-content">
+                    <div class="header-icon">
+                        <div class="icon icon-bell"></div>
+                    </div>
+                    <div class="header-text">
+                        <h1>Notifications</h1>
+                        <p>Restez informé de toutes vos activités</p>
+                    </div>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="action-btn primary" onclick="markAllAsRead()">
+                        <div class="icon icon-check"></div>
+                        Tout marquer lu
+                    </button>
+                    <button class="action-btn secondary" onclick="clearAllNotifications()">
+                        <div class="icon icon-trash"></div>
+                        Effacer tout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filtres de notifications -->
+            <div class="notification-filters">
+                <button class="filter-btn active" data-filter="all" onclick="filterNotifications('all')">
+                    <div class="icon icon-all"></div>
+                    Toutes <span class="filter-count" id="count-all">12</span>
+                </button>
+                <button class="filter-btn" data-filter="unread" onclick="filterNotifications('unread')">
+                    <div class="icon icon-unread"></div>
+                    Non lues <span class="filter-count" id="count-unread">3</span>
+                </button>
+                <button class="filter-btn" data-filter="reservations" onclick="filterNotifications('reservations')">
+                    <div class="icon icon-reservations"></div>
+                    Réservations <span class="filter-count" id="count-reservations">5</span>
+                </button>
+                <button class="filter-btn" data-filter="payments" onclick="filterNotifications('payments')">
+                    <div class="icon icon-payment"></div>
+                    Paiements <span class="filter-count" id="count-payments">2</span>
+                </button>
+                <button class="filter-btn" data-filter="system" onclick="filterNotifications('system')">
+                    <div class="icon icon-system"></div>
+                    Système <span class="filter-count" id="count-system">2</span>
+                </button>
+            </div>
+
+            <!-- Liste des notifications -->
+            <div class="notifications-container">
+                <div class="notifications-list" id="notificationsList">
+                    <!-- Les notifications seront générées dynamiquement -->
+                </div>
+
+                <!-- État vide -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">🔕</div>
+                    <h3>Aucune notification</h3>
+                    <p>Vous êtes à jour ! Aucune nouvelle notification.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .notifications-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem 0;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-icon .icon {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .header-text p {
+            margin: 0.5rem 0 0 0;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: #f8f9fa;
+            color: var(--text-secondary);
+            border: 1px solid #e9ecef;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-btn .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .notification-filters {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+        }
+
+        .filter-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #4A90E2 0%, #7ED6A7 100%);
+            border-color: transparent;
+            color: white;
+        }
+
+        .filter-btn:hover:not(.active) {
+            border-color: var(--primary-color);
+            background: rgba(74, 144, 226, 0.05);
+        }
+
+        .filter-btn .icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .filter-count {
+            background: rgba(255, 255, 255, 0.2);
+            color: currentColor;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .filter-btn.active .filter-count {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .notifications-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-item:hover {
+            background: rgba(74, 144, 226, 0.02);
+        }
+
+        .notification-item.unread {
+            background: rgba(74, 144, 226, 0.05);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .notification-item.unread::before {
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 8px;
+            height: 8px;
+            background: #ff4757;
+            border-radius: 50%;
+        }
+
+        .notification-icon-container {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .notification-icon-container.success {
+            background: linear-gradient(135deg, #7ED6A7 0%, #5fb3d3 100%);
+        }
+
+        .notification-icon-container.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #ff8a00 100%);
+        }
+
+        .notification-icon-container.info {
+            background: linear-gradient(135deg, #4A90E2 0%, #667eea 100%);
+        }
+
+        .notification-icon-container.error {
+            background: linear-gradient(135deg, #ff4757 0%, #c44569 100%);
+        }
+
+        .notification-icon-container .icon {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .notification-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .notification-time {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        .notification-message {
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .notification-action {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .notification-action:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .notification-action.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .notification-action.primary:hover {
+            background: var(--secondary-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .header-content {
+                justify-content: center;
+            }
+
+            .header-actions {
+                justify-content: center;
+            }
+
+            .notification-filters {
+                flex-wrap: wrap;
+            }
+
+            .notification-item {
+                padding: 1rem;
+            }
+
+            .notification-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .notification-time {
+                margin-left: 0;
+                margin-top: 0.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .notifications-page {
+                padding: 1rem 0;
+            }
+
+            .notification-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <script>
+        // Données de démonstration pour les notifications
+        const demoNotifications = [
+            {
+                id: 1,
+                type: 'success',
+                category: 'reservations',
+                title: 'Réservation confirmée !',
+                message: 'Votre place au Parking Centre-ville est réservée pour aujourd\'hui à 15h00.',
+                time: 'Il y a 5 minutes',
+                unread: true,
+                actions: [
+                    { label: 'Voir détails', type: 'primary', action: 'viewReservation(1)' },
+                    { label: 'Modifier', type: 'secondary', action: 'editReservation(1)' }
+                ]
+            },
+            {
+                id: 2,
+                type: 'info',
+                category: 'system',
+                title: 'Nouvelles places disponibles',
+                message: '3 nouvelles places de parking près de votre localisation habituelle.',
+                time: 'Il y a 2 heures',
+                unread: true,
+                actions: [
+                    { label: 'Voir les places', type: 'primary', action: 'viewSpots()' }
+                ]
+            },
+            {
+                id: 3,
+                type: 'warning',
+                category: 'reservations',
+                title: 'Rappel de réservation',
+                message: 'Votre réservation expire dans 30 minutes. Pensez à prolonger si nécessaire.',
+                time: 'Il y a 4 heures',
+                unread: false,
+                actions: [
+                    { label: 'Prolonger', type: 'primary', action: 'extendReservation(3)' },
+                    { label: 'Terminer', type: 'secondary', action: 'endReservation(3)' }
+                ]
+            },
+            {
+                id: 4,
+                type: 'success',
+                category: 'payments',
+                title: 'Paiement effectué',
+                message: 'Votre paiement de 24€ a été traité avec succès.',
+                time: 'Hier',
+                unread: false
+            },
+            {
+                id: 5,
+                type: 'info',
+                category: 'reservations',
+                title: 'Place libérée',
+                message: 'Une place s\'est libérée dans votre zone de recherche préférée.',
+                time: 'Il y a 2 jours',
+                unread: false,
+                actions: [
+                    { label: 'Réserver', type: 'primary', action: 'reserveSpot(5)' }
+                ]
+            },
+            {
+                id: 6,
+                type: 'warning',
+                category: 'system',
+                title: 'Maintenance programmée',
+                message: 'L\'application sera indisponible demain de 2h à 4h pour maintenance.',
+                time: 'Il y a 3 jours',
+                unread: false
+            },
+            {
+                id: 7,
+                type: 'success',
+                category: 'payments',
+                title: 'Remboursement traité',
+                message: 'Votre remboursement de 15€ a été crédité sur votre compte.',
+                time: 'Il y a 1 semaine',
+                unread: false
+            }
+        ];
+
+        let currentFilter = 'all';
+        let notifications = [...demoNotifications];
+
+        // Initialiser la page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderNotifications();
+            updateFilterCounts();
+        });
+
+        // Filtrer les notifications
+        function filterNotifications(filter) {
+            currentFilter = filter;
+            
+            // Mettre à jour les boutons de filtre
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
+            
+            renderNotifications();
+        }
+
+        // Rendre les notifications
+        function renderNotifications() {
+            const container = document.getElementById('notificationsList');
+            const emptyState = document.getElementById('emptyState');
+            
+            let filteredNotifications = notifications;
+            
+            if (currentFilter !== 'all') {
+                if (currentFilter === 'unread') {
+                    filteredNotifications = notifications.filter(n => n.unread);
+                } else {
+                    filteredNotifications = notifications.filter(n => n.category === currentFilter);
+                }
+            }
+            
+            if (filteredNotifications.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            container.innerHTML = filteredNotifications.map(notification => `
+                <div class="notification-item ${notification.unread ? 'unread' : ''}" onclick="markAsRead(${notification.id})">
+                    <div class="notification-icon-container ${notification.type}">
+                        <div class="icon icon-${getIconForCategory(notification.category)}"></div>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <h3 class="notification-title">${notification.title}</h3>
+                            <span class="notification-time">${notification.time}</span>
+                        </div>
+                        <p class="notification-message">${notification.message}</p>
+                        ${notification.actions ? `
+                            <div class="notification-actions">
+                                ${notification.actions.map(action => `
+                                    <button class="notification-action ${action.type}" onclick="event.stopPropagation(); ${action.action}">
+                                        ${action.label}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Obtenir l'icône selon la catégorie
+        function getIconForCategory(category) {
+            const icons = {
+                'reservations': 'reservations',
+                'payments': 'payment', 
+                'system': 'bell',
+                'default': 'bell'
+            };
+            return icons[category] || icons.default;
+        }
+
+        // Mettre à jour les compteurs de filtres
+        function updateFilterCounts() {
+            document.getElementById('count-all').textContent = notifications.length;
+            document.getElementById('count-unread').textContent = notifications.filter(n => n.unread).length;
+            document.getElementById('count-reservations').textContent = notifications.filter(n => n.category === 'reservations').length;
+            document.getElementById('count-payments').textContent = notifications.filter(n => n.category === 'payments').length;
+            document.getElementById('count-system').textContent = notifications.filter(n => n.category === 'system').length;
+            
+            // Mettre à jour le badge de la navbar
+            const unreadCount = notifications.filter(n => n.unread).length;
+            const badge = document.getElementById('notificationCount');
+            if (badge) {
+                badge.textContent = unreadCount;
+                badge.style.display = unreadCount > 0 ? 'flex' : 'none';
+            }
+        }
+
+        // Marquer comme lu
+        function markAsRead(id) {
+            const notification = notifications.find(n => n.id === id);
+            if (notification) {
+                notification.unread = false;
+                updateFilterCounts();
+                renderNotifications();
+            }
+        }
+
+        // Marquer tout comme lu
+        function markAllAsRead() {
+            notifications.forEach(n => n.unread = false);
+            updateFilterCounts();
+            renderNotifications();
+            showToast('Toutes les notifications ont été marquées comme lues', 'success');
+        }
+
+        // Effacer toutes les notifications
+        function clearAllNotifications() {
+            if (confirm('Êtes-vous sûr de vouloir effacer toutes les notifications ?')) {
+                notifications = [];
+                updateFilterCounts();
+                renderNotifications();
+                showToast('Toutes les notifications ont été effacées', 'success');
+            }
+        }
+
+        // Actions des notifications
+        function viewReservation(id) {
+            showToast(`Affichage de la réservation ${id}`, 'info');
+            // Redirection vers la page de réservation
+            setTimeout(() => window.location.href = '/dashboard', 1000);
+        }
+
+        function editReservation(id) {
+            showToast(`Modification de la réservation ${id}`, 'info');
+        }
+
+        function extendReservation(id) {
+            showToast(`Prolongation de la réservation ${id}`, 'success');
+        }
+
+        function endReservation(id) {
+            showToast(`Réservation ${id} terminée`, 'success');
+        }
+
+        function viewSpots() {
+            showToast('Redirection vers la carte...', 'info');
+            setTimeout(() => window.location.href = '/map', 1000);
+        }
+
+        function reserveSpot(id) {
+            showToast(`Réservation de la place ${id}`, 'success');
+        }
+
+        // Toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: ${type === 'success' ? '#7ED6A7' : type === 'error' ? '#FF4757' : '#4A90E2'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-weight: 500;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                max-width: 300px;
+            `;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.style.transform = 'translateX(0)', 100);
+            setTimeout(() => {
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
