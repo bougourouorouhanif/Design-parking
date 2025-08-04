@@ -806,26 +806,131 @@ SUPPORT:
 
         function approveSpot(id) {
             if (confirm('Approuver cette place de parking?')) {
+                updateModerationStats('approve');
+                updateMetricValue('spots', 1);
                 showNotification('Place approuvée et mise en ligne', 'success');
             }
         }
 
         function rejectSpot(id) {
             if (confirm('Refuser cette place de parking?')) {
-                showNotification('Place refusée - notification envoyée', 'warning');
+                updateModerationStats('reject');
+                showNotification('Place refusée - notification envoyée au propriétaire', 'warning');
             }
         }
 
         function viewSpot(id) {
-            showNotification(`Détails de la place ${id}`, 'info');
+            const spot = {
+                id: 'P2024-156',
+                name: 'Parking Bastille',
+                address: '12 Place de la Bastille, 75011 Paris',
+                owner: 'Jean Martin',
+                price: '€2.50/heure',
+                status: 'En attente de validation',
+                images: 3,
+                description: 'Place couverte, accès sécurisé 24h/24'
+            };
+
+            const modal = createModal('Détails de la Place', `
+                <div class="spot-details">
+                    <h3>${spot.name}</h3>
+                    <p><strong>ID:</strong> ${spot.id}</p>
+                    <p><strong>Adresse:</strong> ${spot.address}</p>
+                    <p><strong>Propriétaire:</strong> ${spot.owner}</p>
+                    <p><strong>Prix:</strong> ${spot.price}</p>
+                    <p><strong>Description:</strong> ${spot.description}</p>
+                    <p><strong>Images:</strong> ${spot.images} photos soumises</p>
+                    <p><strong>Statut:</strong> <span class="status-pending">${spot.status}</span></p>
+
+                    <div class="spot-actions">
+                        <button class="btn btn-success" onclick="approveSpot('${spot.id}'); closeModal(this);">Approuver</button>
+                        <button class="btn btn-danger" onclick="rejectSpot('${spot.id}'); closeModal(this);">Refuser</button>
+                        <button class="btn btn-secondary" onclick="requestMoreInfo('${spot.id}')">Plus d'infos</button>
+                    </div>
+                </div>
+            `);
         }
 
         function viewTechnicalDetails() {
-            showNotification('Affichage des détails techniques', 'info');
+            const modal = createModal('Détails Techniques', `
+                <div class="technical-details">
+                    <h3>Performance Système</h3>
+                    <div class="tech-metrics">
+                        <div class="tech-metric">
+                            <span class="tech-label">Uptime:</span>
+                            <span class="tech-value success">99.97%</span>
+                        </div>
+                        <div class="tech-metric">
+                            <span class="tech-label">Temps de réponse:</span>
+                            <span class="tech-value">127ms</span>
+                        </div>
+                        <div class="tech-metric">
+                            <span class="tech-label">CPU Usage:</span>
+                            <span class="tech-value">23%</span>
+                        </div>
+                        <div class="tech-metric">
+                            <span class="tech-label">Memory Usage:</span>
+                            <span class="tech-value">45%</span>
+                        </div>
+                        <div class="tech-metric">
+                            <span class="tech-label">DB Connections:</span>
+                            <span class="tech-value">156/500</span>
+                        </div>
+                        <div class="tech-metric">
+                            <span class="tech-label">Cache Hit Rate:</span>
+                            <span class="tech-value success">94.2%</span>
+                        </div>
+                    </div>
+
+                    <h4>Services Status</h4>
+                    <div class="services-status">
+                        <div class="service-item">🟢 API Gateway</div>
+                        <div class="service-item">🟢 Database</div>
+                        <div class="service-item">🟢 Redis Cache</div>
+                        <div class="service-item">🟢 Payment Service</div>
+                        <div class="service-item">🟡 Email Service</div>
+                        <div class="service-item">🟢 Notification Service</div>
+                    </div>
+                </div>
+            `);
         }
 
         function viewSupportQueue() {
-            showNotification('Chargement de la file d\'attente support', 'info');
+            const modal = createModal('File d\'Attente Support', `
+                <div class="support-queue">
+                    <h3>Tickets en Attente (23)</h3>
+                    <div class="ticket-list">
+                        <div class="ticket-item priority-high">
+                            <div class="ticket-info">
+                                <strong>#2024-158</strong> - Problème de paiement
+                                <br><small>Marie Dubois - Il y a 2h</small>
+                            </div>
+                            <button class="btn btn-sm btn-primary">Prendre en charge</button>
+                        </div>
+
+                        <div class="ticket-item priority-medium">
+                            <div class="ticket-info">
+                                <strong>#2024-157</strong> - Place non accessible
+                                <br><small>Jean Martin - Il y a 4h</small>
+                            </div>
+                            <button class="btn btn-sm btn-primary">Prendre en charge</button>
+                        </div>
+
+                        <div class="ticket-item priority-low">
+                            <div class="ticket-info">
+                                <strong>#2024-156</strong> - Question sur les tarifs
+                                <br><small>Sophie Durand - Il y a 6h</small>
+                            </div>
+                            <button class="btn btn-sm btn-primary">Prendre en charge</button>
+                        </div>
+                    </div>
+
+                    <div class="queue-actions">
+                        <button class="btn btn-secondary" onclick="assignAllTickets()">Auto-Assigner</button>
+                        <button class="btn btn-primary" onclick="createTicketTemplate()">Nouveau Template</button>
+                    </div>
+                </div>
+            `);
         }
 
         function sendNotification() {
