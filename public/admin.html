@@ -739,7 +739,7 @@
         function sendNotification() {
             const message = prompt('Message à envoyer à tous les utilisateurs:');
             if (message) {
-                showNotification(`Notification envoyée: "${message}"`, 'success');
+                showNotification(`Notification envoy��e: "${message}"`, 'success');
             }
         }
 
@@ -827,6 +827,247 @@
                 }, 400);
             });
         }
+
+        // Fonctions utilitaires avancées
+        function showProgressModal(message, callback) {
+            const modal = document.createElement('div');
+            modal.className = 'progress-modal';
+            modal.innerHTML = `
+                <div class="progress-modal-content">
+                    <div class="progress-spinner"></div>
+                    <p>${message}</p>
+                </div>
+            `;
+
+            Object.assign(modal.style, {
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                right: '0',
+                bottom: '0',
+                background: 'rgba(0, 0, 0, 0.8)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: '10001'
+            });
+
+            const content = modal.querySelector('.progress-modal-content');
+            Object.assign(content.style, {
+                background: 'white',
+                padding: '2rem',
+                borderRadius: '1rem',
+                textAlign: 'center',
+                minWidth: '300px'
+            });
+
+            const spinner = modal.querySelector('.progress-spinner');
+            Object.assign(spinner.style, {
+                width: '40px',
+                height: '40px',
+                border: '4px solid #f3f4f6',
+                borderTop: '4px solid #3b82f6',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+                margin: '0 auto 1rem auto'
+            });
+
+            document.body.appendChild(modal);
+
+            // Simulation du processus
+            setTimeout(() => {
+                document.body.removeChild(modal);
+                if (callback) callback();
+            }, 2000);
+        }
+
+        function showUserModal(user) {
+            const modal = createModal('Détails Utilisateur', `
+                <div class="user-details">
+                    <h3>${user.name}</h3>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>Type:</strong> ${user.type}</p>
+                    <p><strong>Statut:</strong> ${user.status}</p>
+                    <p><strong>Inscription:</strong> ${user.joinDate}</p>
+                    <div class="user-actions">
+                        <button class="btn btn-primary" onclick="editUser('${user.email}')">Modifier</button>
+                        <button class="btn btn-warning" onclick="suspendUser('${user.email}')">Suspendre</button>
+                        <button class="btn btn-secondary" onclick="viewUserHistory('${user.email}')">Historique</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        function showReportModal(report) {
+            const modal = createModal('Détails Signalement', `
+                <div class="report-details">
+                    <h3>${report.title}</h3>
+                    <p><strong>ID:</strong> ${report.id}</p>
+                    <p><strong>Description:</strong> ${report.description}</p>
+                    <p><strong>Signalé par:</strong> ${report.reporter}</p>
+                    <p><strong>Date:</strong> ${report.reportDate}</p>
+                    <p><strong>Priorité:</strong> <span class="priority-${report.priority.toLowerCase()}">${report.priority}</span></p>
+                    <div class="report-actions">
+                        <button class="btn btn-success" onclick="resolveReportModal('${report.id}')">Résoudre</button>
+                        <button class="btn btn-warning" onclick="escalateReport('${report.id}')">Escalader</button>
+                        <button class="btn btn-secondary" onclick="assignReport('${report.id}')">Assigner</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        function createModal(title, content) {
+            const modal = document.createElement('div');
+            modal.className = 'admin-modal';
+            modal.innerHTML = `
+                <div class="admin-modal-content">
+                    <div class="admin-modal-header">
+                        <h2>${title}</h2>
+                        <button class="admin-modal-close" onclick="closeModal(this)">&times;</button>
+                    </div>
+                    <div class="admin-modal-body">
+                        ${content}
+                    </div>
+                </div>
+            `;
+
+            Object.assign(modal.style, {
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                right: '0',
+                bottom: '0',
+                background: 'rgba(0, 0, 0, 0.8)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: '10001'
+            });
+
+            document.body.appendChild(modal);
+            return modal;
+        }
+
+        function closeModal(button) {
+            const modal = button.closest('.admin-modal') || button.closest('.progress-modal');
+            if (modal && document.body.contains(modal)) {
+                document.body.removeChild(modal);
+            }
+        }
+
+        function updateMetricValue(type, increment = 1) {
+            const metricCards = {
+                'users': document.querySelector('.metric-users .metric-value'),
+                'spots': document.querySelector('.metric-spots .metric-value'),
+                'revenue': document.querySelector('.metric-revenue .metric-value'),
+                'bookings': document.querySelector('.metric-bookings .metric-value')
+            };
+
+            const card = metricCards[type];
+            if (card) {
+                const currentValue = parseInt(card.getAttribute('data-target'));
+                const newValue = currentValue + increment;
+                card.setAttribute('data-target', newValue);
+                card.textContent = type === 'revenue' ? `€${newValue}K` : newValue.toLocaleString();
+            }
+        }
+
+        function updateModerationStats(action) {
+            const stats = {
+                resolve: () => {
+                    const urgentStat = document.querySelector('.summary-stat.urgent .summary-value');
+                    if (urgentStat) {
+                        const current = parseInt(urgentStat.textContent);
+                        urgentStat.textContent = Math.max(0, current - 1);
+                    }
+                },
+                approve: () => {
+                    const pendingStat = document.querySelector('.summary-stat.pending .summary-value');
+                    if (pendingStat) {
+                        const current = parseInt(pendingStat.textContent);
+                        pendingStat.textContent = Math.max(0, current - 1);
+                    }
+                },
+                reject: () => {
+                    const pendingStat = document.querySelector('.summary-stat.pending .summary-value');
+                    if (pendingStat) {
+                        const current = parseInt(pendingStat.textContent);
+                        pendingStat.textContent = Math.max(0, current - 1);
+                    }
+                }
+            };
+
+            if (stats[action]) stats[action]();
+        }
+
+        // Ajout de styles CSS pour les modales
+        const modalStyles = document.createElement('style');
+        modalStyles.textContent = `
+            .admin-modal-content {
+                background: white;
+                border-radius: 1rem;
+                max-width: 600px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
+            }
+
+            .admin-modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1.5rem;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .admin-modal-header h2 {
+                margin: 0;
+                color: #1e293b;
+            }
+
+            .admin-modal-close {
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: #6b7280;
+                padding: 0.5rem;
+                border-radius: 0.5rem;
+                transition: all 0.2s;
+            }
+
+            .admin-modal-close:hover {
+                background: #f3f4f6;
+                color: #1e293b;
+            }
+
+            .admin-modal-body {
+                padding: 1.5rem;
+            }
+
+            .user-details, .report-details {
+                line-height: 1.6;
+            }
+
+            .user-actions, .report-actions {
+                display: flex;
+                gap: 1rem;
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+            }
+
+            .priority-urgent {
+                color: #ef4444;
+                font-weight: bold;
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(modalStyles);
 
         // Vérification d'accès admin au chargement
         window.onload = function() {
