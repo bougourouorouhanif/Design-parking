@@ -1383,6 +1383,194 @@
   }
 }
 
+/* Styles pour les modales et fonctionnalités avancées */
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: all var(--transition-base);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.contact-form label {
+  display: block;
+  font-weight: 600;
+  color: var(--admin-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.contact-actions,
+.spot-actions,
+.queue-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.spot-details,
+.technical-details,
+.support-queue {
+  line-height: 1.6;
+}
+
+.status-pending {
+  color: var(--admin-warning);
+  font-weight: 600;
+}
+
+.tech-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.tech-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--gray-50);
+  border-radius: var(--admin-radius);
+  border-left: 3px solid var(--admin-primary);
+}
+
+.tech-label {
+  font-weight: 500;
+  color: var(--admin-text-secondary);
+}
+
+.tech-value {
+  font-weight: 700;
+  color: var(--admin-text-primary);
+}
+
+.tech-value.success {
+  color: var(--admin-success);
+}
+
+.services-status {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.service-item {
+  padding: 0.75rem;
+  background: var(--gray-50);
+  border-radius: var(--admin-radius);
+  text-align: center;
+  font-weight: 500;
+}
+
+.ticket-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 1rem 0;
+}
+
+.ticket-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  margin-bottom: 0.75rem;
+  background: var(--admin-surface);
+  transition: all var(--transition-base);
+}
+
+.ticket-item:hover {
+  box-shadow: var(--admin-shadow);
+  border-color: var(--admin-primary);
+}
+
+.ticket-item.priority-high {
+  border-left: 4px solid var(--admin-danger);
+}
+
+.ticket-item.priority-medium {
+  border-left: 4px solid var(--admin-warning);
+}
+
+.ticket-item.priority-low {
+  border-left: 4px solid var(--admin-info);
+}
+
+.ticket-info strong {
+  color: var(--admin-text-primary);
+}
+
+.ticket-info small {
+  color: var(--admin-text-muted);
+}
+
+/* Responsive pour les modales */
+@media (max-width: 768px) {
+  .admin-modal-content {
+    width: 95%;
+    margin: 1rem;
+  }
+
+  .contact-actions,
+  .spot-actions,
+  .queue-actions {
+    flex-direction: column;
+  }
+
+  .contact-actions .btn,
+  .spot-actions .btn,
+  .queue-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tech-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .services-status {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ticket-item {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-modal-content {
+    width: 98%;
+    margin: 0.5rem;
+    max-height: 95vh;
+  }
+
+  .admin-modal-header {
+    padding: 1rem;
+  }
+
+  .admin-modal-body {
+    padding: 1rem;
+  }
+
+  .services-status {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Animations avancées */
 @keyframes fadeInUp {
   from {
